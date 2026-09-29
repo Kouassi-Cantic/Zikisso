@@ -19,4 +19,4 @@ bun.lockb
 !.env.example
 serviceAccountKey.json
 *service-account*.json
-firebase-service-account.json
+firebase-service-account.json 
