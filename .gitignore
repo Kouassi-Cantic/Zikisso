@@ -9,6 +9,10 @@ coverage/
 *.log
 Thumbs.db
 
+# Lockfiles incompatibles Cloudflare Pages
+bun.lock
+bun.lockb
+
 # Variables d'environnement & Clés secrètes Firebase
 .env
 .env.*
