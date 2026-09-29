@@ -1,0 +1,18 @@
+# Dépendances & Builds
+node_modules/
+build/
+dist/
+coverage/
+
+# Systèmes & Logs
+.DS_Store
+*.log
+Thumbs.db
+
+# Variables d'environnement & Clés secrètes Firebase
+.env
+.env.*
+!.env.example
+serviceAccountKey.json
+*service-account*.json
+firebase-service-account.json

@@ -1,0 +1,941 @@
+{
+  "meta": {
+    "title": "MOOC — Gestion des Collectivités Locales & Transformation Digitale",
+    "caseStudy": "Commune de Zikisso (Région du Lôh-Djiboua)",
+    "duration": "30 jours (4 semaines) + Module Bonus",
+    "level": "Débutant / Intermédiaire",
+    "palette": {
+      "green": "#1A6B3C",
+      "navy": "#1F4E79",
+      "orange": "#C55A11"
+    }
+  },
+  "weeks": [
+    {
+      "id": "s1",
+      "order": 1,
+      "title": "Cadre Institutionnel, Acteurs et Décentralisation en Côte d'Ivoire",
+      "objectives": "Maîtriser l'organisation territoriale ivoirienne, comprendre le principe de libre administration des collectivités et identifier le rôle des organes de tutelle qui encadrent l'action communale.",
+      "capsules": [
+        {
+          "id": "1.1",
+          "title": "La loi n° 2012-1128 et l'architecture de la décentralisation",
+          "content": "La décentralisation ivoirienne repose sur la loi n° 2012-1128 du 13 décembre 2012 portant orientation générale de l'organisation générale de l'administration territoriale. Ce texte structure le territoire national en trois échelons de collectivités territoriales : les Régions, les Communes, et les Districts Autonomes (Abidjan, Yamoussoukro). Chaque collectivité territoriale est dotée de la personnalité morale, de compétences propres et de ressources budgétaires distinctes de celles de l'État."
+        },
+        {
+          "id": "1.2",
+          "title": "Les organes de la Commune",
+          "content": "La Commune fonctionne autour de trois organes complémentaires : le Conseil Municipal (organe délibérant, élu, vote le budget et les grandes orientations), la Municipalité (organe exécutif collégial, Maire + adjoints), et le Maire, qui cumule exécutif communal et agent de l'État au niveau local pour certains actes précis (état civil, police administrative)."
+        },
+        {
+          "id": "1.3",
+          "title": "Le rôle de la tutelle administrative",
+          "content": "La libre administration s'exerce sous le contrôle de la tutelle administrative. Pour Zikisso, ce rôle est exercé par le Préfet du Département de Lakota, qui exerce un contrôle de légalité a posteriori sur chaque délibération municipale. Au niveau national, la DGDDL coordonne la politique de décentralisation et appuie le renforcement des capacités des communes."
+        },
+        {
+          "id": "1.4",
+          "title": "Focus Digital : la plateforme DGDDL et le portail e-Gouv",
+          "content": "La transformation numérique de la gouvernance locale s'appuie sur la plateforme de suivi de la DGDDL et le portail national e-Gouv, point d'entrée unique de la dématérialisation des démarches administratives entre citoyens, communes et administrations centrales."
+        }
+      ],
+      "exercise": {
+        "title": "Le Diagnostic Institutionnel de Zikisso",
+        "statement": "La commune de Zikisso souhaite lancer son plan de développement, mais les nouveaux conseillers municipaux confondent les compétences de la Mairie et celles du Conseil Régional du Lôh-Djiboua. Rédigez une note d'orientation de 2 pages clarifiant les rôles et le circuit de validation des délibérations avec la Préfecture.",
+        "corrige": [
+          "Répartition des compétences : Commune (état civil, urbanisme communal, voirie, marchés, écoles primaires, assainissement) vs Conseil Régional (routes régionales, santé secondaire, développement économique régional).",
+          "Circuit de validation : délibération votée → transmission au Préfet de Lakota → contrôle de légalité → acte exécutoire de plein droit sauf recours.",
+          "Digitalisation : registre numérique des délibérations avec accusé de réception horodaté, transmis en parallèle papier/électronique."
+        ],
+        "grid": [
+          {
+            "critere": "Conformité réglementaire",
+            "points": 8,
+            "description": "Identification correcte de la loi de 2012 et du rôle du Préfet."
+          },
+          {
+            "critere": "Réalisme local",
+            "points": 6,
+            "description": "Articulation entre commune et Conseil Régional du Lôh-Djiboua."
+          },
+          {
+            "critere": "Digitalisation",
+            "points": 6,
+            "description": "Circuit de transmission dématérialisé proposé."
+          }
+        ]
+      },
+      "quiz": [
+        {
+          "q": "Quel texte fixe le cadre général de la décentralisation en Côte d'Ivoire ?",
+          "options": [
+            "La loi n° 2012-1128 du 13 décembre 2012",
+            "La loi n° 2001-476",
+            "L'ordonnance de 1980 sur les communes",
+            "La Constitution de 2016 uniquement"
+          ],
+          "correct": "A",
+          "explain": "La loi n° 2012-1128 porte orientation générale de l'organisation de l'administration territoriale."
+        },
+        {
+          "q": "Qui exerce le contrôle de légalité sur les délibérations du Conseil Municipal de Zikisso ?",
+          "options": [
+            "Le Ministre en charge de la décentralisation",
+            "Le Préfet du Département de Lakota",
+            "Le Conseil Régional du Lôh-Djiboua",
+            "La DGDDL directement"
+          ],
+          "correct": "B",
+          "explain": "La tutelle sur Zikisso est exercée par le Préfet de Lakota."
+        },
+        {
+          "q": "Le principe de libre administration signifie que :",
+          "options": [
+            "Les communes sont totalement indépendantes de l'État",
+            "Les communes gèrent leurs affaires par des conseils élus, sous contrôle de légalité",
+            "Le maire est nommé par le Préfet",
+            "Aucun contrôle n'est exercé"
+          ],
+          "correct": "B",
+          "explain": "Libre administration = gestion élue sous contrôle de légalité, non tutelle hiérarchique."
+        },
+        {
+          "q": "Le quorum du Conseil Municipal correspond, en règle générale, à :",
+          "options": [
+            "Le tiers des conseillers",
+            "La majorité des conseillers en exercice",
+            "Les deux tiers",
+            "L'unanimité"
+          ],
+          "correct": "B",
+          "explain": "Le quorum de droit commun est la majorité des membres en exercice."
+        },
+        {
+          "q": "Le délai de contrôle de légalité de la tutelle est :",
+          "options": [
+            "Aucun délai",
+            "Un délai bref, réglementairement encadré",
+            "Trois ans",
+            "Laissé au maire"
+          ],
+          "correct": "B",
+          "explain": "Passé ce délai bref sans observation, l'acte devient exécutoire de plein droit."
+        }
+      ]
+    },
+    {
+      "id": "s2",
+      "order": 2,
+      "title": "Planification Locale et Budgétisation Territoriale",
+      "objectives": "Comprendre les cycles budgétaires d'une commune ivoirienne, de la planification triennale au vote du budget primitif.",
+      "capsules": [
+        {
+          "id": "2.1",
+          "title": "Le Plan Triennal, outil stratégique du développement local",
+          "content": "Instrument de programmation glissante par lequel une commune planifie ses investissements sur trois exercices, en cohérence avec le PND et les appuis mobilisables. Élaboré par le Conseil Municipal avec l'appui de la DGDDL."
+        },
+        {
+          "id": "2.2",
+          "title": "La structure du Budget Communal",
+          "content": "Section de Fonctionnement (dépenses courantes, équilibre réel recettes=dépenses) vs Section d'Investissement (infrastructures durables, financée par subventions, emprunts, FPCL)."
+        },
+        {
+          "id": "2.3",
+          "title": "Le calendrier budgétaire communal",
+          "content": "Préparation N-1 (débat d'orientation) → vote du Budget Primitif avant le début de l'exercice N → exécution sous contrôle Maire/Receveur → Compte Administratif l'année suivante."
+        },
+        {
+          "id": "2.4",
+          "title": "Focus Digital : les progiciels de gestion budgétaire communale",
+          "content": "Progiciels type SIGFIP adapté ou « e-Commune » pour un suivi en temps réel des engagements, disponibilités et restes à recouvrer."
+        }
+      ],
+      "exercise": {
+        "title": "Élaboration du Plan Triennal de Zikisso",
+        "statement": "Face à la baisse des subventions de l'État, la mairie de Zikisso doit planifier la construction d'un nouveau marché couvert et la réhabilitation de pistes agricoles. Proposez l'arbitrage budgétaire dans le cadre du prochain Plan Triennal.",
+        "corrige": [
+          "Priorisation : réhabilitation des pistes agricoles en année 1 (coût modeste, impact immédiat sur la filière cacaoyère).",
+          "Phasage du marché couvert sur 2 exercices, cofinancement FPCL et partenaires régionaux.",
+          "Respect du plafond de 40 % de dépenses de personnel.",
+          "Digitalisation : tableau de suivi budgétaire en ligne actualisé mensuellement."
+        ],
+        "grid": [
+          {
+            "critere": "Conformité réglementaire",
+            "points": 7,
+            "description": "Respect de l'équilibre budgétaire entre les deux sections."
+          },
+          {
+            "critere": "Réalisme local",
+            "points": 7,
+            "description": "Cohérence des coûts avec l'économie cacaoyère et agricole."
+          },
+          {
+            "critere": "Digitalisation",
+            "points": 6,
+            "description": "Outil de suivi budgétaire en ligne."
+          }
+        ]
+      },
+      "quiz": [
+        {
+          "q": "La règle de plafonnement des dépenses de personnel est fixée à :",
+          "options": [
+            "20 % maximum",
+            "40 % maximum",
+            "60 % maximum",
+            "Aucun plafond"
+          ],
+          "correct": "B",
+          "explain": "Plafond de 40 % maximum pour préserver l'autofinancement."
+        },
+        {
+          "q": "Le Budget Primitif doit être voté :",
+          "options": [
+            "À tout moment",
+            "Avant le début de l'exercice concerné",
+            "Après exécution de l'exercice précédent",
+            "Par le Préfet"
+          ],
+          "correct": "B",
+          "explain": "Vote avant le début de l'exercice N, après le débat d'orientation."
+        },
+        {
+          "q": "La Section d'Investissement finance en priorité :",
+          "options": [
+            "Les salaires",
+            "Les infrastructures durables",
+            "Les fournitures courantes",
+            "Les frais de mission"
+          ],
+          "correct": "B",
+          "explain": "Dépenses durables créatrices de patrimoine communal."
+        },
+        {
+          "q": "Qui exécute comptablement le budget aux côtés du Maire ?",
+          "options": [
+            "Le Préfet",
+            "Le Receveur Municipal",
+            "Le Conseil Régional",
+            "Un conseiller désigné"
+          ],
+          "correct": "B",
+          "explain": "Le Receveur Municipal est le comptable public de la commune."
+        },
+        {
+          "q": "L'équilibre budgétaire réel signifie que :",
+          "options": [
+            "Recettes > dépenses de fonctionnement",
+            "Chaque section est votée recettes = dépenses",
+            "Seul l'investissement doit être équilibré",
+            "L'équilibre n'est exigé qu'en fin d'exercice"
+          ],
+          "correct": "B",
+          "explain": "Équilibre réel section par section."
+        }
+      ]
+    },
+    {
+      "id": "s3",
+      "order": 3,
+      "title": "Fiscalité Locale et Mobilisation des Ressources Propres",
+      "objectives": "Identifier les taxes locales ivoiriennes et concevoir une stratégie numérique pour optimiser les recettes propres, en contexte rural.",
+      "capsules": [
+        {
+          "id": "3.1",
+          "title": "Les ressources fiscales des communes",
+          "content": "Impôts d'État rétrocédés (patente, impôt foncier) vs taxes communales directes (voirie, publicité, droits divers), instituées par délibération du Conseil Municipal."
+        },
+        {
+          "id": "3.2",
+          "title": "Taxes de marché, de stationnement et d'occupation du domaine public",
+          "content": "Source de recettes propres importante en zone rurale, mais défis structurels : dispersion, absence de tickets standardisés, insécurité du transport d'espèces."
+        },
+        {
+          "id": "3.3",
+          "title": "Le rôle du Receveur Municipal",
+          "content": "Comptable public chargé du recouvrement et du paiement, dans le respect strict de la séparation ordonnateur (Maire) / comptable (Receveur)."
+        },
+        {
+          "id": "3.4",
+          "title": "Focus Digital : le télépaiement des recettes",
+          "content": "Mobile Money et POS sécurisés réduisent la manipulation d'espèces, assurent la traçabilité, permettent un reversement quotidien au Receveur."
+        }
+      ],
+      "exercise": {
+        "title": "Plan de Modernisation Fiscale du Marché de Zikisso",
+        "statement": "Les collecteurs manuels de Zikisso font face à d'importantes déperditions de recettes sur le grand marché. Concevez un plan de déploiement d'une solution de paiement numérique par Mobile Money pour sécuriser les taxes municipales.",
+        "corrige": [
+          "Gouvernance conjointe Maire (taux) / Receveur (fonds), séparation ordonnateur/comptable respectée.",
+          "Phase pilote avec un opérateur Mobile Money local, ticket papier numéroté en secours.",
+          "QR code par étal, reversement quotidien automatique, rapprochement électronique.",
+          "Formation des collecteurs en agents de facilitation numérique."
+        ],
+        "grid": [
+          {
+            "critere": "Conformité réglementaire",
+            "points": 6,
+            "description": "Respect des prérogatives Maire / Receveur Municipal."
+          },
+          {
+            "critere": "Réalisme local",
+            "points": 7,
+            "description": "Adaptation aux commerçants et artisans locaux."
+          },
+          {
+            "critere": "Digitalisation",
+            "points": 7,
+            "description": "Architecture technique du télépaiement."
+          }
+        ]
+      },
+      "quiz": [
+        {
+          "q": "La patente est un exemple de :",
+          "options": [
+            "Taxe communale directe",
+            "Impôt d'État rétrocédé, quote-part reversée à la commune",
+            "Don volontaire",
+            "Taxe supprimée depuis 2012"
+          ],
+          "correct": "B",
+          "explain": "La patente relève de la fiscalité d'État rétrocédée."
+        },
+        {
+          "q": "Qui manie effectivement les fonds publics d'une commune ?",
+          "options": [
+            "Le Maire directement",
+            "Le Receveur Municipal",
+            "Le Président du Conseil Municipal",
+            "Le Préfet"
+          ],
+          "correct": "B",
+          "explain": "Séparation ordonnateur/comptable : le Receveur manie les fonds."
+        },
+        {
+          "q": "Le principal avantage du Mobile Money pour la collecte des taxes est :",
+          "options": [
+            "Suppression de tout contrôle",
+            "Traçabilité et réduction de la manipulation d'espèces",
+            "Gratuité systématique",
+            "Absence de besoin de réseau"
+          ],
+          "correct": "B",
+          "explain": "Traçabilité automatique de chaque transaction."
+        },
+        {
+          "q": "Les taxes de stationnement sont fixées :",
+          "options": [
+            "Par décret présidentiel",
+            "Par délibération du Conseil Municipal",
+            "Par le Receveur seul",
+            "Elles n'existent pas au niveau communal"
+          ],
+          "correct": "B",
+          "explain": "Taxe communale directe fixée par délibération, dans le cadre légal."
+        },
+        {
+          "q": "En zone à réseau instable, un plan de modernisation fiscale prudent doit :",
+          "options": [
+            "Abandonner la digitalisation",
+            "Prévoir un dispositif de secours en ticket papier",
+            "Attendre la 5G",
+            "Supprimer la collecte sur cette zone"
+          ],
+          "correct": "B",
+          "explain": "Mode dégradé fiable en complément du paiement numérique."
+        }
+      ]
+    },
+    {
+      "id": "s4",
+      "order": 4,
+      "title": "Modernisation des Services Publics et Administration Numérique",
+      "objectives": "Mettre en œuvre la dématérialisation des actes d'état civil et piloter la transition numérique du service aux usagers.",
+      "capsules": [
+        {
+          "id": "4.1",
+          "title": "Les services publics de proximité",
+          "content": "État civil, hygiène/salubrité, gestion des déchets : principal point de contact entre administration communale et citoyens, notamment dans les villages éloignés."
+        },
+        {
+          "id": "4.2",
+          "title": "Le cadre légal de la modernisation de l'état civil",
+          "content": "ONECI chargé de la fiabilisation/informatisation des registres. Délai légal de déclaration de naissance ; au-delà, jugement supplétif requis."
+        },
+        {
+          "id": "4.3",
+          "title": "La conduite du changement auprès des agents municipaux",
+          "content": "Résistances légitimes des agents ; réussite via association précoce, formation progressive, communication claire, accompagnement de proximité."
+        },
+        {
+          "id": "4.4",
+          "title": "Focus Digital : le guichet unique virtuel e-Commune",
+          "content": "Pré-demande en ligne d'extraits de naissance et légalisations, avec interconnexion à terme au registre national ONECI."
+        }
+      ],
+      "exercise": {
+        "title": "L'État Civil Numérique à Zikisso",
+        "statement": "Les populations des villages reculés de Zikisso parcourent de longues distances pour obtenir un extrait d'acte de naissance. Rédigez le cahier des charges d'une caravane d'état civil connectée et d'une plateforme de pré-demande en ligne.",
+        "corrige": [
+          "Respect du délai légal de déclaration, orientation vers jugement supplétif si hors délai.",
+          "Interconnexion avec le registre national ONECI dès rétablissement de connexion.",
+          "Mode déconnecté (saisie hors ligne, synchronisation différée), tournée calée sur jours de marché.",
+          "Double canal web simplifié + USSD pour l'inclusion."
+        ],
+        "grid": [
+          {
+            "critere": "Conformité réglementaire",
+            "points": 7,
+            "description": "Délais de déclaration et interconnexion registre national."
+          },
+          {
+            "critere": "Réalisme local",
+            "points": 6,
+            "description": "Couverture réseau défaillante dans les hameaux."
+          },
+          {
+            "critere": "Digitalisation",
+            "points": 7,
+            "description": "Ergonomie USSD / Web mobile simplifiée."
+          }
+        ]
+      },
+      "quiz": [
+        {
+          "q": "L'ONECI est chargé, au niveau national, de :",
+          "options": [
+            "La collecte des taxes de marché",
+            "La fiabilisation et l'informatisation des registres d'état civil",
+            "Le contrôle de légalité",
+            "La gestion du Plan Triennal"
+          ],
+          "correct": "B",
+          "explain": "Modernisation et fiabilisation des registres d'état civil."
+        },
+        {
+          "q": "Passé le délai légal de déclaration de naissance, il faut :",
+          "options": [
+            "Une simple déclaration orale",
+            "Un jugement supplétif d'acte de naissance",
+            "Une amende au marché",
+            "Aucune démarche"
+          ],
+          "correct": "B",
+          "explain": "Seul un jugement supplétif permet la régularisation."
+        },
+        {
+          "q": "En zone à réseau défaillant, la solution la plus inclusive est :",
+          "options": [
+            "Une application smartphone haut de gamme",
+            "Un service USSD",
+            "Un courrier postal international",
+            "Aucune solution numérique"
+          ],
+          "correct": "B",
+          "explain": "USSD fonctionne sans connexion data."
+        },
+        {
+          "q": "Une conduite du changement réussie repose avant tout sur :",
+          "options": [
+            "Une bascule imposée",
+            "Association précoce, formation progressive, accompagnement",
+            "Suppression immédiate des postes",
+            "Absence de communication"
+          ],
+          "correct": "B",
+          "explain": "Implication en amont et accompagnement progressif."
+        },
+        {
+          "q": "Les registres d'état civil doivent être conservés :",
+          "options": [
+            "Uniquement numérique",
+            "Sous forme physique et numérique combinées",
+            "Uniquement papier",
+            "Aucune règle"
+          ],
+          "correct": "B",
+          "explain": "Conservation physique et sauvegarde numérique combinées."
+        }
+      ]
+    }
+  ],
+  "moduleBonus": {
+    "id": "bonus",
+    "title": "Redevabilité et Participation Citoyenne",
+    "objectives": "Comprendre les mécanismes qui permettent aux citoyens de Zikisso de participer à la décision communale et d'en contrôler l'exécution, en complément des organes élus.",
+    "capsules": [
+      {
+        "id": "B.1",
+        "title": "Le budget participatif",
+        "content": "Soumettre une part de l'investissement à la priorisation directe des habitants (assemblées, vote simple), sans remettre en cause la compétence de décision finale du Conseil Municipal."
+      },
+      {
+        "id": "B.2",
+        "title": "Les comités de veille citoyenne",
+        "content": "Groupe d'habitants suivant l'exécution d'un projet voté et alertant le Conseil Municipal ; rôle d'observation, non de décision."
+      },
+      {
+        "id": "B.3",
+        "title": "Le droit d'accès à l'information communale",
+        "content": "Budget voté et Compte Administratif accessibles aux citoyens ; condition du bon fonctionnement du budget participatif et de la veille citoyenne."
+      },
+      {
+        "id": "B.4",
+        "title": "Focus Digital : plateformes de transparence citoyenne",
+        "content": "Version publique simplifiée du tableau de suivi budgétaire + canal de signalement citoyen SMS/USSD."
+      }
+    ],
+    "exercise": {
+      "title": "Le Budget Participatif du Marché Couvert",
+      "statement": "Une part du financement du marché couvert de Zikisso reste à affecter. Le Maire souhaite la soumettre à un dispositif de budget participatif associé à un comité de veille citoyenne. Concevez ce dispositif en une page.",
+      "corrige": [
+        "Dispositif consultatif, décision finale au Conseil Municipal.",
+        "Assemblée un jour de marché, 2-3 options déjà chiffrées, comité de veille mixte (commerçants, jeunes, femmes).",
+        "Affichage du résultat et de l'avancement sur le tableau public, canal USSD de signalement."
+      ],
+      "grid": [
+        {
+          "critere": "Faisabilité institutionnelle",
+          "points": 7,
+          "description": "Compétence de décision finale du Conseil Municipal."
+        },
+        {
+          "critere": "Réalisme local",
+          "points": 7,
+          "description": "Adaptation au contexte du marché de Zikisso."
+        },
+        {
+          "critere": "Digitalisation & transparence",
+          "points": 6,
+          "description": "Publicité du résultat et canal de signalement."
+        }
+      ]
+    },
+    "quiz": [
+      {
+        "q": "Le budget participatif a pour effet de :",
+        "options": [
+          "Retirer au Conseil Municipal sa compétence de vote",
+          "Faire prioriser une part de l'investissement, décision finale au Conseil Municipal",
+          "Remplacer le Receveur Municipal",
+          "Supprimer le contrôle de légalité"
+        ],
+        "correct": "B",
+        "explain": "Mécanisme consultatif, non substitutif."
+      },
+      {
+        "q": "Un comité de veille citoyenne a pour rôle principal de :",
+        "options": [
+          "Gérer les fonds",
+          "Observer et alerter le Conseil Municipal",
+          "Remplacer le Maire",
+          "Fixer les taux de taxes"
+        ],
+        "correct": "B",
+        "explain": "Rôle d'observation et d'alerte uniquement."
+      },
+      {
+        "q": "Le droit d'accès à l'information communale est une condition préalable à :",
+        "options": [
+          "La suppression de la fiscalité",
+          "Le fonctionnement du budget participatif et de la veille citoyenne",
+          "La suppression du contrôle de légalité",
+          "Le remplacement du Plan Triennal"
+        ],
+        "correct": "B",
+        "explain": "On ne peut suivre ce qu'on ne peut consulter."
+      },
+      {
+        "q": "L'USSD, dans le contexte de Zikisso, présente l'avantage de :",
+        "options": [
+          "Nécessiter un smartphone récent",
+          "Être accessible sans connexion data",
+          "Remplacer le comité de veille",
+          "Être réservé aux agents"
+        ],
+        "correct": "B",
+        "explain": "Accessible depuis un téléphone basique."
+      },
+      {
+        "q": "Le tableau de suivi budgétaire public diffère du tableau interne en ce qu'il :",
+        "options": [
+          "Contient les mêmes données sensibles",
+          "Est une version simplifiée sans données sensibles",
+          "N'existe pas",
+          "Remplace le Compte Administratif"
+        ],
+        "correct": "B",
+        "explain": "Déclinaison publique simplifiée."
+      }
+    ]
+  },
+  "examFinal": {
+    "id": "exam",
+    "title": "Examen Final Général — Zikisso, bilan de mi-mandat",
+    "intro": "Vérifie la capacité à mobiliser ensemble les notions institutionnelles, budgétaires, fiscales et numériques. Compte pour la certification globale.",
+    "qcm": [
+      {
+        "q": "Une délibération du Conseil Municipal de Zikisso devient exécutoire :",
+        "options": [
+          "Dès son vote",
+          "Après transmission au Préfet et expiration du délai de contrôle sans observation",
+          "Après validation du Conseil Régional",
+          "Après publication au Journal Officiel"
+        ],
+        "correct": "B",
+        "explain": "Contrôle de légalité du Préfet dans un délai réglementaire."
+      },
+      {
+        "q": "Le Maire agit comme agent de l'État lorsqu'il :",
+        "options": [
+          "Vote le budget primitif",
+          "Signe un acte d'état civil",
+          "Négocie un emprunt",
+          "Préside la Municipalité"
+        ],
+        "correct": "B",
+        "explain": "État civil = attribution exercée au nom de l'État."
+      },
+      {
+        "q": "Un Plan Triennal mal arbitré contredit surtout :",
+        "options": [
+          "La séparation ordonnateur/comptable",
+          "Le principe de programmation réaliste",
+          "Le contrôle de légalité",
+          "Le cadre légal de l'état civil"
+        ],
+        "correct": "B",
+        "explain": "Hiérarchisation selon coût réel et ressources mobilisables."
+      },
+      {
+        "q": "Si la section de fonctionnement est votée en déficit, cela viole :",
+        "options": [
+          "Le plafond de 40 %",
+          "Le principe d'équilibre budgétaire réel",
+          "La libre administration",
+          "Le calendrier ONECI"
+        ],
+        "correct": "B",
+        "explain": "Équilibre réel imposé section par section."
+      },
+      {
+        "q": "Le financement des pistes agricoles relève de :",
+        "options": [
+          "La section de fonctionnement",
+          "La section d'investissement",
+          "Une taxe directe uniquement",
+          "Une charge de l'État seul"
+        ],
+        "correct": "B",
+        "explain": "Infrastructure durable = dépense d'investissement."
+      },
+      {
+        "q": "Patente et taxes de marché se distinguent en ce que :",
+        "options": [
+          "Les deux sont libres",
+          "La patente est un impôt d'État rétrocédé, la taxe de marché une ressource propre",
+          "La patente est perçue par le Préfet",
+          "Elles sont identiques"
+        ],
+        "correct": "B",
+        "explain": "Fiscalité rétrocédée vs fiscalité propre."
+      },
+      {
+        "q": "Un collecteur qui n'encaisse pas met en cause en premier lieu :",
+        "options": [
+          "Le contrôle de légalité",
+          "La traçabilité de la collecte",
+          "Le Plan Triennal",
+          "L'ONECI"
+        ],
+        "correct": "B",
+        "explain": "Absence de traçabilité en amont du Receveur."
+      },
+      {
+        "q": "Le Receveur Municipal ne peut payer une dépense que si :",
+        "options": [
+          "Il en décide seul",
+          "Elle a été ordonnancée par le Maire",
+          "Le Conseil Régional l'approuve",
+          "Le Préfet l'autorise oralement"
+        ],
+        "correct": "B",
+        "explain": "Séparation ordonnateur/comptable."
+      },
+      {
+        "q": "Une naissance déclarée hors délai nécessite :",
+        "options": [
+          "Une amende",
+          "Un jugement supplétif",
+          "Le prochain recensement",
+          "S'adresser directement à l'ONECI"
+        ],
+        "correct": "B",
+        "explain": "Seul un jugement supplétif régularise l'acte."
+      },
+      {
+        "q": "Guichet virtuel et caravane connectée répondent à un même objectif de :",
+        "options": [
+          "Suppression du contrôle de légalité",
+          "Rapprochement du service d'état civil des usagers",
+          "Remplacement du Receveur",
+          "Suppression de la fiscalité directe"
+        ],
+        "correct": "B",
+        "explain": "Réduire la distance usager/service."
+      },
+      {
+        "q": "La contrainte technique la plus citée dans un projet numérique communal à Zikisso est :",
+        "options": [
+          "Le coût des licences",
+          "La couverture réseau inégale",
+          "L'absence de cadre légal",
+          "Le refus des usagers"
+        ],
+        "correct": "B",
+        "explain": "Conditionne les solutions hybrides (USSD, hors ligne)."
+      },
+      {
+        "q": "Ce qui relie le plus directement les quatre semaines du MOOC est :",
+        "options": [
+          "Chaque semaine = un pays différent",
+          "Chaque semaine = une dimension d'une même chaîne de décision communale",
+          "Aucun lien",
+          "Seule la semaine 4 concerne Zikisso"
+        ],
+        "correct": "B",
+        "explain": "Institutionnel, budget, fiscal, numérique = maillons liés."
+      }
+    ],
+    "caseStudy": {
+      "title": "Le Guichet Unique de Zikisso",
+      "statement": "À mi-mandat, le Maire de Zikisso souhaite lancer un « Guichet Unique Communal » regroupant état civil, paiement des taxes et suivi public du Plan Triennal. Rédigez, en 3 pages, la note de cadrage présentée au Conseil Municipal avant délibération.",
+      "corrige": [
+        "Institutionnel : circuit de délibération et tutelle du Préfet de Lakota, sans modification des compétences Commune/Région.",
+        "Budgétaire : coût en investissement, phasage sur le Plan Triennal, cofinancement recherché.",
+        "Fiscalité : télépaiement intégré, reversement au Receveur, circuit de secours.",
+        "Numérique : interconnexion ONECI, double canal web/USSD, conduite du changement des agents."
+      ],
+      "grid": [
+        {
+          "critere": "Cadre institutionnel",
+          "points": 5,
+          "description": "Circuit de délibération et de tutelle respecté."
+        },
+        {
+          "critere": "Budget & Plan Triennal",
+          "points": 5,
+          "description": "Cohérence budgétaire et phasage."
+        },
+        {
+          "critere": "Fiscalité & sécurisation des recettes",
+          "points": 5,
+          "description": "Télépaiement et circuit de secours."
+        },
+        {
+          "critere": "Digitalisation & inclusion",
+          "points": 5,
+          "description": "Interconnexion ONECI, accessibilité, conduite du changement."
+        }
+      ]
+    },
+    "bareme": "Note d'examen = (note QCM /20 × 40 %) + (note étude de cas /20 × 60 %). Seuil de réussite : 12/20."
+  },
+  "annexes": {
+    "toolboxA": {
+      "title": "Boîte à outils du parcours",
+      "items": [
+        {
+          "id": "A.1",
+          "title": "Trame de délibération municipale",
+          "fields": [
+            "Intitulé",
+            "Visas des textes",
+            "Exposé des motifs",
+            "Article 1 (objet)",
+            "Article 2 (modalités et calendrier)",
+            "Article 3 (imputation budgétaire)",
+            "Transmission tutelle",
+            "Date, signature, émargement"
+          ]
+        },
+        {
+          "id": "A.2",
+          "title": "Grille de suivi budgétaire simplifiée",
+          "columns": [
+            "Ligne budgétaire",
+            "Prévu",
+            "Engagé",
+            "Disponible",
+            "Observations"
+          ]
+        },
+        {
+          "id": "A.3",
+          "title": "Modèle de cahier des charges d'un projet numérique communal",
+          "fields": [
+            "Contexte et besoin",
+            "Objectifs mesurables",
+            "Public cible et contraintes réseau",
+            "Architecture fonctionnelle (web/USSD/guichet physique)",
+            "Conduite du changement",
+            "Budget et phasage",
+            "Indicateurs de suivi"
+          ]
+        }
+      ]
+    },
+    "logbookB": {
+      "title": "Carnet de bord de l'apprenant",
+      "fieldsPerModule": [
+        "Ce que je retiens",
+        "Ce que j'appliquerais dans ma commune",
+        "Une question qui reste ouverte pour moi"
+      ],
+      "modules": [
+        "Semaine 1",
+        "Semaine 2",
+        "Semaine 3",
+        "Semaine 4",
+        "Module Bonus"
+      ]
+    },
+    "glossaryC": [
+      [
+        "Libre administration",
+        "Principe selon lequel les collectivités gèrent leurs affaires par des conseils élus, sous contrôle de légalité."
+      ],
+      [
+        "Tutelle administrative",
+        "Contrôle du représentant de l'État sur les actes locaux, limité à un contrôle de légalité a posteriori."
+      ],
+      [
+        "Contrôle de légalité",
+        "Vérification de la conformité d'un acte local à la loi."
+      ],
+      [
+        "DGDDL",
+        "Direction Générale de la Décentralisation et du Développement Local."
+      ],
+      [
+        "ONECI",
+        "Office National de l'État Civil et de l'Identification."
+      ],
+      [
+        "Ordonnateur",
+        "Autorité qui décide la dépense (le Maire), sans manier les fonds."
+      ],
+      [
+        "Receveur Municipal",
+        "Comptable public chargé du maniement effectif des fonds communaux."
+      ],
+      [
+        "Séparation ordonnateur/comptable",
+        "Principe de contrôle mutuel entre décision et maniement des fonds."
+      ],
+      [
+        "Plan Triennal",
+        "Programmation glissante des investissements sur trois exercices."
+      ],
+      [
+        "Budget Primitif",
+        "Budget prévisionnel voté avant le début de l'exercice."
+      ],
+      [
+        "Compte Administratif",
+        "Document retraçant l'exécution réelle du budget."
+      ],
+      [
+        "Section de Fonctionnement",
+        "Dépenses courantes, équilibre réel obligatoire."
+      ],
+      [
+        "Section d'Investissement",
+        "Dépenses durables, financées par subventions/emprunts/péréquation."
+      ],
+      [
+        "FPCL",
+        "Fonds de Péréquation des Collectivités Locales."
+      ],
+      [
+        "Patente",
+        "Impôt d'État rétrocédé dû par commerçants et artisans."
+      ],
+      [
+        "Taxe communale directe",
+        "Taxe instituée par délibération du Conseil Municipal."
+      ],
+      [
+        "Mobile Money / télépaiement",
+        "Paiement électronique sécurisant la collecte des recettes."
+      ],
+      [
+        "USSD",
+        "Protocole accessible sans connexion internet depuis un téléphone basique."
+      ],
+      [
+        "Guichet unique virtuel (e-Commune)",
+        "Plateforme en ligne centralisant les démarches communales."
+      ],
+      [
+        "Jugement supplétif",
+        "Décision judiciaire régularisant un acte de naissance hors délai."
+      ],
+      [
+        "Budget participatif",
+        "Priorisation citoyenne consultative d'une part de l'investissement."
+      ],
+      [
+        "Comité de veille citoyenne",
+        "Groupe d'habitants observant l'exécution d'un projet communal."
+      ]
+    ],
+    "charter": {
+      "title": "Charte d'Engagement Civique de Zikisso",
+      "commitments": [
+        "Faire connaître les principes de transparence budgétaire et de contrôle citoyen.",
+        "Contribuer à une veille citoyenne bienveillante et constructive.",
+        "Promouvoir un usage responsable et inclusif des outils numériques.",
+        "Partager les connaissances acquises, en particulier avec les plus jeunes."
+      ]
+    }
+  },
+  "bridge": {
+    "title": "Devenir Ambassadeur Zikisso",
+    "text": "Passerelle vers Connexions Jeunes Afrique Monde : relayer localement les principes du MOOC (transparence, veille citoyenne, accès à l'information) et faire remonter les cas concrets rencontrés sur le terrain."
+  },
+  "productionRecommendations": [
+    "Version audio courte (5-7 min) par capsule, partageable hors ligne.",
+    "Résumé d'une page en langue(s) locale(s) par semaine.",
+    "Version imprimable simplifiée de la Boîte à outils et du Glossaire."
+  ],
+  "ectOpening": {
+    "title": "Zikisso et l'Écosophie du Communautarisme Territorial",
+    "text": "Le cas Zikisso illustre les principes de l'ECT : le territoire et la communauté comme un même sujet politique, à administrer et faire vivre ensemble.",
+    "closing": "Afin que demain ne meure jamais."
+  },
+  "certification": {
+    "weighting": [
+      {
+        "item": "4 exercices fil rouge",
+        "coef": 3
+      },
+      {
+        "item": "4 quiz hebdomadaires",
+        "coef": 1,
+        "threshold": "3/5"
+      },
+      {
+        "item": "Module Bonus citoyen",
+        "coef": 2
+      },
+      {
+        "item": "Examen Final Général",
+        "coef": 4,
+        "threshold": "12/20"
+      }
+    ],
+    "passThreshold": 12,
+    "participationThreshold": 10
+  }
+}

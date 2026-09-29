@@ -1,0 +1,6 @@
+{
+  "name": "MOOC Zikisso",
+  "description": "Plateforme web de formation en ligne — Gestion des Collectivités Locales & Transformation Digitale à Zikisso.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

@@ -1,0 +1,33 @@
+@import "tailwindcss";
+
+@theme {
+  --color-zik-green: #1A6B3C;
+  --color-zik-green-dark: #14532D;
+  --color-zik-green-light: #22864C;
+  --color-zik-green-bg: #F0F7F2;
+
+  --color-zik-navy: #1F4E79;
+  --color-zik-navy-dark: #153755;
+  --color-zik-navy-light: #2A689F;
+  --color-zik-navy-bg: #F0F5FA;
+
+  --color-zik-orange: #C55A11;
+  --color-zik-orange-dark: #A3480C;
+  --color-zik-orange-light: #DE6B1E;
+  --color-zik-orange-bg: #FDF4ED;
+
+  --font-sans: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+  --font-serif: Georgia, Cambria, "Times New Roman", Times, serif;
+}
+
+body {
+  font-family: var(--font-sans);
+  color: #1e293b;
+  background-color: #f8fafc;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Citations institutionnelles */
+blockquote, .quote-serif {
+  font-family: var(--font-serif);
+}
