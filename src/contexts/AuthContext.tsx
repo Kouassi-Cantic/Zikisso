@@ -3,6 +3,8 @@ import {
   type User,
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
+  signInWithPopup,
+  GoogleAuthProvider,
   signOut,
   onAuthStateChanged,
 } from 'firebase/auth';
@@ -24,6 +26,7 @@ interface AuthContextType {
     region?: string
   ) => Promise<void>;
   login: (email: string, motDePasse: string) => Promise<void>;
+  loginWithGoogle: () => Promise<void>;
   logout: () => Promise<void>;
   updateProfileTerritory: (commune: string, region: string) => Promise<void>;
 }
@@ -206,6 +209,63 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     }
   };
 
+  const loginWithGoogle = async () => {
+    if (isFirebaseConfigured) {
+      const provider = new GoogleAuthProvider();
+      // Demande de sélection de compte si plusieurs comptes Google sont connectés
+      provider.setCustomParameters({ prompt: 'select_account' });
+      const result = await signInWithPopup(auth, provider);
+      const user = result.user;
+
+      // Vérification / création automatique du document profil utilisateur dans Firestore
+      const userDocRef = doc(db, 'users', user.uid);
+      const userSnap = await getDoc(userDocRef);
+
+      if (userSnap.exists()) {
+        const data = userSnap.data() as UserData;
+        setUserData({
+          ...data,
+          commune: data.commune || 'Zikisso',
+          region: data.region || 'Lôh-Djiboua',
+        });
+      } else {
+        // Premier accès via Google : création du profil apprenant par défaut
+        const newUserData: UserData = {
+          uid: user.uid,
+          nom: user.displayName || user.email?.split('@')[0] || 'Apprenant Google',
+          email: (user.email || '').toLowerCase(),
+          profil: 'Citoyen engagé',
+          role: 'apprenant',
+          commune: 'Zikisso',
+          region: 'Lôh-Djiboua',
+          createdAt: new Date().toISOString(),
+        };
+        await setDoc(userDocRef, {
+          ...newUserData,
+          createdAt: serverTimestamp(),
+        });
+        setUserData(newUserData);
+      }
+      setCurrentUser(user);
+    } else {
+      // Secours en mode simulation local
+      const mockUid = 'google_sim_' + Date.now();
+      const mockEmail = 'apprenant.google@domaine.ci';
+      const sessionData: UserData = {
+        uid: mockUid,
+        nom: 'Apprenant Google (Simulé)',
+        email: mockEmail,
+        profil: 'Citoyen engagé',
+        role: 'apprenant',
+        commune: 'Zikisso',
+        region: 'Lôh-Djiboua',
+      };
+      localStorage.setItem(LOCAL_STORAGE_SESSION_KEY, JSON.stringify(sessionData));
+      setCurrentUser({ uid: mockUid, email: mockEmail } as User);
+      setUserData(sessionData);
+    }
+  };
+
   const updateProfileTerritory = async (commune: string, region: string) => {
     if (!currentUser || !userData) return;
     const cleanCommune = commune.trim() || 'Zikisso';
@@ -260,6 +320,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         isFirebaseConfigured,
         signup,
         login,
+        loginWithGoogle,
         logout,
         updateProfileTerritory,
       }}

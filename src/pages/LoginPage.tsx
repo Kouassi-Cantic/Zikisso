@@ -4,13 +4,14 @@ import { useAuth } from '../contexts/AuthContext';
 import { LogIn, AlertCircle, Mail, Lock, Loader2, Info } from 'lucide-react';
 
 export const LoginPage: React.FC = () => {
-  const { login } = useAuth();
+  const { login, loginWithGoogle } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
 
   const [email, setEmail] = useState('');
   const [motDePasse, setMotDePasse] = useState('');
   const [loading, setLoading] = useState(false);
+  const [googleLoading, setGoogleLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   // Redirection vers la page demandée ou vers l'accueil
@@ -53,6 +54,32 @@ export const LoginPage: React.FC = () => {
     }
   };
 
+  const handleGoogleSignIn = async () => {
+    setErrorMessage(null);
+    try {
+      setGoogleLoading(true);
+      await loginWithGoogle();
+      navigate(from, { replace: true });
+    } catch (err: any) {
+      console.error('Erreur connexion Google:', err);
+      let message = 'Impossible de se connecter avec Google.';
+      if (err?.code === 'auth/popup-closed-by-user') {
+        message = 'La fenêtre de connexion Google a été fermée avant la fin de l’authentification.';
+      } else if (err?.code === 'auth/popup-blocked') {
+        message = 'Le pop-up de connexion a été bloqué par votre navigateur. Veuillez autoriser les fenêtres pop-up.';
+      } else if (err?.code === 'auth/cancelled-popup-request') {
+        message = 'Opération de connexion annulée.';
+      } else if (err?.code === 'auth/account-exists-with-different-credential') {
+        message = 'Un compte existe déjà avec cette adresse email sous un autre mode de connexion.';
+      } else if (err?.message) {
+        message = err.message;
+      }
+      setErrorMessage(message);
+    } finally {
+      setGoogleLoading(false);
+    }
+  };
+
   return (
     <div className="min-h-[80vh] flex flex-col justify-center items-center py-6 px-4 sm:px-6">
       <div className="w-full max-w-md bg-white border border-slate-200 shadow-sm rounded-lg p-6 sm:p-8">
@@ -92,7 +119,59 @@ export const LoginPage: React.FC = () => {
           </div>
         )}
 
-        {/* Formulaire de connexion */}
+        {/* Connexion rapide avec Google */}
+        <div className="mb-5">
+          <button
+            type="button"
+            onClick={handleGoogleSignIn}
+            disabled={loading || googleLoading}
+            className="w-full flex items-center justify-center space-x-3 py-2.5 px-4 bg-white hover:bg-slate-50 text-slate-700 text-sm font-semibold rounded-md border border-slate-300 shadow-2xs transition focus:outline-none focus:ring-2 focus:ring-[#1F4E79] focus:ring-offset-1 disabled:opacity-60"
+          >
+            {googleLoading ? (
+              <>
+                <Loader2 className="w-4 h-4 animate-spin text-[#1F4E79]" />
+                <span>Connexion à Google en cours...</span>
+              </>
+            ) : (
+              <>
+                {/* Logo officiel Google multi-couleurs */}
+                <svg className="w-4 h-4" viewBox="0 0 24 24">
+                  <path
+                    fill="#4285F4"
+                    d="M23.745 12.27c0-.7-.06-1.4-.19-2.07H12v4.51h6.6c-.29 1.52-1.14 2.8-2.4 3.66v3.05h3.88c2.27-2.09 3.665-5.17 3.665-9.15z"
+                  />
+                  <path
+                    fill="#34A853"
+                    d="M12 24c3.24 0 5.95-1.08 7.93-2.91l-3.88-3.05c-1.08.72-2.45 1.16-4.05 1.16-3.12 0-5.77-2.1-6.72-4.93H1.26v3.15C3.27 21.36 7.35 24 12 24z"
+                  />
+                  <path
+                    fill="#FBBC05"
+                    d="M5.28 14.27c-.25-.72-.38-1.49-.38-2.27s.13-1.55.38-2.27V6.58H1.26C.46 8.16 0 9.98 0 12s.46 3.84 1.26 5.42l4.02-3.15z"
+                  />
+                  <path
+                    fill="#EA4335"
+                    d="M12 4.75c1.77 0 3.35.61 4.6 1.8l3.42-3.42C17.95 1.19 15.24 0 12 0 7.35 0 3.27 2.64 1.26 6.58l4.02 3.15c.95-2.83 3.6-4.98 6.72-4.98z"
+                  />
+                </svg>
+                <span>Continuer avec Google</span>
+              </>
+            )}
+          </button>
+
+          {/* Séparateur élégant "OU" */}
+          <div className="relative my-5">
+            <div className="absolute inset-0 flex items-center">
+              <div className="w-full border-t border-slate-200"></div>
+            </div>
+            <div className="relative flex justify-center text-xs">
+              <span className="px-3 bg-white text-slate-500 uppercase tracking-wider font-semibold">
+                ou avec email et mot de passe
+              </span>
+            </div>
+          </div>
+        </div>
+
+        {/* Formulaire de connexion Email / Mot de passe */}
         <form onSubmit={handleSubmit} className="space-y-4">
           
           {/* Email */}
@@ -112,7 +191,7 @@ export const LoginPage: React.FC = () => {
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="votre.email@domaine.ci"
                 className="w-full pl-9 pr-3 py-2 text-sm border border-slate-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#1F4E79] focus:border-transparent transition"
-                disabled={loading}
+                disabled={loading || googleLoading}
               />
             </div>
           </div>
@@ -134,15 +213,15 @@ export const LoginPage: React.FC = () => {
                 onChange={(e) => setMotDePasse(e.target.value)}
                 placeholder="••••••••"
                 className="w-full pl-9 pr-3 py-2 text-sm border border-slate-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#1F4E79] focus:border-transparent transition"
-                disabled={loading}
+                disabled={loading || googleLoading}
               />
             </div>
           </div>
 
-          {/* Bouton de connexion : Marine #1F4E79 ou Orange #C55A11 */}
+          {/* Bouton de connexion : Marine #1F4E79 */}
           <button
             type="submit"
-            disabled={loading}
+            disabled={loading || googleLoading}
             className="w-full mt-4 flex items-center justify-center space-x-2 py-2.5 px-4 bg-[#1F4E79] hover:bg-[#153755] text-white text-sm font-semibold rounded-md shadow transition focus:outline-none focus:ring-2 focus:ring-[#1F4E79] focus:ring-offset-2 disabled:opacity-60"
           >
             {loading ? (
@@ -151,7 +230,7 @@ export const LoginPage: React.FC = () => {
                 <span>Vérification des identifiants...</span>
               </>
             ) : (
-              <span>Se connecter</span>
+              <span>Se connecter par Email</span>
             )}
           </button>
         </form>
@@ -173,3 +252,4 @@ export const LoginPage: React.FC = () => {
     </div>
   );
 };
+
