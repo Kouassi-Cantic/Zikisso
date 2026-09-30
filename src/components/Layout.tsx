@@ -1,7 +1,10 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
+import { useTheme } from '../contexts/ThemeContext';
+import { ThemeSelector } from './ThemeSelector';
 import { LogOut, User, Menu, X, BookOpen, ShieldCheck, Home, ShieldAlert, Award, Files } from 'lucide-react';
+import elephantsBgUrl from '../assets/images/elephants_cote_ivoire_savane_1790771623677.jpg';
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -9,6 +12,7 @@ interface LayoutProps {
 
 export const Layout: React.FC<LayoutProps> = ({ children }) => {
   const { userData, currentUser, logout, isFirebaseConfigured } = useAuth();
+  const { currentTheme } = useTheme();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [isLoggingOut, setIsLoggingOut] = useState(false);
   const navigate = useNavigate();
@@ -25,11 +29,96 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
     }
   };
 
+  // Configuration du fond selon le thème sélectionné
+  const getBackgroundStyles = () => {
+    switch (currentTheme) {
+      case 'elephants':
+        return {
+          wrapperClass: 'bg-[#FAF8F5]',
+          bgOverlay: (
+            <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden">
+              {/* Image de fond : Troupeau d'éléphants emblème national */}
+              <div 
+                className="absolute inset-0 bg-cover bg-center bg-fixed opacity-[0.14] filter saturate-120"
+                style={{ backgroundImage: `url(${elephantsBgUrl})` }}
+              />
+              {/* Voile dégradé lumineux pour préserver une lisibilité et un contraste parfaits */}
+              <div className="absolute inset-0 bg-gradient-to-b from-[#FDFBF7]/90 via-[#FAF8F5]/85 to-[#F5F2EC]/95" />
+              {/* Halo doré savane */}
+              <div className="absolute top-0 right-1/4 w-96 h-96 bg-amber-200/20 rounded-full blur-3xl" />
+              <div className="absolute bottom-10 left-10 w-96 h-96 bg-emerald-200/15 rounded-full blur-3xl" />
+            </div>
+          ),
+        };
+      case 'republicain':
+        return {
+          wrapperClass: 'bg-[#FBFBFA]',
+          bgOverlay: (
+            <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden">
+              {/* Liseré tricolore républicain en haut de page */}
+              <div className="absolute top-0 left-0 right-0 h-1.5 flex">
+                <div className="w-1/3 bg-[#E06A1B]" />
+                <div className="w-1/3 bg-white" />
+                <div className="w-1/3 bg-[#1A6B3C]" />
+              </div>
+              {/* Halos subtils orange et vert */}
+              <div className="absolute top-10 left-10 w-[500px] h-[500px] bg-orange-100/35 rounded-full blur-3xl" />
+              <div className="absolute bottom-10 right-10 w-[500px] h-[500px] bg-emerald-100/30 rounded-full blur-3xl" />
+              {/* Trame filigrane républicaine */}
+              <div 
+                className="absolute inset-0 opacity-[0.035]"
+                style={{
+                  backgroundImage: `radial-gradient(#1F4E79 1px, transparent 1px)`,
+                  backgroundSize: '24px 24px'
+                }}
+              />
+            </div>
+          ),
+        };
+      case 'foret':
+        return {
+          wrapperClass: 'bg-[#F3F7F4]',
+          bgOverlay: (
+            <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden">
+              <div className="absolute top-0 left-0 right-0 h-1 bg-[#1A6B3C]" />
+              <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-emerald-100/40 rounded-full blur-3xl" />
+              <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-amber-100/30 rounded-full blur-3xl" />
+              <div 
+                className="absolute inset-0 opacity-[0.03]"
+                style={{
+                  backgroundImage: `radial-gradient(#1A6B3C 1.5px, transparent 1.5px)`,
+                  backgroundSize: '28px 28px'
+                }}
+              />
+            </div>
+          ),
+        };
+      case 'epure':
+      default:
+        return {
+          wrapperClass: 'bg-slate-50',
+          bgOverlay: null,
+        };
+    }
+  };
+
+  const { wrapperClass, bgOverlay } = getBackgroundStyles();
+
   return (
-    <div className="min-h-screen flex flex-col bg-slate-50 text-slate-800">
+    <div className={`min-h-screen flex flex-col ${wrapperClass} text-slate-800 relative transition-colors duration-300`}>
+      {/* Arrière-plan thématique */}
+      {bgOverlay}
+
+      {/* Liseré national ivoirien d'en-tête (Orange · Blanc · Vert) */}
+      <div className="h-1 w-full flex relative z-50">
+        <div className="flex-1 bg-[#E06A1B]" title="Orange national" />
+        <div className="w-16 sm:w-28 bg-white" title="Blanc national" />
+        <div className="flex-1 bg-[#1A6B3C]" title="Vert national" />
+      </div>
+
       {/* Bannière d'information si Firebase n'est pas encore lié au .env */}
       {!isFirebaseConfigured && (
-        <div className="bg-[#FDF4ED] border-b border-[#C55A11]/30 px-4 py-2 text-xs text-[#A3480C] text-center font-medium">
+        <div className="bg-[#FDF4ED] border-b border-[#C55A11]/30 px-4 py-2 text-xs text-[#A3480C] text-center font-medium relative z-50">
           Mode prévisualisation locale actif — Pour connecter Firebase en production, renseignez vos clés dans le fichier <code className="bg-white/80 px-1 py-0.5 rounded border border-[#C55A11]/20 font-mono">.env</code>.
         </div>
       )}
@@ -62,7 +151,7 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
             </div>
 
             {/* Menu Desktop */}
-            <div className="hidden md:flex items-center space-x-3 lg:space-x-4">
+            <div className="hidden md:flex items-center space-x-2.5 lg:space-x-3">
               {currentUser && (
                 <>
                   <Link
@@ -86,7 +175,7 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
                     className="inline-flex items-center space-x-1.5 text-xs sm:text-sm font-medium text-blue-100 hover:text-white px-2.5 py-1.5 rounded-md hover:bg-white/10 transition-colors"
                   >
                     <Files className="w-4 h-4 text-amber-300" />
-                    <span>Ressources &amp; Charte</span>
+                    <span>Ressources</span>
                   </Link>
 
                   <Link
@@ -134,18 +223,24 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
                   <button
                     onClick={handleLogout}
                     disabled={isLoggingOut}
-                    className="inline-flex items-center space-x-1.5 text-xs sm:text-sm font-medium text-white hover:text-red-200 transition-colors bg-white/10 hover:bg-red-900/40 px-3 py-1.5 rounded-md border border-white/20 disabled:opacity-50"
+                    className="inline-flex items-center space-x-1.5 text-xs sm:text-sm font-medium text-white hover:text-red-200 transition-colors bg-white/10 hover:bg-red-900/40 px-2.5 py-1.5 rounded-md border border-white/20 disabled:opacity-50"
                     title="Se déconnecter"
                   >
                     <LogOut className="w-4 h-4 text-red-300" />
-                    <span>{isLoggingOut ? 'Déconnexion...' : 'Déconnexion'}</span>
+                    <span>{isLoggingOut ? '...' : 'Sortir'}</span>
                   </button>
                 </>
               )}
+
+              {/* Sélecteur de Thème Visuel */}
+              <div className="pl-1 border-l border-white/20">
+                <ThemeSelector />
+              </div>
             </div>
 
-            {/* Bouton Menu Mobile */}
-            <div className="flex md:hidden">
+            {/* Bouton Menu Mobile & Sélecteur Thème */}
+            <div className="flex items-center space-x-2 md:hidden">
+              <ThemeSelector />
               <button
                 type="button"
                 onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
@@ -190,6 +285,15 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
                   <span>Ressources, PDF &amp; Charte Civique</span>
                 </Link>
 
+                <Link
+                  to="/verifier-certificat"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="flex items-center space-x-2 text-white px-3 py-2 rounded-md hover:bg-white/10 text-sm font-medium"
+                >
+                  <ShieldCheck className="w-4 h-4 text-emerald-300" />
+                  <span>Vérifier un certificat</span>
+                </Link>
+
                 {userData?.role === 'admin' && (
                   <Link
                     to="/admin"
@@ -225,20 +329,20 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
               </>
             ) : (
               <div className="text-sm text-blue-200 text-center py-2">
-                Plateforme de formation numérique pour les acteurs locaux de Zikisso.
+                Plateforme de formation numérique pour les acteurs locaux et communaux.
               </div>
             )}
           </div>
         )}
       </header>
 
-      {/* Contenu principal */}
-      <main className="flex-1 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
+      {/* Contenu principal surélevé par rapport à l'arrière-plan */}
+      <main className="flex-1 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8 relative z-10">
         {children}
       </main>
 
       {/* Pied de page institutionnel */}
-      <footer className="bg-slate-800 text-slate-300 text-xs py-6 border-t border-slate-700">
+      <footer className="bg-slate-900/95 text-slate-300 text-xs py-6 border-t border-slate-700 relative z-10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row justify-between items-center gap-4 text-center sm:text-left">
           <div>
             <p className="font-bold text-white tracking-wide">
@@ -266,3 +370,4 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
     </div>
   );
 };
+

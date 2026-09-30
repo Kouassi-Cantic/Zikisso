@@ -6,6 +6,7 @@
 import React from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { AuthProvider } from './contexts/AuthContext';
+import { ThemeProvider } from './contexts/ThemeContext';
 import { Layout } from './components/Layout';
 import { ProtectedRoute } from './components/ProtectedRoute';
 import { AdminRoute } from './components/AdminRoute';
@@ -23,8 +24,9 @@ export default function App() {
   return (
     <BrowserRouter>
       <AuthProvider>
-        <Layout>
-          <Routes>
+        <ThemeProvider>
+          <Layout>
+            <Routes>
             {/* Route protégée : Tableau de bord principal listant les semaines */}
             <Route
               path="/"
@@ -105,7 +107,8 @@ export default function App() {
             <Route path="*" element={<Navigate to="/" replace />} />
           </Routes>
         </Layout>
-      </AuthProvider>
-    </BrowserRouter>
+      </ThemeProvider>
+    </AuthProvider>
+  </BrowserRouter>
   );
 }
