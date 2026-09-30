@@ -94,8 +94,8 @@ export const ResourcesPage: React.FC = () => {
   const [signatureSuccess, setSignatureSuccess] = useState<string | null>(null);
   const [signatureError, setSignatureError] = useState<string | null>(null);
 
-  // 3. Lien vers Connexions Jeunes Afrique Monde
-  const cjamUrl = import.meta.env.VITE_CJAM_URL || 'https://connexions-jeunes.org';
+  // 3. Lien vers la plateforme partenaire Klo-Liké (Ambassadeurs)
+  const klolikeUrl = import.meta.env.VITE_CJAM_URL || 'https://www.klo-like.com';
 
   // Pré-remplissage du nom du signataire
   useEffect(() => {
@@ -618,40 +618,40 @@ export const ResourcesPage: React.FC = () => {
       </div>
 
       {/* ========================================================================= */}
-      {/* SECTION 3 : ENCART "DEVENIR AMBASSADEUR ZIKISSO" (CONNEXIONS JEUNES) */}
+      {/* SECTION 3 : ENCART "DEVENIR AMBASSADEUR KLO-LIKÉ" (ALPHABÉTISATION & PETITE ENFANCE) */}
       {/* ========================================================================= */}
       <div className="bg-gradient-to-r from-[#1F4E79] to-[#153755] text-white rounded-lg p-6 sm:p-8 shadow-sm">
         <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6">
           <div className="space-y-3 max-w-3xl">
             <div className="inline-flex items-center space-x-1.5 px-3 py-1 rounded-full text-xs font-bold bg-white/10 text-emerald-300 border border-white/15">
               <Sparkles className="w-3.5 h-3.5" />
-              <span>Réseau &amp; Action Territoriale</span>
+              <span>Alphabétisation &amp; Petite Enfance</span>
             </div>
 
             <h2 className="text-xl sm:text-2xl font-bold tracking-tight">
-              Devenir Ambassadeur Zikisso
+              Devenir Ambassadeur de la plateforme Klo-Liké
             </h2>
 
             <p className="text-xs sm:text-sm text-blue-100 leading-relaxed">
-              Le programme <strong>Connexions Jeunes Afrique Monde</strong> offre une passerelle active pour prolonger votre apprentissage sur le terrain : relayez localement les principes du MOOC (transparence budgétaire, veille citoyenne, accès à l'information publique) et faites remonter les cas d'usage concrets rencontrés dans votre quartier ou village de Zikisso.
+              Pour ceux qui souhaitent devenir des <strong>Ambassadeurs de la plateforme Klo-Liké</strong> dédiée à <strong>l'alphabétisation des adultes et de la petite enfance</strong> : relayez localement les initiatives éducatives, facilitez l'apprentissage des savoirs fondamentaux et contribuez à l'éveil des plus jeunes dans les campements, villages et quartiers de Zikisso.
             </p>
 
             <div className="flex flex-wrap items-center gap-4 text-xs text-blue-200 pt-1">
-              <span>• Animation d'ateliers citoyens</span>
-              <span>• Veille et signalement participatif</span>
-              <span>• Plaidoyer pour l'inclusion numérique locale</span>
+              <span>• Alphabétisation et savoirs de base des adultes</span>
+              <span>• Éveil et soutien éducatif à la petite enfance</span>
+              <span>• Sensibilisation communautaire et inclusion</span>
             </div>
           </div>
 
           <div className="flex-shrink-0">
             <a
-              href={cjamUrl}
+              href={klolikeUrl}
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center space-x-2 px-6 py-3 bg-[#C55A11] hover:bg-[#A3480C] text-white text-xs sm:text-sm font-bold rounded-md shadow-md hover:shadow-lg transition focus:outline-none focus:ring-2 focus:ring-amber-400 focus:ring-offset-2 focus:ring-offset-[#1F4E79]"
             >
               <Globe className="w-4 h-4" />
-              <span>Rejoindre Connexions Jeunes</span>
+              <span>Rejoindre Klo-Liké</span>
               <ExternalLink className="w-3.5 h-3.5 ml-1" />
             </a>
           </div>

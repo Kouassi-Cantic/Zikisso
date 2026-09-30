@@ -153,7 +153,7 @@ export const generateToolboxPDF = (): jsPDF => {
   doc.setFont('helvetica', 'normal');
   doc.setFontSize(7);
   doc.setTextColor(148, 163, 184);
-  doc.text("Document pédagogique officiel • MOOC Zikisso • Mairie de Zikisso & Connexions Jeunes Afrique Monde", pageWidth / 2, pageHeight - 10, { align: 'center' });
+  doc.text("Document pédagogique officiel • MOOC Zikisso • Mairie de Zikisso & Partenaire Éducatif Klo-Liké", pageWidth / 2, pageHeight - 10, { align: 'center' });
 
   return doc;
 };
