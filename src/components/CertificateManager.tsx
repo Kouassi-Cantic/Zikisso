@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import { db, isFirebaseConfigured } from '../firebase/config';
 import { 
@@ -387,16 +388,24 @@ export const CertificateManager: React.FC<CertificateManagerProps> = ({ noteGlob
                     </span>
                   </div>
 
-                  <span className="text-slate-400">
-                    Généré le{' '}
-                    {new Date(cert.dateGeneration).toLocaleDateString('fr-FR', {
-                      day: '2-digit',
-                      month: 'long',
-                      year: 'numeric',
-                      hour: '2-digit',
-                      minute: '2-digit',
-                    })}
-                  </span>
+                  <div className="flex items-center space-x-3 text-slate-400">
+                    <span>
+                      Généré le{' '}
+                      {new Date(cert.dateGeneration).toLocaleDateString('fr-FR', {
+                        day: '2-digit',
+                        month: 'long',
+                        year: 'numeric',
+                      })}
+                    </span>
+                    <Link
+                      to={`/verifier-certificat/${cert.certificatId}`}
+                      className="inline-flex items-center space-x-1 text-[#1A6B3C] hover:text-[#14532D] font-semibold bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200 transition"
+                      title="Vérifier la validité de cette attestation en ligne"
+                    >
+                      <ShieldCheck className="w-3 h-3 text-[#1A6B3C]" />
+                      <span>Vérifier en ligne</span>
+                    </Link>
+                  </div>
                 </div>
               ))}
             </div>

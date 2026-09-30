@@ -17,6 +17,7 @@ import { WeekDetailPage } from './pages/WeekDetailPage';
 import { FinalExamPage } from './pages/FinalExamPage';
 import { ResourcesPage } from './pages/ResourcesPage';
 import { AdminPage } from './pages/AdminPage';
+import { CertificateVerificationPage } from './pages/CertificateVerificationPage';
 
 export default function App() {
   return (
@@ -95,6 +96,10 @@ export default function App() {
             {/* Routes publiques d'authentification */}
             <Route path="/login" element={<LoginPage />} />
             <Route path="/register" element={<RegisterPage />} />
+
+            {/* Routes publiques de vérification officielle d'attestation */}
+            <Route path="/verifier-certificat" element={<CertificateVerificationPage />} />
+            <Route path="/verifier-certificat/:code" element={<CertificateVerificationPage />} />
 
             {/* Redirection par défaut */}
             <Route path="*" element={<Navigate to="/" replace />} />

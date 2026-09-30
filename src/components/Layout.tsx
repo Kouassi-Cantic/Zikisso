@@ -84,6 +84,15 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
                     <span>Ressources &amp; Charte</span>
                   </Link>
 
+                  <Link
+                    to="/verifier-certificat"
+                    className="inline-flex items-center space-x-1.5 text-xs sm:text-sm font-medium text-blue-100 hover:text-white px-2.5 py-1.5 rounded-md hover:bg-white/10 transition-colors"
+                    title="Vérifier une attestation par son identifiant"
+                  >
+                    <ShieldCheck className="w-4 h-4 text-emerald-400" />
+                    <span>Vérifier diplôme</span>
+                  </Link>
+
                   {/* Lien administration si le rôle est 'admin' */}
                   {userData?.role === 'admin' && (
                     <Link
@@ -229,9 +238,18 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
               Plateforme pédagogique dédiée au renforcement des compétences communales et citoyennes.
             </p>
           </div>
-          <div className="flex items-center space-x-2 text-slate-400">
-            <ShieldCheck className="w-4 h-4 text-[#1A6B3C]" />
-            <span>Portail sécurisé</span>
+          <div className="flex flex-col sm:flex-row items-center gap-3 sm:gap-6 text-slate-400">
+            <Link
+              to="/verifier-certificat"
+              className="inline-flex items-center space-x-1.5 text-xs text-emerald-400 hover:text-emerald-300 transition underline underline-offset-4"
+            >
+              <ShieldCheck className="w-4 h-4 text-[#1A6B3C]" />
+              <span>Vérifier un certificat officiel</span>
+            </Link>
+            <div className="flex items-center space-x-1.5">
+              <span className="w-2 h-2 rounded-full bg-[#1A6B3C]"></span>
+              <span>Portail sécurisé Mairie de Zikisso</span>
+            </div>
           </div>
         </div>
       </footer>

@@ -13,6 +13,7 @@ import {
 } from 'lucide-react';
 import { collection, getDocs, query, where } from 'firebase/firestore';
 import { db, isFirebaseConfigured } from '../firebase/config';
+import { AudioReader } from '../components/AudioReader';
 
 interface CourseCardMeta {
   id: string;
@@ -175,15 +176,24 @@ export const DashboardPage: React.FC = () => {
         </div>
       </div>
 
-      {/* Citation institutionnelle en police serif */}
-      <div className="p-5 rounded-lg bg-[#F0F5FA] border-l-4 border-[#1F4E79]">
-        <blockquote className="quote-serif italic text-base sm:text-lg text-slate-700">
-          « La bonne gouvernance locale et la transformation numérique constituent les deux piliers
-          d'un développement communal durable, équitable et au service direct des populations de Zikisso. »
-        </blockquote>
-        <p className="text-xs font-semibold text-[#1F4E79] mt-2 uppercase tracking-wider">
-          — Direction du Programme Pédagogique Communal
-        </p>
+      {/* Citation institutionnelle en police serif avec lecteur audio */}
+      <div className="p-5 rounded-lg bg-[#F0F5FA] border-l-4 border-[#1F4E79] flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div>
+          <blockquote className="quote-serif italic text-base sm:text-lg text-slate-700">
+            « La bonne gouvernance locale et la transformation numérique constituent les deux piliers
+            d'un développement communal durable, équitable et au service direct des populations de Zikisso. »
+          </blockquote>
+          <p className="text-xs font-semibold text-[#1F4E79] mt-2 uppercase tracking-wider">
+            — Direction du Programme Pédagogique Communal
+          </p>
+        </div>
+        <div className="flex-shrink-0">
+          <AudioReader
+            text="Bienvenue sur le MOOC Zikisso, Gestion des Collectivités Locales et Transformation Digitale. La bonne gouvernance locale et la transformation numérique constituent les deux piliers d'un développement communal durable, équitable et au service direct des populations de Zikisso."
+            title="Introduction audio du MOOC Zikisso"
+            variant="button"
+          />
+        </div>
       </div>
 
       {/* Titre de section du programme */}
