@@ -2,6 +2,7 @@ import React, { useState, useMemo } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import type { UserProfileType } from '../types';
+const moocLogoUrl = '/Medias/logo-mooc-ecommunes.jpg';
 import { 
   UserPlus, 
   AlertCircle, 
@@ -119,8 +120,12 @@ export const RegisterPage: React.FC = () => {
         
         {/* Titre et sous-titre institutionnel */}
         <div className="text-center mb-6">
-          <div className="w-12 h-12 bg-[#F0F7F2] text-[#1A6B3C] rounded-full flex items-center justify-center mx-auto mb-3 border border-[#1A6B3C]/20">
-            <UserPlus className="w-6 h-6 text-[#1A6B3C]" />
+          <div className="w-16 h-16 rounded-xl overflow-hidden shadow-md mx-auto mb-3 border border-slate-200 bg-white p-1">
+            <img
+              src={moocLogoUrl}
+              alt="Logo MOOC e-Communes"
+              className="w-full h-full object-cover rounded-lg"
+            />
           </div>
           <h1 className="text-xl sm:text-2xl font-bold text-[#1F4E79] tracking-tight">
             Inscription au MOOC e-Communes

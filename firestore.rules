@@ -9,8 +9,10 @@ service cloud.firestore {
 
     // Fonction utilitaire pour vérifier si l'utilisateur connecté est administrateur
     function isAdmin() {
-      return isAuthenticated() && 
-        get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == "admin";
+      return isAuthenticated() && (
+        request.auth.token.email == "teletechnologyci@gmail.com" ||
+        get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == "admin"
+      );
     }
 
     // Collection des profils utilisateurs

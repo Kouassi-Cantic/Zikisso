@@ -5,6 +5,7 @@ import { useTheme } from '../contexts/ThemeContext';
 import { ThemeSelector } from './ThemeSelector';
 import { LogOut, User, Menu, X, BookOpen, ShieldCheck, Home, ShieldAlert, Award, Files } from 'lucide-react';
 import elephantsBgUrl from '../assets/images/elephants_cote_ivoire_savane_1790771623677.jpg';
+const moocLogoUrl = '/Medias/logo-mooc-ecommunes.jpg';
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -128,11 +129,15 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
             
-            {/* Logo texte MOOC e-Communes */}
+            {/* Logo officiel & marque MOOC e-Communes */}
             <div className="flex items-center space-x-3">
               <Link to="/" className="flex items-center space-x-3 group">
-                <div className="w-10 h-10 rounded bg-[#1A6B3C] flex items-center justify-center text-white font-bold text-lg shadow-sm border border-emerald-400/20 group-hover:bg-[#14532D] transition">
-                  <BookOpen className="w-5 h-5 text-white" />
+                <div className="w-10 h-10 rounded-lg overflow-hidden bg-white p-0.5 shadow-sm border border-emerald-400/30 group-hover:scale-105 transition-transform flex-shrink-0">
+                  <img
+                    src={moocLogoUrl}
+                    alt="Logo MOOC e-Communes"
+                    className="w-full h-full object-cover rounded-md"
+                  />
                 </div>
                 <div className="flex flex-col">
                   <div className="flex items-center space-x-2">

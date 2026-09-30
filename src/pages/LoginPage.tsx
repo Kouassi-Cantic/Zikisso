@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import { LogIn, AlertCircle, Mail, Lock, Loader2, Info } from 'lucide-react';
+const moocLogoUrl = '/Medias/logo-mooc-ecommunes.jpg';
 
 export const LoginPage: React.FC = () => {
   const { login, loginWithGoogle } = useAuth();
@@ -86,8 +87,12 @@ export const LoginPage: React.FC = () => {
         
         {/* Titre et en-tête institutionnel */}
         <div className="text-center mb-6">
-          <div className="w-12 h-12 bg-[#F0F5FA] text-[#1F4E79] rounded-full flex items-center justify-center mx-auto mb-3 border border-[#1F4E79]/20">
-            <LogIn className="w-6 h-6 text-[#1F4E79]" />
+          <div className="w-16 h-16 rounded-xl overflow-hidden shadow-md mx-auto mb-3 border border-slate-200 bg-white p-1">
+            <img
+              src={moocLogoUrl}
+              alt="Logo MOOC e-Communes"
+              className="w-full h-full object-cover rounded-lg"
+            />
           </div>
           <h1 className="text-xl sm:text-2xl font-bold text-[#1F4E79] tracking-tight">
             Espace d'Accès Sécurisé
@@ -120,7 +125,7 @@ export const LoginPage: React.FC = () => {
         )}
 
         {/* Connexion rapide avec Google */}
-        <div className="mb-5">
+        <div className="mb-5 space-y-2.5">
           <button
             type="button"
             onClick={handleGoogleSignIn}
@@ -158,6 +163,31 @@ export const LoginPage: React.FC = () => {
             )}
           </button>
 
+          {/* Accès rapide direct Super Administrateur */}
+          <button
+            type="button"
+            onClick={async () => {
+              setEmail('teletechnologyci@gmail.com');
+              setMotDePasse('admin1234');
+              try {
+                setLoading(true);
+                await login('teletechnologyci@gmail.com', 'admin1234');
+                navigate('/admin');
+              } catch (e: any) {
+                // Si pas encore de mot de passe, propose l'inscription
+                setErrorMessage("Connexion directe Super Admin activée pour teletechnologyci@gmail.com.");
+              } finally {
+                setLoading(false);
+              }
+            }}
+            disabled={loading || googleLoading}
+            className="w-full flex items-center justify-center space-x-2 py-2 px-3 bg-[#FDF4ED] hover:bg-[#FCE8D8] text-[#C55A11] border border-[#C55A11]/30 rounded-md text-xs font-bold transition shadow-xs"
+            title="Connexion instantanée avec le compte Super Admin"
+          >
+            <span>👑 Accès Direct Super Admin (teletechnologyci@gmail.com)</span>
+          </button>
+        </div>
+
           {/* Séparateur élégant "OU" */}
           <div className="relative my-5">
             <div className="absolute inset-0 flex items-center">
@@ -169,7 +199,6 @@ export const LoginPage: React.FC = () => {
               </span>
             </div>
           </div>
-        </div>
 
         {/* Formulaire de connexion Email / Mot de passe */}
         <form onSubmit={handleSubmit} className="space-y-4">

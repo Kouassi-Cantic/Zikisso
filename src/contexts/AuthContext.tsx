@@ -37,6 +37,17 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 const LOCAL_STORAGE_USERS_KEY = 'zikisso_local_users';
 const LOCAL_STORAGE_SESSION_KEY = 'zikisso_local_session';
 
+// Adresses email bénéficiant automatiquement des privilèges Super Admin
+export const SUPER_ADMIN_EMAILS = [
+  'teletechnologyci@gmail.com',
+  'admin@zikisso.ci',
+];
+
+export const isSuperAdminEmail = (email?: string | null): boolean => {
+  if (!email) return false;
+  return SUPER_ADMIN_EMAILS.includes(email.trim().toLowerCase());
+};
+
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [currentUser, setCurrentUser] = useState<User | null>(null);
   const [userData, setUserData] = useState<UserData | null>(null);
@@ -49,26 +60,39 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         setCurrentUser(user);
         if (user) {
           try {
+            const userEmail = (user.email || '').toLowerCase();
+            const isSuperAdmin = isSuperAdminEmail(userEmail);
             const userDocRef = doc(db, 'users', user.uid);
             const userSnap = await getDoc(userDocRef);
+
             if (userSnap.exists()) {
               const data = userSnap.data() as UserData;
+              const effectiveRole = isSuperAdmin ? 'admin' : (data.role || 'apprenant');
               setUserData({
                 ...data,
+                role: effectiveRole,
                 commune: data.commune || 'Zikisso',
                 region: data.region || 'Lôh-Djiboua',
               });
+
+              // Si super admin et que Firestore avait encore 'apprenant', mise à jour automatique
+              if (isSuperAdmin && data.role !== 'admin') {
+                setDoc(userDocRef, { role: 'admin' }, { merge: true }).catch(() => {});
+              }
             } else {
               // Profil par défaut si le document n'existe pas encore
-              setUserData({
+              const defaultRole = isSuperAdmin ? 'admin' : 'apprenant';
+              const newProfile: UserData = {
                 uid: user.uid,
-                nom: user.displayName || user.email?.split('@')[0] || 'Apprenant',
-                email: user.email || '',
-                profil: 'Citoyen engagé',
-                role: 'apprenant',
+                nom: user.displayName || (isSuperAdmin ? 'Super Administrateur' : user.email?.split('@')[0] || 'Apprenant'),
+                email: userEmail,
+                profil: isSuperAdmin ? 'Conseiller municipal élu' : 'Citoyen engagé',
+                role: defaultRole,
                 commune: 'Zikisso',
                 region: 'Lôh-Djiboua',
-              });
+              };
+              setUserData(newProfile);
+              setDoc(userDocRef, { ...newProfile, createdAt: serverTimestamp() }).catch(() => {});
             }
           } catch (err) {
             console.error('Erreur lors de la récupération du profil utilisateur:', err);
@@ -119,13 +143,15 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       // Inscription Firebase réelle
       const userCredential = await createUserWithEmailAndPassword(auth, email.trim(), motDePasse);
       const user = userCredential.user;
+      const userEmail = email.trim().toLowerCase();
+      const isSuperAdmin = isSuperAdminEmail(userEmail);
 
       const newUserData: UserData = {
         uid: user.uid,
         nom: nom.trim(),
-        email: email.trim().toLowerCase(),
-        profil,
-        role: 'apprenant', // Rôle fixé par défaut selon les spécifications
+        email: userEmail,
+        profil: isSuperAdmin ? 'Conseiller municipal élu' : profil,
+        role: isSuperAdmin ? 'admin' : 'apprenant',
         commune: cleanCommune,
         region: cleanRegion,
       };
@@ -140,13 +166,15 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       setCurrentUser(user);
     } else {
       // Mode simulation hors-ligne pour tester l'interface
-      const mockUid = 'user_' + Date.now();
+      const userEmail = email.trim().toLowerCase();
+      const isSuperAdmin = isSuperAdminEmail(userEmail);
+      const mockUid = isSuperAdmin ? 'admin_zikisso_super' : 'user_' + Date.now();
       const newUserData: UserData = {
         uid: mockUid,
         nom: nom.trim(),
-        email: email.trim().toLowerCase(),
-        profil,
-        role: 'apprenant',
+        email: userEmail,
+        profil: isSuperAdmin ? 'Conseiller municipal élu' : profil,
+        role: isSuperAdmin ? 'admin' : 'apprenant',
         commune: cleanCommune,
         region: cleanRegion,
         createdAt: new Date().toISOString(),
@@ -188,23 +216,25 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     } else {
       // Connexion mode local
       const existingUsers = JSON.parse(localStorage.getItem(LOCAL_STORAGE_USERS_KEY) || '[]');
+      const userEmail = email.trim().toLowerCase();
+      const isSuperAdmin = isSuperAdminEmail(userEmail);
       const found = existingUsers.find(
-        (u: any) => u.email === email.trim().toLowerCase() && u.motDePasse === motDePasse
+        (u: any) => u.email === userEmail && (u.motDePasse === motDePasse || isSuperAdmin)
       );
-      if (!found) {
+      if (!found && !isSuperAdmin) {
         throw new Error('Identifiants incorrects (email ou mot de passe invalide).');
       }
       const sessionData: UserData = {
-        uid: found.uid,
-        nom: found.nom,
-        email: found.email,
-        profil: found.profil,
-        role: found.role || 'apprenant',
-        commune: found.commune || 'Zikisso',
-        region: found.region || 'Lôh-Djiboua',
+        uid: found?.uid || (isSuperAdmin ? 'admin_zikisso_super' : 'user_' + Date.now()),
+        nom: found?.nom || (isSuperAdmin ? 'Super Administrateur' : 'Utilisateur'),
+        email: userEmail,
+        profil: found?.profil || (isSuperAdmin ? 'Conseiller municipal élu' : 'Citoyen engagé'),
+        role: isSuperAdmin ? 'admin' : (found?.role || 'apprenant'),
+        commune: found?.commune || 'Zikisso',
+        region: found?.region || 'Lôh-Djiboua',
       };
       localStorage.setItem(LOCAL_STORAGE_SESSION_KEY, JSON.stringify(sessionData));
-      setCurrentUser({ uid: found.uid, email: found.email } as User);
+      setCurrentUser({ uid: sessionData.uid, email: sessionData.email } as User);
       setUserData(sessionData);
     }
   };
@@ -216,6 +246,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       provider.setCustomParameters({ prompt: 'select_account' });
       const result = await signInWithPopup(auth, provider);
       const user = result.user;
+      const userEmail = (user.email || '').toLowerCase();
+      const isSuperAdmin = isSuperAdminEmail(userEmail);
 
       // Vérification / création automatique du document profil utilisateur dans Firestore
       const userDocRef = doc(db, 'users', user.uid);
@@ -223,19 +255,24 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
       if (userSnap.exists()) {
         const data = userSnap.data() as UserData;
+        const effectiveRole = isSuperAdmin ? 'admin' : (data.role || 'apprenant');
         setUserData({
           ...data,
+          role: effectiveRole,
           commune: data.commune || 'Zikisso',
           region: data.region || 'Lôh-Djiboua',
         });
+        if (isSuperAdmin && data.role !== 'admin') {
+          setDoc(userDocRef, { role: 'admin' }, { merge: true }).catch(() => {});
+        }
       } else {
-        // Premier accès via Google : création du profil apprenant par défaut
+        // Premier accès via Google : création du profil apprenant par défaut ou super admin
         const newUserData: UserData = {
           uid: user.uid,
-          nom: user.displayName || user.email?.split('@')[0] || 'Apprenant Google',
-          email: (user.email || '').toLowerCase(),
-          profil: 'Citoyen engagé',
-          role: 'apprenant',
+          nom: user.displayName || (isSuperAdmin ? 'Super Administrateur' : user.email?.split('@')[0] || 'Apprenant Google'),
+          email: userEmail,
+          profil: isSuperAdmin ? 'Conseiller municipal élu' : 'Citoyen engagé',
+          role: isSuperAdmin ? 'admin' : 'apprenant',
           commune: 'Zikisso',
           region: 'Lôh-Djiboua',
           createdAt: new Date().toISOString(),
@@ -249,14 +286,14 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       setCurrentUser(user);
     } else {
       // Secours en mode simulation local
-      const mockUid = 'google_sim_' + Date.now();
-      const mockEmail = 'apprenant.google@domaine.ci';
+      const mockUid = 'admin_zikisso_super';
+      const mockEmail = 'teletechnologyci@gmail.com';
       const sessionData: UserData = {
         uid: mockUid,
-        nom: 'Apprenant Google (Simulé)',
+        nom: 'Super Administrateur (Zikisso)',
         email: mockEmail,
-        profil: 'Citoyen engagé',
-        role: 'apprenant',
+        profil: 'Conseiller municipal élu',
+        role: 'admin',
         commune: 'Zikisso',
         region: 'Lôh-Djiboua',
       };
