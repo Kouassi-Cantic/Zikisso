@@ -12,6 +12,7 @@ import {
 } from 'firebase/firestore';
 import type { SubmissionData, ExerciceFilRouge, NotationCritere } from '../types';
 import { DEFAULT_EXERCISES } from '../data/defaultExercises';
+import { TerritoryObservatory } from '../components/TerritoryObservatory';
 import { 
   ShieldCheck, 
   Clock, 
@@ -26,13 +27,18 @@ import {
   RefreshCw, 
   Filter, 
   ChevronRight, 
-  BookOpen 
+  BookOpen,
+  Building2,
+  MapPin
 } from 'lucide-react';
 
 const LOCAL_STORAGE_SUBMISSIONS_KEY = 'zikisso_local_submissions';
 
 export const AdminPage: React.FC = () => {
   const { userData, currentUser } = useAuth();
+
+  // Onglet actif : 'corrections' ou 'observatoire'
+  const [activeTab, setActiveTab] = useState<'corrections' | 'observatoire'>('corrections');
 
   const [submissions, setSubmissions] = useState<SubmissionData[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
@@ -275,13 +281,13 @@ Notre priorité doit porter sur la modernisation du recouvrement des taxes forai
           <div>
             <div className="inline-flex items-center space-x-1.5 px-3 py-1 rounded-full text-xs font-bold bg-[#FDF4ED] text-[#C55A11] border border-[#C55A11]/30 mb-2">
               <ShieldCheck className="w-4 h-4 text-[#C55A11]" />
-              <span>Espace Réservé • Administration Pédagogique</span>
+              <span>Espace Réservé • Administration Pédagogique &amp; Territoriale</span>
             </div>
             <h1 className="text-2xl sm:text-3xl font-bold text-[#1F4E79] tracking-tight">
-              Correction des Exercices Fil Rouge
+              Espace Administrateur MOOC e-Communes
             </h1>
             <p className="text-xs sm:text-sm text-slate-600 mt-1 max-w-3xl">
-              Évaluation formative des devoirs libres soumis par les apprenants du MOOC Zikisso selon la grille de critères officielle.
+              Gestion des évaluations, suivi de l'ancrage territorial et préparation des conventions de parrainage municipal.
             </p>
           </div>
 
@@ -297,27 +303,72 @@ Notre priorité doit porter sur la modernisation du recouvrement des taxes forai
           </div>
         </div>
 
-        {/* Métriques récapitulatives */}
-        <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 mt-6 pt-6 border-t border-slate-100">
-          <div className="bg-[#FDF4ED] border border-[#C55A11]/20 rounded-md p-3">
-            <span className="text-xs text-[#A3480C] font-semibold block">En attente de notation</span>
-            <span className="text-2xl font-extrabold text-[#C55A11]">{pendingCount}</span>
-          </div>
+        {/* Sélecteur d'onglets principaux */}
+        <div className="flex border-b border-slate-200 space-x-3 mt-6 pt-2">
+          <button
+            type="button"
+            onClick={() => setActiveTab('corrections')}
+            className={`pb-3 px-3 text-xs sm:text-sm font-bold flex items-center space-x-2 border-b-2 transition ${
+              activeTab === 'corrections'
+                ? 'border-[#1F4E79] text-[#1F4E79]'
+                : 'border-transparent text-slate-500 hover:text-slate-800'
+            }`}
+          >
+            <FileText className="w-4 h-4" />
+            <span>Correction des Devoirs ({submissions.length})</span>
+            {pendingCount > 0 && (
+              <span className="bg-[#C55A11] text-white text-[10px] px-1.5 py-0.2 rounded-full font-bold">
+                {pendingCount} en attente
+              </span>
+            )}
+          </button>
 
-          <div className="bg-[#F0F7F2] border border-[#1A6B3C]/20 rounded-md p-3">
-            <span className="text-xs text-[#14532D] font-semibold block">Devoirs déjà notés</span>
-            <span className="text-2xl font-extrabold text-[#1A6B3C]">{gradedCount}</span>
-          </div>
-
-          <div className="bg-[#F0F5FA] border border-[#1F4E79]/20 rounded-md p-3 col-span-2 sm:col-span-1">
-            <span className="text-xs text-[#1F4E79] font-semibold block">Total soumissions</span>
-            <span className="text-2xl font-extrabold text-[#1F4E79]">{submissions.length}</span>
-          </div>
+          <button
+            type="button"
+            onClick={() => setActiveTab('observatoire')}
+            className={`pb-3 px-3 text-xs sm:text-sm font-bold flex items-center space-x-2 border-b-2 transition ${
+              activeTab === 'observatoire'
+                ? 'border-[#1A6B3C] text-[#1A6B3C]'
+                : 'border-transparent text-slate-500 hover:text-slate-800'
+            }`}
+          >
+            <Building2 className="w-4 h-4 text-[#1A6B3C]" />
+            <span>Observatoire Territorial &amp; Parrainage</span>
+            <span className="bg-emerald-100 text-[#14532D] text-[10px] px-2 py-0.5 rounded-full font-bold border border-emerald-300">
+              Statistiques Régionales
+            </span>
+          </button>
         </div>
+
+        {/* Métriques récapitulatives (affichées en mode corrections) */}
+        {activeTab === 'corrections' && (
+          <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 mt-6 pt-4 border-t border-slate-100">
+            <div className="bg-[#FDF4ED] border border-[#C55A11]/20 rounded-md p-3">
+              <span className="text-xs text-[#A3480C] font-semibold block">En attente de notation</span>
+              <span className="text-2xl font-extrabold text-[#C55A11]">{pendingCount}</span>
+            </div>
+
+            <div className="bg-[#F0F7F2] border border-[#1A6B3C]/20 rounded-md p-3">
+              <span className="text-xs text-[#14532D] font-semibold block">Devoirs déjà notés</span>
+              <span className="text-2xl font-extrabold text-[#1A6B3C]">{gradedCount}</span>
+            </div>
+
+            <div className="bg-[#F0F5FA] border border-[#1F4E79]/20 rounded-md p-3 col-span-2 sm:col-span-1">
+              <span className="text-xs text-[#1F4E79] font-semibold block">Total soumissions</span>
+              <span className="text-2xl font-extrabold text-[#1F4E79]">{submissions.length}</span>
+            </div>
+          </div>
+        )}
       </div>
 
-      {/* Contenu principal : 2 Colonnes (Liste des soumissions à gauche, Détail et notation à droite) */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+      {/* Onglet 2 : Observatoire Territorial */}
+      {activeTab === 'observatoire' && (
+        <TerritoryObservatory />
+      )}
+
+      {/* Onglet 1 : Contenu principal des corrections */}
+      {activeTab === 'corrections' && (
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
         
         {/* Colonne Gauche : Liste des soumissions */}
         <div className="lg:col-span-4 bg-white rounded-lg border border-slate-200 shadow-sm overflow-hidden">
@@ -664,6 +715,7 @@ Notre priorité doit porter sur la modernisation du recouvrement des taxes forai
         </div>
 
       </div>
+      )}
 
     </div>
   );

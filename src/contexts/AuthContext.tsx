@@ -15,9 +15,17 @@ interface AuthContextType {
   userData: UserData | null;
   loading: boolean;
   isFirebaseConfigured: boolean;
-  signup: (nom: string, email: string, motDePasse: string, profil: UserProfileType) => Promise<void>;
+  signup: (
+    nom: string,
+    email: string,
+    motDePasse: string,
+    profil: UserProfileType,
+    commune?: string,
+    region?: string
+  ) => Promise<void>;
   login: (email: string, motDePasse: string) => Promise<void>;
   logout: () => Promise<void>;
+  updateProfileTerritory: (commune: string, region: string) => Promise<void>;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -41,7 +49,12 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
             const userDocRef = doc(db, 'users', user.uid);
             const userSnap = await getDoc(userDocRef);
             if (userSnap.exists()) {
-              setUserData(userSnap.data() as UserData);
+              const data = userSnap.data() as UserData;
+              setUserData({
+                ...data,
+                commune: data.commune || 'Zikisso',
+                region: data.region || 'Lôh-Djiboua',
+              });
             } else {
               // Profil par défaut si le document n'existe pas encore
               setUserData({
@@ -50,6 +63,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
                 email: user.email || '',
                 profil: 'Citoyen engagé',
                 role: 'apprenant',
+                commune: 'Zikisso',
+                region: 'Lôh-Djiboua',
               });
             }
           } catch (err) {
@@ -69,7 +84,11 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         if (savedSession) {
           const parsed = JSON.parse(savedSession);
           setCurrentUser({ uid: parsed.uid, email: parsed.email } as User);
-          setUserData(parsed);
+          setUserData({
+            ...parsed,
+            commune: parsed.commune || 'Zikisso',
+            region: parsed.region || 'Lôh-Djiboua',
+          });
         }
       } catch (err) {
         console.warn('Session locale introuvable:', err);
@@ -78,10 +97,20 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     }
   }, []);
 
-  const signup = async (nom: string, email: string, motDePasse: string, profil: UserProfileType) => {
+  const signup = async (
+    nom: string,
+    email: string,
+    motDePasse: string,
+    profil: UserProfileType,
+    commune?: string,
+    region?: string
+  ) => {
     if (!nom.trim()) throw new Error('Le nom complet est obligatoire.');
     if (!email.trim()) throw new Error("L'adresse email est obligatoire.");
     if (motDePasse.length < 6) throw new Error('Le mot de passe doit comporter au moins 6 caractères.');
+
+    const cleanCommune = commune?.trim() || 'Zikisso';
+    const cleanRegion = region?.trim() || 'Lôh-Djiboua';
 
     if (isFirebaseConfigured) {
       // Inscription Firebase réelle
@@ -94,6 +123,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         email: email.trim().toLowerCase(),
         profil,
         role: 'apprenant', // Rôle fixé par défaut selon les spécifications
+        commune: cleanCommune,
+        region: cleanRegion,
       };
 
       // Création du document dans la collection "users"
@@ -113,6 +144,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         email: email.trim().toLowerCase(),
         profil,
         role: 'apprenant',
+        commune: cleanCommune,
+        region: cleanRegion,
         createdAt: new Date().toISOString(),
       };
 
@@ -141,7 +174,12 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       const userSnap = await getDoc(userDocRef);
 
       if (userSnap.exists()) {
-        setUserData(userSnap.data() as UserData);
+        const data = userSnap.data() as UserData;
+        setUserData({
+          ...data,
+          commune: data.commune || 'Zikisso',
+          region: data.region || 'Lôh-Djiboua',
+        });
       }
       setCurrentUser(user);
     } else {
@@ -159,11 +197,48 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         email: found.email,
         profil: found.profil,
         role: found.role || 'apprenant',
+        commune: found.commune || 'Zikisso',
+        region: found.region || 'Lôh-Djiboua',
       };
       localStorage.setItem(LOCAL_STORAGE_SESSION_KEY, JSON.stringify(sessionData));
       setCurrentUser({ uid: found.uid, email: found.email } as User);
       setUserData(sessionData);
     }
+  };
+
+  const updateProfileTerritory = async (commune: string, region: string) => {
+    if (!currentUser || !userData) return;
+    const cleanCommune = commune.trim() || 'Zikisso';
+    const cleanRegion = region.trim() || 'Lôh-Djiboua';
+
+    const updated: UserData = {
+      ...userData,
+      commune: cleanCommune,
+      region: cleanRegion,
+    };
+
+    if (isFirebaseConfigured) {
+      try {
+        await setDoc(
+          doc(db, 'users', currentUser.uid),
+          { commune: cleanCommune, region: cleanRegion },
+          { merge: true }
+        );
+      } catch (e) {
+        console.error('Erreur mise à jour territoire Firestore:', e);
+      }
+    } else {
+      try {
+        localStorage.setItem(LOCAL_STORAGE_SESSION_KEY, JSON.stringify(updated));
+        const existingUsers = JSON.parse(localStorage.getItem(LOCAL_STORAGE_USERS_KEY) || '[]');
+        const idx = existingUsers.findIndex((u: any) => u.uid === currentUser.uid);
+        if (idx !== -1) {
+          existingUsers[idx] = { ...existingUsers[idx], commune: cleanCommune, region: cleanRegion };
+          localStorage.setItem(LOCAL_STORAGE_USERS_KEY, JSON.stringify(existingUsers));
+        }
+      } catch (e) {}
+    }
+    setUserData(updated);
   };
 
   const logout = async () => {
@@ -186,6 +261,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         signup,
         login,
         logout,
+        updateProfileTerritory,
       }}
     >
       {children}

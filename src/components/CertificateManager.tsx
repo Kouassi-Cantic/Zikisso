@@ -37,6 +37,9 @@ interface SavedCertificate {
   dateGénération?: string;
   certificatId: string;
   nomApprenant: string;
+  commune?: string;
+  region?: string;
+  apprenantProfil?: string;
 }
 
 const LOCAL_STORAGE_CERTIFICATES_KEY = 'zikisso_local_certificates';
@@ -107,12 +110,14 @@ export const CertificateManager: React.FC<CertificateManagerProps> = ({ noteGlob
 
     try {
       const nomApprenant = userData?.nom || currentUser.displayName || currentUser.email || 'Apprenant';
+      const userCommune = userData?.commune || 'Zikisso';
+      const userRegion = userData?.region || 'Lôh-Djiboua';
       const nowIso = new Date().toISOString();
       const codeType = certificateType === 'reussite' ? 'REU' : 'PAR';
       const randomDigits = Math.floor(1000 + Math.random() * 9000);
-      const certificatId = `ZIK-MOOC-${new Date().getFullYear()}-${codeType}-${randomDigits}`;
+      const certificatId = `ECOMM-${new Date().getFullYear()}-${codeType}-${randomDigits}`;
 
-      // Enregistrement dans Firestore collection "certificates" : { uid, noteGlobale, type, dateGénération }
+      // Enregistrement dans Firestore collection "certificates"
       const certRecord: SavedCertificate = {
         uid: currentUser.uid,
         noteGlobale: Math.round(noteGlobale * 10) / 10,
@@ -121,6 +126,9 @@ export const CertificateManager: React.FC<CertificateManagerProps> = ({ noteGlob
         dateGénération: nowIso,
         certificatId,
         nomApprenant,
+        commune: userCommune,
+        region: userRegion,
+        apprenantProfil: userData?.profil,
       };
 
       if (isFirebaseConfigured) {
@@ -128,7 +136,9 @@ export const CertificateManager: React.FC<CertificateManagerProps> = ({ noteGlob
           const docRef = await addDoc(collection(db, 'certificates'), {
             ...certRecord,
             userId: currentUser.uid,
-            titreMooc: 'MOOC Zikisso — Collectivités Locales & Transformation Digitale',
+            titreMooc: 'MOOC e-Communes — Gouvernance Municipale & Transformation Digitale',
+            commune: userCommune,
+            region: userRegion,
             createdAt: serverTimestamp(),
           });
           certRecord.id = docRef.id;
@@ -153,9 +163,11 @@ export const CertificateManager: React.FC<CertificateManagerProps> = ({ noteGlob
         dateGeneration: nowIso,
         certificatId,
         apprenantProfil: userData?.profil,
+        commune: userCommune,
+        region: userRegion,
       });
 
-      const cleanFileName = `Attestation_${certificateType === 'reussite' ? 'Reussite' : 'Participation'}_Zikisso_${nomApprenant.replace(/\s+/g, '_')}.pdf`;
+      const cleanFileName = `Attestation_${certificateType === 'reussite' ? 'Reussite' : 'Participation'}_eCommunes_${userCommune}_${nomApprenant.replace(/\s+/g, '_')}.pdf`;
       pdf.save(cleanFileName);
 
       setPastCertificates((prev) => [certRecord, ...prev]);
@@ -182,7 +194,7 @@ export const CertificateManager: React.FC<CertificateManagerProps> = ({ noteGlob
         </div>
 
         <span className="text-xs font-semibold px-2.5 py-1 bg-white rounded border border-slate-200 text-slate-700">
-          Format vectoriel PDF certifié • Décentralisation Zikisso
+          Format vectoriel PDF certifié • MOOC e-Communes CI
         </span>
       </div>
 
@@ -205,7 +217,7 @@ export const CertificateManager: React.FC<CertificateManagerProps> = ({ noteGlob
                   Félicitations ! Votre Attestation de Réussite est disponible
                 </h3>
                 <p className="text-xs sm:text-sm text-slate-700 mt-1 max-w-2xl leading-relaxed">
-                  Avec une note globale de <strong>{noteGlobale.toFixed(1)} / 20</strong>, vous validez l'ensemble du cycle de formation communale. Vous pouvez télécharger dès maintenant votre diplôme officiel certifié par la Mairie de Zikisso.
+                  Avec une note globale de <strong>{noteGlobale.toFixed(1)} / 20</strong>, vous validez le programme national de formation. Votre diplôme officiel mentionne votre ancrage territorial (<strong>{userData?.commune || 'Zikisso'}</strong>, Région <strong>{userData?.region || 'Lôh-Djiboua'}</strong>).
                 </p>
               </div>
             </div>
@@ -247,7 +259,7 @@ export const CertificateManager: React.FC<CertificateManagerProps> = ({ noteGlob
                   Votre Attestation de Participation est disponible
                 </h3>
                 <p className="text-xs sm:text-sm text-slate-700 mt-1 max-w-2xl leading-relaxed">
-                  Avec une note globale de <strong>{noteGlobale.toFixed(1)} / 20</strong>, vous recevez l'Attestation officielle de Participation au MOOC Zikisso. Vous pouvez continuer d'améliorer vos notes de quiz ou devoirs pour décrocher l'Attestation de Réussite (seuil : 12/20).
+                  Avec une note globale de <strong>{noteGlobale.toFixed(1)} / 20</strong>, vous recevez l'Attestation officielle de Participation au MOOC e-Communes au titre de la Commune de <strong>{userData?.commune || 'Zikisso'}</strong>. Vous pouvez continuer d'améliorer vos quiz et devoirs pour obtenir l'Attestation de Réussite (seuil : 12/20).
                 </p>
               </div>
             </div>
@@ -351,7 +363,7 @@ export const CertificateManager: React.FC<CertificateManagerProps> = ({ noteGlob
 
             <div className="p-3 rounded bg-slate-50 border border-slate-200">
               <span className="text-slate-500 block text-[11px]">Signature &amp; Sceau</span>
-              <strong className="text-slate-800">Mairie de Zikisso (Lôh-Djiboua)</strong>
+              <strong className="text-slate-800">Mairie d'attache • Pilote Zikisso</strong>
             </div>
           </div>
         </div>
@@ -361,7 +373,7 @@ export const CertificateManager: React.FC<CertificateManagerProps> = ({ noteGlob
           <div className="pt-4 border-t border-slate-100">
             <h4 className="text-xs font-bold text-slate-700 uppercase tracking-wider mb-3 flex items-center space-x-1.5">
               <Calendar className="w-4 h-4 text-[#1F4E79]" />
-              <span>Historique de vos attestations enregistrées dans Firestore</span>
+              <span>Historique de vos attestations officielles</span>
             </h4>
 
             <div className="divide-y divide-slate-100 border border-slate-200 rounded-md overflow-hidden">
@@ -370,7 +382,7 @@ export const CertificateManager: React.FC<CertificateManagerProps> = ({ noteGlob
                   key={cert.id || index}
                   className="p-3.5 bg-slate-50/50 flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs"
                 >
-                  <div className="flex items-center space-x-2.5">
+                  <div className="flex items-center space-x-2.5 flex-wrap gap-y-1">
                     <span
                       className={`px-2 py-0.5 rounded text-[10px] font-bold ${
                         cert.type === 'reussite'
@@ -383,6 +395,11 @@ export const CertificateManager: React.FC<CertificateManagerProps> = ({ noteGlob
                     <span className="font-semibold text-slate-800">
                       Réf : {cert.certificatId}
                     </span>
+                    {cert.commune && (
+                      <span className="text-[10px] bg-slate-100 text-slate-700 font-semibold px-1.5 py-0.5 rounded border border-slate-300">
+                        📍 {cert.commune}
+                      </span>
+                    )}
                     <span className="text-slate-500">
                       • Note : <strong>{cert.noteGlobale} / 20</strong>
                     </span>

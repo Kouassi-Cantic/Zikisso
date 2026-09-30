@@ -66,7 +66,10 @@ export const LoginPage: React.FC = () => {
             Espace d'Accès Sécurisé
           </h1>
           <p className="text-xs sm:text-sm text-slate-500 mt-1">
-            Connectez-vous à votre espace MOOC Zikisso
+            Connectez-vous à votre espace <strong>MOOC e-Communes</strong>
+          </p>
+          <p className="text-[11px] text-[#1A6B3C] font-semibold mt-0.5">
+            Collectivité pilote d'application : Commune de Zikisso
           </p>
         </div>
 

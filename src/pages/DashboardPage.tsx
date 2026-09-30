@@ -9,11 +9,16 @@ import {
   CheckCircle, 
   Clock, 
   TrendingUp, 
-  FileCheck2 
+  FileCheck2,
+  MapPin,
+  Building2,
+  Edit2,
+  Check
 } from 'lucide-react';
 import { collection, getDocs, query, where } from 'firebase/firestore';
 import { db, isFirebaseConfigured } from '../firebase/config';
 import { AudioReader } from '../components/AudioReader';
+import { COTE_D_IVOIRE_TERRITORIES, findTerritoryByCommune } from '../data/territories';
 
 interface CourseCardMeta {
   id: string;
@@ -76,8 +81,39 @@ const MODULES_LIST: CourseCardMeta[] = [
 ];
 
 export const DashboardPage: React.FC = () => {
-  const { userData, currentUser } = useAuth();
+  const { userData, currentUser, updateProfileTerritory } = useAuth();
   const [completedCount, setCompletedCount] = useState<number>(0);
+  const [isEditingTerritory, setIsEditingTerritory] = useState<boolean>(false);
+  const [tempCommune, setTempCommune] = useState<string>(userData?.commune || 'Zikisso');
+  const [tempRegion, setTempRegion] = useState<string>(userData?.region || 'Lôh-Djiboua');
+  const [isSavingTerritory, setIsSavingTerritory] = useState<boolean>(false);
+
+  useEffect(() => {
+    if (userData?.commune) {
+      setTempCommune(userData.commune);
+      setTempRegion(userData.region || 'Lôh-Djiboua');
+    }
+  }, [userData]);
+
+  const handleCommuneChange = (newCommune: string) => {
+    const found = findTerritoryByCommune(newCommune);
+    setTempCommune(newCommune);
+    if (found) {
+      setTempRegion(found.region);
+    }
+  };
+
+  const handleSaveTerritory = async () => {
+    try {
+      setIsSavingTerritory(true);
+      await updateProfileTerritory(tempCommune, tempRegion);
+      setIsEditingTerritory(false);
+    } catch (e) {
+      console.error('Erreur sauvegarde commune:', e);
+    } finally {
+      setIsSavingTerritory(false);
+    }
+  };
 
   useEffect(() => {
     let isMounted = true;
@@ -123,14 +159,14 @@ export const DashboardPage: React.FC = () => {
           <div>
             <div className="inline-flex items-center space-x-1.5 px-2.5 py-1 rounded-full text-xs font-semibold bg-[#F0F7F2] text-[#1A6B3C] border border-[#1A6B3C]/20 mb-2">
               <CheckCircle className="w-3.5 h-3.5" />
-              <span>Session active</span>
+              <span>Session active • MOOC e-Communes</span>
             </div>
             <h1 className="text-2xl sm:text-3xl font-bold text-[#1F4E79] tracking-tight">
               Bienvenue, {userData?.nom || currentUser?.email}
             </h1>
             <p className="text-sm text-slate-600 mt-1 max-w-3xl leading-relaxed">
-              Plateforme de formation continue des acteurs communaux et des forces vives de Zikisso. 
-              Accédez ci-dessous à votre parcours pédagogique ou consultez votre suivi individuel.
+              Plateforme nationale de formation continue des acteurs communaux, régionaux et des forces vives citoyennes.
+              Laboratoire territorial d'expérimentation : <strong>Commune pilote de Zikisso</strong> (Lôh-Djiboua).
             </p>
           </div>
 
@@ -150,8 +186,76 @@ export const DashboardPage: React.FC = () => {
           </div>
         </div>
 
+        {/* Bloc d'ancrage territorial de l'apprenant */}
+        <div className="mt-5 p-4 rounded-lg bg-[#F8FAFC] border border-slate-200 flex flex-col md:flex-row md:items-center justify-between gap-3">
+          <div className="flex items-start sm:items-center space-x-3">
+            <div className="w-9 h-9 rounded-full bg-[#1A6B3C]/10 text-[#1A6B3C] flex items-center justify-center flex-shrink-0">
+              <MapPin className="w-4 h-4 text-[#1A6B3C]" />
+            </div>
+            <div>
+              <div className="flex items-center space-x-2">
+                <span className="text-xs font-bold uppercase tracking-wider text-slate-500">
+                  Votre ancrage territorial :
+                </span>
+                <span className="text-xs font-bold text-[#1F4E79]">
+                  Commune de {userData?.commune || 'Zikisso'}
+                </span>
+                <span className="text-xs text-slate-500">
+                  (Région du {userData?.region || 'Lôh-Djiboua'})
+                </span>
+              </div>
+              <p className="text-[11px] text-slate-500 mt-0.5">
+                Ces mentions figureront sur vos certificats officiels et dans le registre pour le parrainage communal.
+              </p>
+            </div>
+          </div>
+
+          <div>
+            {!isEditingTerritory ? (
+              <button
+                type="button"
+                onClick={() => setIsEditingTerritory(true)}
+                className="inline-flex items-center space-x-1.5 text-xs font-semibold text-[#1F4E79] hover:text-[#1A6B3C] bg-white px-3 py-1.5 rounded border border-slate-300 hover:border-[#1A6B3C] transition shadow-2xs"
+              >
+                <Edit2 className="w-3.5 h-3.5" />
+                <span>Modifier ma commune</span>
+              </button>
+            ) : (
+              <div className="flex items-center space-x-2 bg-white p-1 rounded border border-slate-300">
+                <select
+                  value={tempCommune}
+                  onChange={(e) => handleCommuneChange(e.target.value)}
+                  className="text-xs border border-slate-200 rounded px-2 py-1 bg-white focus:outline-none focus:ring-1 focus:ring-[#1A6B3C]"
+                >
+                  {COTE_D_IVOIRE_TERRITORIES.map((t) => (
+                    <option key={`${t.commune}-${t.region}`} value={t.commune}>
+                      {t.isPilot ? `★ ${t.commune} (Commune pilote)` : `${t.commune} (${t.region})`}
+                    </option>
+                  ))}
+                </select>
+                <button
+                  type="button"
+                  disabled={isSavingTerritory}
+                  onClick={handleSaveTerritory}
+                  className="px-2 py-1 text-xs font-bold bg-[#1A6B3C] text-white rounded hover:bg-[#14532D] transition flex items-center space-x-1"
+                >
+                  <Check className="w-3.5 h-3.5" />
+                  <span>Enregistrer</span>
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setIsEditingTerritory(false)}
+                  className="px-2 py-1 text-xs text-slate-600 hover:text-slate-900"
+                >
+                  Annuler
+                </button>
+              </div>
+            )}
+          </div>
+        </div>
+
         {/* Accès direct à "Mon tableau de bord" personnel */}
-        <div className="mt-6 pt-5 border-t border-slate-100 flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-[#F0F5FA] p-4 rounded-lg">
+        <div className="mt-4 pt-4 border-t border-slate-100 flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-[#F0F5FA] p-4 rounded-lg">
           <div className="flex items-center space-x-3">
             <div className="w-10 h-10 rounded-full bg-[#1F4E79] text-white flex items-center justify-center flex-shrink-0">
               <Award className="w-5 h-5 text-emerald-300" />
@@ -181,16 +285,16 @@ export const DashboardPage: React.FC = () => {
         <div>
           <blockquote className="quote-serif italic text-base sm:text-lg text-slate-700">
             « La bonne gouvernance locale et la transformation numérique constituent les deux piliers
-            d'un développement communal durable, équitable et au service direct des populations de Zikisso. »
+            d'un développement municipal durable, équitable et au service direct de toutes les populations de nos collectivités. »
           </blockquote>
           <p className="text-xs font-semibold text-[#1F4E79] mt-2 uppercase tracking-wider">
-            — Direction du Programme Pédagogique Communal
+            — Direction du Programme National MOOC e-Communes (Collectivité pilote : Zikisso)
           </p>
         </div>
         <div className="flex-shrink-0">
           <AudioReader
-            text="Bienvenue sur le MOOC Zikisso, Gestion des Collectivités Locales et Transformation Digitale. La bonne gouvernance locale et la transformation numérique constituent les deux piliers d'un développement communal durable, équitable et au service direct des populations de Zikisso."
-            title="Introduction audio du MOOC Zikisso"
+            text="Bienvenue sur le MOOC e-Communes, Gouvernance Municipale et Transformation Digitale. La bonne gouvernance locale et la transformation numérique constituent les deux piliers d'un développement communal durable, équitable et au service direct des populations, avec la collectivité de Zikisso comme laboratoire d'expérimentation."
+            title="Introduction audio du MOOC e-Communes"
             variant="button"
           />
         </div>

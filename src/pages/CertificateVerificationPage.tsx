@@ -27,6 +27,8 @@ interface VerifiedCertificate {
   dateGeneration: string;
   dateGénération?: string;
   titreMooc?: string;
+  commune?: string;
+  region?: string;
 }
 
 const LOCAL_STORAGE_CERTIFICATES_KEY = 'zikisso_local_certificates';
@@ -210,11 +212,16 @@ export const CertificateVerificationPage: React.FC = () => {
                     <User className="w-5 h-5 text-slate-400" />
                     <span>{certificate.nomApprenant}</span>
                   </p>
-                  {certificate.apprenantProfil && (
-                    <span className="inline-block mt-1 text-xs bg-[#F0F5FA] text-[#1F4E79] font-semibold px-2.5 py-0.5 rounded-full border border-[#1F4E79]/20">
-                      {certificate.apprenantProfil}
+                  <div className="flex flex-wrap items-center gap-1.5 pt-1">
+                    {certificate.apprenantProfil && (
+                      <span className="inline-block text-xs bg-[#F0F5FA] text-[#1F4E79] font-semibold px-2.5 py-0.5 rounded-full border border-[#1F4E79]/20">
+                        {certificate.apprenantProfil}
+                      </span>
+                    )}
+                    <span className="inline-block text-xs bg-emerald-50 text-[#14532D] font-bold px-2.5 py-0.5 rounded-full border border-emerald-300">
+                      📍 Commune de {certificate.commune || 'Zikisso'} ({certificate.region || 'Lôh-Djiboua'})
                     </span>
-                  )}
+                  </div>
                 </div>
 
                 <div className="space-y-1">
@@ -243,7 +250,10 @@ export const CertificateVerificationPage: React.FC = () => {
                   <span className="text-xs font-semibold uppercase tracking-wider text-slate-500">Programme de formation</span>
                   <p className="text-sm font-bold text-slate-800 flex items-start space-x-2">
                     <BookOpen className="w-4 h-4 text-[#1F4E79] flex-shrink-0 mt-0.5" />
-                    <span>MOOC Zikisso — Collectivités Locales &amp; Transformation Digitale</span>
+                    <span>MOOC e-Communes — Gouvernance Municipale &amp; Transformation Digitale</span>
+                  </p>
+                  <p className="text-[11px] text-slate-500 italic pl-6">
+                    Laboratoire territorial d'expérimentation : Commune de Zikisso
                   </p>
                 </div>
 
@@ -262,10 +272,10 @@ export const CertificateVerificationPage: React.FC = () => {
                 </div>
 
                 <div className="space-y-1">
-                  <span className="text-xs font-semibold uppercase tracking-wider text-slate-500">Organisme émetteur</span>
+                  <span className="text-xs font-semibold uppercase tracking-wider text-slate-500">Autorité &amp; Organismes Associés</span>
                   <p className="text-sm font-semibold text-slate-700 flex items-center space-x-2">
                     <Building2 className="w-4 h-4 text-[#1A6B3C]" />
-                    <span>Mairie de Zikisso &amp; Plateforme Éducative Klo-Liké</span>
+                    <span>Collectivité de {certificate.commune || 'Zikisso'} &amp; Conseil Pédagogique MOOC e-Communes</span>
                   </p>
                 </div>
               </div>
@@ -275,7 +285,7 @@ export const CertificateVerificationPage: React.FC = () => {
             <div className="bg-[#F0F5FA] border border-[#1F4E79]/15 rounded-lg p-4 flex items-center space-x-3 text-xs text-[#1F4E79]">
               <ShieldCheck className="w-5 h-5 text-[#1A6B3C] flex-shrink-0" />
               <span>
-                Cet enregistrement a été certifié par signature cryptographique de la Mairie de Zikisso. Il confère à son titulaire la validation formelle des compétences acquises en gouvernance locale et administration numérique.
+                Cet enregistrement a été validé dans le Registre National du <strong>MOOC e-Communes</strong>. Il certifie l'authenticité des compétences territoriales validées par l'apprenant pour la Commune de <strong>{certificate.commune || 'Zikisso'}</strong> (Région du <strong>{certificate.region || 'Lôh-Djiboua'}</strong>).
               </span>
             </div>
           </div>

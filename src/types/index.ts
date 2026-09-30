@@ -11,6 +11,8 @@ export interface UserData {
   email: string;
   profil: UserProfileType;
   role: UserRole;
+  commune?: string;
+  region?: string;
   createdAt?: string | number | null;
 }
 
@@ -62,6 +64,8 @@ export interface SubmissionData {
   apprenantNom?: string;
   apprenantEmail?: string;
   apprenantProfil?: UserProfileType;
+  apprenantCommune?: string;
+  apprenantRegion?: string;
   exerciceId: string;
   exerciceTitre?: string;
   texte: string;

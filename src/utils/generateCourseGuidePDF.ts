@@ -26,7 +26,7 @@ export const generateCourseGuidePDF = (): jsPDF => {
     doc.setFontSize(7.5);
     doc.setTextColor(148, 163, 184);
     doc.text(
-      `Fascicule Pédagogique Intégral • MOOC Zikisso — Mairie de Zikisso & Klo-Liké • Page ${pageNum}`,
+      `Fascicule Pédagogique Intégral • MOOC e-Communes — Collectivité pilote : Zikisso • Page ${pageNum}`,
       pageWidth / 2,
       pageHeight - 9,
       { align: 'center' }
@@ -47,12 +47,12 @@ export const generateCourseGuidePDF = (): jsPDF => {
   doc.setFont('helvetica', 'bold');
   doc.setFontSize(22);
   doc.setTextColor(255, 255, 255);
-  doc.text("MOOC ZIKISSO", margin + 10, 62);
+  doc.text("MOOC E-COMMUNES", margin + 10, 62);
 
   doc.setFont('helvetica', 'normal');
   doc.setFontSize(13);
   doc.setTextColor(220, 235, 250);
-  doc.text("Collectivités Locales & Transformation Digitale", margin + 10, 72);
+  doc.text("Gouvernance Municipale & Transformation Digitale", margin + 10, 72);
 
   doc.setFont('helvetica', 'bold');
   doc.setFontSize(16);
@@ -63,7 +63,7 @@ export const generateCourseGuidePDF = (): jsPDF => {
   doc.setFontSize(10);
   doc.setTextColor(203, 213, 225);
   const introCouv = [
-    "Programme complet de formation des acteurs communaux et des citoyens :",
+    "Programme complet de formation des acteurs communaux, régionaux et des citoyens :",
     "• Semaine 1 : Cadre Institutionnel, Acteurs et Décentralisation",
     "• Semaine 2 : Planification Locale et Budgétisation Territoriale",
     "• Semaine 3 : Fiscalité Locale et Mobilisation des Ressources Propres",
@@ -83,13 +83,13 @@ export const generateCourseGuidePDF = (): jsPDF => {
   doc.setFont('helvetica', 'bold');
   doc.setFontSize(9.5);
   doc.setTextColor(255, 255, 255);
-  doc.text("Mairie de Zikisso (Région du Lôh-Djiboua) & Plateforme Klo-Liké", margin + 8, pageHeight - 44);
+  doc.text("Réseau des Collectivités Locales de Côte d'Ivoire & Conseil Pédagogique", margin + 8, pageHeight - 44);
 
   doc.setFont('helvetica', 'normal');
   doc.setFontSize(8);
   doc.setTextColor(148, 163, 184);
-  doc.text("Support de révision et d'étude conçu pour la consultation hors-ligne.", margin + 8, pageHeight - 36);
-  doc.text("Édition officielle certifiée — Conforme à la loi ivoirienne n° 2012-1128.", margin + 8, pageHeight - 30);
+  doc.text("Laboratoire territorial et cas pratique d'application : Commune de Zikisso (Lôh-Djiboua).", margin + 8, pageHeight - 36);
+  doc.text("Édition certifiée conforme à la loi ivoirienne n° 2012-1128 portant organisation des collectivités territoriales.", margin + 8, pageHeight - 30);
 
   // --- PAGES INTÉRIEURES : LES 4 SEMAINES + BONUS ---
   const weekKeys = ['semaine-1', 'semaine-2', 'semaine-3', 'semaine-4', 'module-bonus'];

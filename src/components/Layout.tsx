@@ -39,18 +39,23 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
             
-            {/* Logo texte MOOC Zikisso */}
+            {/* Logo texte MOOC e-Communes */}
             <div className="flex items-center space-x-3">
               <Link to="/" className="flex items-center space-x-3 group">
                 <div className="w-10 h-10 rounded bg-[#1A6B3C] flex items-center justify-center text-white font-bold text-lg shadow-sm border border-emerald-400/20 group-hover:bg-[#14532D] transition">
                   <BookOpen className="w-5 h-5 text-white" />
                 </div>
                 <div className="flex flex-col">
-                  <span className="text-lg sm:text-xl font-bold tracking-tight text-white group-hover:text-emerald-100 transition-colors">
-                    MOOC Zikisso
-                  </span>
+                  <div className="flex items-center space-x-2">
+                    <span className="text-lg sm:text-xl font-bold tracking-tight text-white group-hover:text-emerald-100 transition-colors">
+                      MOOC e-Communes
+                    </span>
+                    <span className="hidden sm:inline-block text-[10px] bg-emerald-700/80 text-emerald-100 px-1.5 py-0.2 rounded font-semibold border border-emerald-500/30">
+                      Pilote : Zikisso
+                    </span>
+                  </div>
                   <span className="text-[10px] sm:text-xs text-blue-200 tracking-wide font-normal truncate max-w-[200px] sm:max-w-md">
-                    Collectivités Locales &amp; Transformation Digitale
+                    Gouvernance Municipale &amp; Transformation Digitale
                   </span>
                 </div>
               </Link>
@@ -110,10 +115,15 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
                       <p className="font-semibold text-white leading-none">
                         {userData?.nom || currentUser.email}
                       </p>
-                      <p className="text-[11px] text-blue-200 mt-0.5 leading-none">
-                        {userData?.profil || 'Apprenant'}
+                      <p className="text-[11px] text-blue-200 mt-0.5 leading-none flex items-center space-x-1.5 flex-wrap">
+                        <span>{userData?.profil || 'Apprenant'}</span>
+                        {userData?.commune && (
+                          <span className="text-[10px] text-emerald-200 font-semibold bg-emerald-950/50 px-1.5 py-0.5 rounded border border-emerald-400/30">
+                            📍 {userData.commune}
+                          </span>
+                        )}
                         {userData?.role === 'admin' && (
-                          <span className="ml-1.5 inline-flex items-center text-[10px] bg-[#C55A11] text-white px-1.5 py-0.2 rounded font-semibold">
+                          <span className="inline-flex items-center text-[10px] bg-[#C55A11] text-white px-1.5 py-0.2 rounded font-semibold">
                             Admin
                           </span>
                         )}
@@ -232,10 +242,10 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row justify-between items-center gap-4 text-center sm:text-left">
           <div>
             <p className="font-bold text-white tracking-wide">
-              MOOC Zikisso — Gestion des Collectivités Locales &amp; Transformation Digitale
+              MOOC e-Communes — Gouvernance Municipale &amp; Transformation Digitale
             </p>
             <p className="text-slate-400 mt-0.5">
-              Plateforme pédagogique dédiée au renforcement des compétences communales et citoyennes.
+              Plateforme nationale certifiante • Collectivité pilote d'expérimentation : Commune de Zikisso (Lôh-Djiboua).
             </p>
           </div>
           <div className="flex flex-col sm:flex-row items-center gap-3 sm:gap-6 text-slate-400">
@@ -248,7 +258,7 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
             </Link>
             <div className="flex items-center space-x-1.5">
               <span className="w-2 h-2 rounded-full bg-[#1A6B3C]"></span>
-              <span>Portail sécurisé Mairie de Zikisso</span>
+              <span>Réseau des Collectivités Locales de Côte d'Ivoire</span>
             </div>
           </div>
         </div>
