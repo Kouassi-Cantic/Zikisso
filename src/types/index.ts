@@ -13,6 +13,10 @@ export interface UserData {
   role: UserRole;
   commune?: string;
   region?: string;
+  photoUrl?: string;
+  photoLieuEmblematiqueUrl?: string;
+  lieuEmblematiqueNom?: string;
+  lieuEmblematiqueDescription?: string;
   createdAt?: string | number | null;
 }
 

@@ -531,17 +531,29 @@ Notre priorité doit porter sur la modernisation du recouvrement des taxes forai
                 </div>
 
                 {/* Profil de l'apprenant */}
-                <div className="flex flex-wrap items-center gap-4 text-xs text-slate-600 bg-slate-50 p-3 rounded-md border border-slate-200">
-                  <div className="flex items-center space-x-1.5">
-                    <User className="w-4 h-4 text-[#1F4E79]" />
-                    <strong className="text-slate-800">{selectedSubmission.apprenantNom}</strong>
+                <div className="flex flex-wrap items-center justify-between gap-4 text-xs text-slate-600 bg-slate-50 p-3.5 rounded-lg border border-slate-200">
+                  <div className="flex items-center space-x-3">
+                    <div className="w-10 h-10 rounded-full bg-[#1F4E79]/10 text-[#1F4E79] flex items-center justify-center font-bold text-sm border border-[#1F4E79]/20 flex-shrink-0">
+                      {(selectedSubmission.apprenantNom || 'A').charAt(0).toUpperCase()}
+                    </div>
+                    <div>
+                      <strong className="text-slate-800 text-sm block">{selectedSubmission.apprenantNom}</strong>
+                      <span className="text-slate-500">{selectedSubmission.apprenantEmail}</span>
+                    </div>
                   </div>
-                  <span>•</span>
-                  <span>{selectedSubmission.apprenantEmail}</span>
-                  <span>•</span>
-                  <span className="font-medium text-[#1A6B3C]">{selectedSubmission.apprenantProfil}</span>
-                  <span>•</span>
-                  <span>Envoyé le {new Date(selectedSubmission.dateEnvoi).toLocaleString('fr-FR')}</span>
+
+                  <div className="flex flex-wrap items-center gap-2">
+                    <span className="font-semibold text-[#1F4E79] bg-blue-50 border border-blue-200 px-2.5 py-1 rounded">
+                      {selectedSubmission.apprenantProfil || 'Apprenant'}
+                    </span>
+                    <span className="font-bold text-[#14532D] bg-emerald-50 border border-emerald-300 px-2.5 py-1 rounded">
+                      📍 {selectedSubmission.apprenantCommune ? `Commune de ${selectedSubmission.apprenantCommune}` : 'Commune de Zikisso'}
+                      {selectedSubmission.apprenantRegion && ` (${selectedSubmission.apprenantRegion})`}
+                    </span>
+                    <span className="text-slate-400 text-[11px]">
+                      Envoyé le {new Date(selectedSubmission.dateEnvoi).toLocaleString('fr-FR')}
+                    </span>
+                  </div>
                 </div>
               </div>
 

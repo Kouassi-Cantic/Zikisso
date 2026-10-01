@@ -164,6 +164,8 @@ export const SubmissionForm: React.FC<SubmissionFormProps> = ({ exercice }) => {
       apprenantNom: userData?.nom || currentUser.displayName || currentUser.email || 'Apprenant',
       apprenantEmail: currentUser.email || '',
       apprenantProfil: userData?.profil,
+      apprenantCommune: userData?.commune || 'Zikisso',
+      apprenantRegion: userData?.region || 'Lôh-Djiboua',
       exerciceId: exercice.id,
       exerciceTitre: exercice.titre,
       texte: cleanText,

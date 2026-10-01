@@ -209,9 +209,17 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
                     type="button"
                     onClick={() => setIsProfileModalOpen(true)}
                     className="flex items-center space-x-2 text-xs sm:text-sm bg-white/10 hover:bg-white/15 px-3 py-1.5 rounded-md border border-white/15 transition text-left group cursor-pointer"
-                    title="Cliquer pour modifier votre profil, identité et commune"
+                    title="Cliquer pour modifier votre profil, photo et commune"
                   >
-                    <User className="w-4 h-4 text-emerald-300 group-hover:scale-110 transition-transform" />
+                    {userData?.photoUrl ? (
+                      <img
+                        src={userData.photoUrl}
+                        alt="Avatar"
+                        className="w-5 h-5 rounded-full object-cover border border-emerald-300 group-hover:scale-110 transition-transform"
+                      />
+                    ) : (
+                      <User className="w-4 h-4 text-emerald-300 group-hover:scale-110 transition-transform" />
+                    )}
                     <div className="text-left">
                       <div className="flex items-center space-x-1.5">
                         <p className="font-semibold text-white leading-none">

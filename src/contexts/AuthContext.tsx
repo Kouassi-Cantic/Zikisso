@@ -29,7 +29,16 @@ interface AuthContextType {
   loginWithGoogle: () => Promise<void>;
   logout: () => Promise<void>;
   updateProfileTerritory: (commune: string, region: string) => Promise<void>;
-  updateUserProfile: (data: { nom?: string; profil?: UserProfileType; commune?: string; region?: string }) => Promise<void>;
+  updateUserProfile: (data: {
+    nom?: string;
+    profil?: UserProfileType;
+    commune?: string;
+    region?: string;
+    photoUrl?: string;
+    photoLieuEmblematiqueUrl?: string;
+    lieuEmblematiqueNom?: string;
+    lieuEmblematiqueDescription?: string;
+  }) => Promise<void>;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -332,6 +341,10 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     profil?: UserProfileType;
     commune?: string;
     region?: string;
+    photoUrl?: string;
+    photoLieuEmblematiqueUrl?: string;
+    lieuEmblematiqueNom?: string;
+    lieuEmblematiqueDescription?: string;
   }) => {
     if (!currentUser || !userData) return;
 
@@ -344,6 +357,10 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       profil: updates.profil !== undefined ? updates.profil : userData.profil,
       commune: updates.commune !== undefined ? (updates.commune.trim() || 'Zikisso') : (userData.commune || 'Zikisso'),
       region: updates.region !== undefined ? (updates.region.trim() || 'Lôh-Djiboua') : (userData.region || 'Lôh-Djiboua'),
+      photoUrl: updates.photoUrl !== undefined ? updates.photoUrl : userData.photoUrl,
+      photoLieuEmblematiqueUrl: updates.photoLieuEmblematiqueUrl !== undefined ? updates.photoLieuEmblematiqueUrl : userData.photoLieuEmblematiqueUrl,
+      lieuEmblematiqueNom: updates.lieuEmblematiqueNom !== undefined ? updates.lieuEmblematiqueNom.trim() : userData.lieuEmblematiqueNom,
+      lieuEmblematiqueDescription: updates.lieuEmblematiqueDescription !== undefined ? updates.lieuEmblematiqueDescription.trim() : userData.lieuEmblematiqueDescription,
       role: isSuperAdmin ? 'admin' : userData.role,
     };
 
@@ -356,6 +373,11 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
           region: updated.region,
           role: updated.role,
         };
+        if (updated.photoUrl !== undefined) payload.photoUrl = updated.photoUrl;
+        if (updated.photoLieuEmblematiqueUrl !== undefined) payload.photoLieuEmblematiqueUrl = updated.photoLieuEmblematiqueUrl;
+        if (updated.lieuEmblematiqueNom !== undefined) payload.lieuEmblematiqueNom = updated.lieuEmblematiqueNom;
+        if (updated.lieuEmblematiqueDescription !== undefined) payload.lieuEmblematiqueDescription = updated.lieuEmblematiqueDescription;
+
         await setDoc(doc(db, 'users', currentUser.uid), payload, { merge: true });
       } catch (e) {
         console.error('Erreur mise à jour profil Firestore:', e);

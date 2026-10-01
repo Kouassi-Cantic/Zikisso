@@ -352,9 +352,12 @@ export const PeerReviewSection: React.FC<PeerReviewSectionProps> = ({ exercice, 
                     <span className="font-bold text-[#1F4E79]">
                       Travail soumis par un collègue apprenant (Anonymisé)
                     </span>
-                    <span className="text-slate-500">
-                      Région d'application : {selectedSubmission.apprenantRegion || 'Territoire national'}
-                    </span>
+                    <div className="flex items-center space-x-1.5 text-slate-600">
+                      <span className="text-emerald-700 bg-emerald-50 border border-emerald-200 px-2 py-0.5 rounded font-semibold text-[11px]">
+                        📍 {selectedSubmission.apprenantCommune ? `Commune de ${selectedSubmission.apprenantCommune}` : 'Commune territoriale'}
+                        {selectedSubmission.apprenantRegion && ` (${selectedSubmission.apprenantRegion})`}
+                      </span>
+                    </div>
                   </div>
 
                   <div className="text-xs sm:text-sm text-slate-800 whitespace-pre-wrap font-serif leading-relaxed bg-white p-4 rounded border border-slate-200 max-h-72 overflow-y-auto">

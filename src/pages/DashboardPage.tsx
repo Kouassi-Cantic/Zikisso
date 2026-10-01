@@ -13,7 +13,10 @@ import {
   MapPin,
   Building2,
   Edit2,
-  Check
+  Check,
+  Landmark,
+  Camera,
+  Compass
 } from 'lucide-react';
 import { collection, getDocs, query, where } from 'firebase/firestore';
 import { db, isFirebaseConfigured } from '../firebase/config';
@@ -158,26 +161,51 @@ export const DashboardPage: React.FC = () => {
       {/* En-tête de bienvenue personnalisé */}
       <div className="bg-white rounded-lg border border-slate-200 p-6 sm:p-8 shadow-sm">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-          <div>
-            <div className="inline-flex items-center space-x-1.5 px-2.5 py-1 rounded-full text-xs font-semibold bg-[#F0F7F2] text-[#1A6B3C] border border-[#1A6B3C]/20 mb-2">
-              <CheckCircle className="w-3.5 h-3.5" />
-              <span>Session active • MOOC e-Communes</span>
+          
+          {/* Avatar & Identité */}
+          <div className="flex items-start sm:items-center space-x-4">
+            <div 
+              onClick={() => setIsProfileModalOpen(true)}
+              className="relative w-16 h-16 sm:w-18 sm:h-18 rounded-full overflow-hidden border-2 border-[#1F4E79] shadow-sm bg-slate-100 flex items-center justify-center flex-shrink-0 cursor-pointer group"
+              title="Cliquer pour modifier votre photo de profil"
+            >
+              {userData?.photoUrl ? (
+                <img
+                  src={userData.photoUrl}
+                  alt={userData.nom || 'Photo de profil'}
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform"
+                />
+              ) : (
+                <div className="w-full h-full bg-[#1F4E79]/10 text-[#1F4E79] flex items-center justify-center font-bold text-xl">
+                  {(userData?.nom || currentUser?.email || 'A').charAt(0).toUpperCase()}
+                </div>
+              )}
+              <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center text-white">
+                <Camera className="w-5 h-5" />
+              </div>
             </div>
-            <h1 className="text-2xl sm:text-3xl font-bold text-[#1F4E79] tracking-tight">
-              Bienvenue, {userData?.nom || currentUser?.email}
-            </h1>
-            <p className="text-sm text-slate-600 mt-1 max-w-3xl leading-relaxed">
-              Plateforme nationale de formation continue des acteurs communaux, régionaux et des forces vives citoyennes.
-              Laboratoire territorial d'expérimentation : <strong>Commune pilote de Zikisso</strong> (Lôh-Djiboua).
-            </p>
+
+            <div>
+              <div className="inline-flex items-center space-x-1.5 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-[#F0F7F2] text-[#1A6B3C] border border-[#1A6B3C]/20 mb-1.5">
+                <CheckCircle className="w-3.5 h-3.5" />
+                <span>Session active • MOOC e-Communes</span>
+              </div>
+              <h1 className="text-2xl sm:text-3xl font-bold text-[#1F4E79] tracking-tight">
+                Bienvenue, {userData?.nom || currentUser?.email}
+              </h1>
+              <p className="text-xs sm:text-sm text-slate-600 mt-0.5 max-w-3xl leading-relaxed">
+                Plateforme nationale de formation continue des acteurs communaux, régionaux et des forces vives citoyennes.
+                Laboratoire territorial d'expérimentation : <strong>Commune pilote de Zikisso</strong> (Lôh-Djiboua).
+              </p>
+            </div>
           </div>
 
-          <div className="flex flex-wrap items-center gap-2">
+          <div className="flex flex-wrap items-center gap-2 self-start sm:self-center">
             <button
               type="button"
               onClick={() => setIsProfileModalOpen(true)}
               className="inline-flex items-center space-x-1.5 px-3 py-1.5 text-xs font-semibold bg-[#1F4E79] hover:bg-[#153755] text-white rounded-md transition shadow-2xs cursor-pointer group"
-              title="Modifier mon nom, profil et commune"
+              title="Modifier mon nom, photo, profil et commune"
             >
               <span>Profil : {userData?.profil || 'Non renseigné'}</span>
               <Edit2 className="w-3 h-3 text-blue-200 group-hover:text-white" />
@@ -194,14 +222,33 @@ export const DashboardPage: React.FC = () => {
           </div>
         </div>
 
-        {/* Bloc d'ancrage territorial de l'apprenant */}
-        <div className="mt-5 p-4 rounded-lg bg-[#F8FAFC] border border-slate-200 flex flex-col md:flex-row md:items-center justify-between gap-3">
-          <div className="flex items-start sm:items-center space-x-3">
-            <div className="w-9 h-9 rounded-full bg-[#1A6B3C]/10 text-[#1A6B3C] flex items-center justify-center flex-shrink-0">
-              <MapPin className="w-4 h-4 text-[#1A6B3C]" />
-            </div>
+        {/* Bloc d'ancrage territorial de l'apprenant avec photo du lieu emblématique */}
+        <div className="mt-5 p-4 rounded-lg bg-[#F8FAFC] border border-slate-200 flex flex-col md:flex-row md:items-center justify-between gap-4">
+          <div className="flex items-start sm:items-center space-x-3.5">
+            {/* Vignette du lieu emblématique si téléversé */}
+            {userData?.photoLieuEmblematiqueUrl ? (
+              <div 
+                onClick={() => setIsProfileModalOpen(true)}
+                className="relative w-14 h-14 rounded-lg overflow-hidden border border-[#1A6B3C]/40 shadow-xs flex-shrink-0 cursor-pointer group"
+                title="Lieu emblématique communal - Cliquer pour modifier"
+              >
+                <img 
+                  src={userData.photoLieuEmblematiqueUrl} 
+                  alt="Lieu emblématique de ma commune" 
+                  className="w-full h-full object-cover group-hover:scale-105 transition"
+                />
+                <span className="absolute bottom-0 inset-x-0 bg-[#1A6B3C]/80 text-[8px] text-white text-center font-bold py-0.5">
+                  Preuve
+                </span>
+              </div>
+            ) : (
+              <div className="w-10 h-10 rounded-full bg-[#1A6B3C]/10 text-[#1A6B3C] flex items-center justify-center flex-shrink-0">
+                <MapPin className="w-4 h-4 text-[#1A6B3C]" />
+              </div>
+            )}
+
             <div>
-              <div className="flex items-center space-x-2">
+              <div className="flex items-center space-x-2 flex-wrap">
                 <span className="text-xs font-bold uppercase tracking-wider text-slate-500">
                   Votre ancrage territorial :
                 </span>
@@ -211,9 +258,17 @@ export const DashboardPage: React.FC = () => {
                 <span className="text-xs text-slate-500">
                   (Région du {userData?.region || 'Lôh-Djiboua'})
                 </span>
+                {userData?.photoLieuEmblematiqueUrl && (
+                  <span className="inline-flex items-center space-x-1 text-[10px] font-bold text-emerald-800 bg-emerald-100 border border-emerald-300 px-1.5 py-0.2 rounded">
+                    <span>✓ Lieu vérifié</span>
+                    {userData.lieuEmblematiqueNom && <span>: {userData.lieuEmblematiqueNom}</span>}
+                  </span>
+                )}
               </div>
               <p className="text-[11px] text-slate-500 mt-0.5">
-                Ces mentions figureront sur vos certificats officiels et dans le registre pour le parrainage communal.
+                {userData?.photoLieuEmblematiqueUrl
+                  ? `Preuve d'ancrage enregistrée (${userData.lieuEmblematiqueNom || 'Lieu emblématique local'}). Ces mentions figureront sur votre certificat officiel.`
+                  : "Ces mentions figureront sur vos certificats officiels et dans le registre pour le parrainage communal."}
               </p>
             </div>
           </div>

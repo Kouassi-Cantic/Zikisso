@@ -29,6 +29,9 @@ interface VerifiedCertificate {
   titreMooc?: string;
   commune?: string;
   region?: string;
+  photoUrl?: string;
+  photoLieuEmblematiqueUrl?: string;
+  lieuEmblematiqueNom?: string;
 }
 
 const LOCAL_STORAGE_CERTIFICATES_KEY = 'zikisso_local_certificates';
@@ -206,23 +209,56 @@ export const CertificateVerificationPage: React.FC = () => {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               
               <div className="space-y-4">
-                <div className="space-y-1">
-                  <span className="text-xs font-semibold uppercase tracking-wider text-slate-500">Titulaire de la certification</span>
-                  <p className="text-xl font-bold text-[#1F4E79] flex items-center space-x-2">
-                    <User className="w-5 h-5 text-slate-400" />
-                    <span>{certificate.nomApprenant}</span>
-                  </p>
-                  <div className="flex flex-wrap items-center gap-1.5 pt-1">
-                    {certificate.apprenantProfil && (
-                      <span className="inline-block text-xs bg-[#F0F5FA] text-[#1F4E79] font-semibold px-2.5 py-0.5 rounded-full border border-[#1F4E79]/20">
-                        {certificate.apprenantProfil}
-                      </span>
+                <div className="flex items-start space-x-3.5">
+                  {/* Photo de profil de l'apprenant */}
+                  <div className="w-14 h-14 rounded-full overflow-hidden border-2 border-[#1F4E79] shadow-xs bg-slate-100 flex items-center justify-center flex-shrink-0">
+                    {certificate.photoUrl ? (
+                      <img
+                        src={certificate.photoUrl}
+                        alt={certificate.nomApprenant}
+                        className="w-full h-full object-cover"
+                      />
+                    ) : (
+                      <User className="w-7 h-7 text-slate-400" />
                     )}
-                    <span className="inline-block text-xs bg-emerald-50 text-[#14532D] font-bold px-2.5 py-0.5 rounded-full border border-emerald-300">
-                      📍 Commune de {certificate.commune || 'Zikisso'} ({certificate.region || 'Lôh-Djiboua'})
-                    </span>
+                  </div>
+
+                  <div className="space-y-1">
+                    <span className="text-xs font-semibold uppercase tracking-wider text-slate-500">Titulaire de la certification</span>
+                    <p className="text-xl font-bold text-[#1F4E79]">
+                      {certificate.nomApprenant}
+                    </p>
+                    <div className="flex flex-wrap items-center gap-1.5 pt-1">
+                      {certificate.apprenantProfil && (
+                        <span className="inline-block text-xs bg-[#F0F5FA] text-[#1F4E79] font-semibold px-2.5 py-0.5 rounded-full border border-[#1F4E79]/20">
+                          {certificate.apprenantProfil}
+                        </span>
+                      )}
+                      <span className="inline-block text-xs bg-emerald-50 text-[#14532D] font-bold px-2.5 py-0.5 rounded-full border border-emerald-300">
+                        📍 Commune de {certificate.commune || 'Zikisso'} ({certificate.region || 'Lôh-Djiboua'})
+                      </span>
+                    </div>
                   </div>
                 </div>
+
+                {/* Preuve d'ancrage : Lieu emblématique */}
+                {certificate.photoLieuEmblematiqueUrl && (
+                  <div className="p-3 bg-emerald-50/60 border border-emerald-200 rounded-lg flex items-center space-x-3">
+                    <img
+                      src={certificate.photoLieuEmblematiqueUrl}
+                      alt="Lieu emblématique"
+                      className="w-12 h-12 rounded object-cover border border-emerald-300 flex-shrink-0"
+                    />
+                    <div className="text-xs">
+                      <span className="font-bold text-[#1A6B3C] block">
+                        Preuve d'ancrage communal certifiée
+                      </span>
+                      <span className="text-slate-600">
+                        {certificate.lieuEmblematiqueNom || `Lieu emblématique de la Commune de ${certificate.commune || 'Zikisso'}`}
+                      </span>
+                    </div>
+                  </div>
+                )}
 
                 <div className="space-y-1">
                   <span className="text-xs font-semibold uppercase tracking-wider text-slate-500">Type de document</span>

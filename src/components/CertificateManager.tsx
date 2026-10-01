@@ -40,6 +40,9 @@ interface SavedCertificate {
   commune?: string;
   region?: string;
   apprenantProfil?: string;
+  photoUrl?: string;
+  photoLieuEmblematiqueUrl?: string;
+  lieuEmblematiqueNom?: string;
 }
 
 const LOCAL_STORAGE_CERTIFICATES_KEY = 'zikisso_local_certificates';
@@ -129,6 +132,9 @@ export const CertificateManager: React.FC<CertificateManagerProps> = ({ noteGlob
         commune: userCommune,
         region: userRegion,
         apprenantProfil: userData?.profil,
+        photoUrl: userData?.photoUrl,
+        photoLieuEmblematiqueUrl: userData?.photoLieuEmblematiqueUrl,
+        lieuEmblematiqueNom: userData?.lieuEmblematiqueNom,
       };
 
       if (isFirebaseConfigured) {
@@ -165,6 +171,9 @@ export const CertificateManager: React.FC<CertificateManagerProps> = ({ noteGlob
         apprenantProfil: userData?.profil,
         commune: userCommune,
         region: userRegion,
+        photoUrl: userData?.photoUrl,
+        photoLieuEmblematiqueUrl: userData?.photoLieuEmblematiqueUrl,
+        lieuEmblematiqueNom: userData?.lieuEmblematiqueNom,
       });
 
       const cleanFileName = `Attestation_${certificateType === 'reussite' ? 'Reussite' : 'Participation'}_eCommunes_${userCommune}_${nomApprenant.replace(/\s+/g, '_')}.pdf`;

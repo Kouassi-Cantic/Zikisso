@@ -9,6 +9,9 @@ export interface CertificateData {
   apprenantProfil?: string;
   commune?: string;
   region?: string;
+  photoUrl?: string;
+  photoLieuEmblematiqueUrl?: string;
+  lieuEmblematiqueNom?: string;
 }
 
 export const generateCertificatePDF = (data: CertificateData): jsPDF => {
@@ -20,7 +23,10 @@ export const generateCertificatePDF = (data: CertificateData): jsPDF => {
     certificatId, 
     apprenantProfil,
     commune = 'Zikisso',
-    region = 'Lôh-Djiboua'
+    region = 'Lôh-Djiboua',
+    photoUrl,
+    photoLieuEmblematiqueUrl,
+    lieuEmblematiqueNom,
   } = data;
 
   // Création du document PDF A4 Paysage (297 mm x 210 mm)
@@ -70,6 +76,46 @@ export const generateCertificatePDF = (data: CertificateData): jsPDF => {
   drawCorner(pageWidth - 15, 15, -1, 1);
   drawCorner(15, pageHeight - 15, 1, -1);
   drawCorner(pageWidth - 15, pageHeight - 15, -1, -1);
+
+  // Ingestion sécurisée des photos si fournies (Photo de profil & Lieu emblématique)
+  // 1. Photo de profil (Coin supérieur gauche)
+  if (photoUrl && photoUrl.startsWith('data:image')) {
+    try {
+      doc.setDrawColor(...colorMarine);
+      doc.setLineWidth(0.5);
+      doc.rect(20, 20, 24, 28);
+      doc.addImage(photoUrl, 'JPEG', 20.5, 20.5, 23, 27);
+      doc.setFont('helvetica', 'bold');
+      doc.setFontSize(5);
+      doc.setTextColor(...colorMarine);
+      doc.text("TITULAIRE", 32, 51.5, { align: 'center' });
+    } catch (e) {
+      console.warn("Impossible d'incorporer l'avatar sur le PDF:", e);
+    }
+  }
+
+  // 2. Photo du lieu emblématique (Coin supérieur droit - Preuve d'ancrage)
+  if (photoLieuEmblematiqueUrl && photoLieuEmblematiqueUrl.startsWith('data:image')) {
+    try {
+      const placeX = pageWidth - 46;
+      doc.setDrawColor(...colorVert);
+      doc.setLineWidth(0.5);
+      doc.rect(placeX, 20, 26, 20);
+      doc.addImage(photoLieuEmblematiqueUrl, 'JPEG', placeX + 0.5, 20.5, 25, 19);
+      doc.setFont('helvetica', 'bold');
+      doc.setFontSize(4.5);
+      doc.setTextColor(...colorVert);
+      doc.text("PREUVE D'ANCRAGE", placeX + 13, 43, { align: 'center' });
+      if (lieuEmblematiqueNom) {
+        doc.setFont('helvetica', 'italic');
+        doc.setFontSize(4);
+        doc.setTextColor(100, 116, 139);
+        doc.text(lieuEmblematiqueNom.substring(0, 22), placeX + 13, 46.5, { align: 'center' });
+      }
+    } catch (e) {
+      console.warn("Impossible d'incorporer le lieu emblématique sur le PDF:", e);
+    }
+  }
 
   // 3. En-tête républicain & territorial
   doc.setFont('helvetica', 'bold');
