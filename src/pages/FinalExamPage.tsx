@@ -212,7 +212,7 @@ export const FinalExamPage: React.FC = () => {
       {/* Bouton retour et fil d'Ariane */}
       <div className="flex items-center justify-between">
         <Link
-          to="/"
+          to="/cours"
           className="inline-flex items-center space-x-2 text-xs sm:text-sm font-semibold text-[#1F4E79] hover:text-[#C55A11] transition-colors bg-white px-3 py-1.5 rounded-md border border-slate-200 shadow-sm"
         >
           <ArrowLeft className="w-4 h-4" />

@@ -23,6 +23,7 @@ import { db, isFirebaseConfigured } from '../firebase/config';
 import { AudioReader } from '../components/AudioReader';
 import { COTE_D_IVOIRE_TERRITORIES, findTerritoryByCommune } from '../data/territories';
 import { ProfileModal } from '../components/ProfileModal';
+import { MayorMessageModal } from '../components/MayorMessageModal';
 
 interface CourseCardMeta {
   id: string;
@@ -92,6 +93,7 @@ export const DashboardPage: React.FC = () => {
   const [tempCommune, setTempCommune] = useState<string>(userData?.commune || 'Zikisso');
   const [tempRegion, setTempRegion] = useState<string>(userData?.region || 'Lôh-Djiboua');
   const [isSavingTerritory, setIsSavingTerritory] = useState<boolean>(false);
+  const [isMayorModalOpen, setIsMayorModalOpen] = useState<boolean>(false);
 
   useEffect(() => {
     if (userData?.commune) {
@@ -273,7 +275,17 @@ export const DashboardPage: React.FC = () => {
             </div>
           </div>
 
-          <div>
+          <div className="flex flex-wrap items-center gap-2">
+            <button
+              type="button"
+              onClick={() => setIsMayorModalOpen(true)}
+              className="inline-flex items-center space-x-1.5 text-xs font-bold text-[#1A6B3C] bg-emerald-50 hover:bg-emerald-100 border border-emerald-300 px-3 py-1.5 rounded-md transition shadow-2xs cursor-pointer"
+              title="Lire le mot d'encouragement officiel du Maire de votre commune"
+            >
+              <Building2 className="w-3.5 h-3.5 text-[#1A6B3C]" />
+              <span>Mot du Maire</span>
+            </button>
+
             {!isEditingTerritory ? (
               <button
                 type="button"
@@ -445,6 +457,13 @@ export const DashboardPage: React.FC = () => {
       <ProfileModal
         isOpen={isProfileModalOpen}
         onClose={() => setIsProfileModalOpen(false)}
+      />
+
+      {/* Modale du mot d'encouragement officiel du Maire de la commune */}
+      <MayorMessageModal
+        isOpen={isMayorModalOpen}
+        commune={userData?.commune || 'Zikisso'}
+        onClose={() => setIsMayorModalOpen(false)}
       />
     </div>
   );

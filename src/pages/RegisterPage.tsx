@@ -94,7 +94,7 @@ export const RegisterPage: React.FC = () => {
       await signup(nom, email, motDePasse, profil, commune, region);
       setSuccessMessage('Compte apprenant créé avec succès ! Redirection en cours...');
       setTimeout(() => {
-        navigate('/');
+        navigate('/cours');
       }, 1000);
     } catch (err: any) {
       console.error("Erreur lors de l'inscription:", err);

@@ -255,6 +255,41 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
                 </>
               )}
 
+              {/* Boutons pour visiteurs non connectés */}
+              {!currentUser && (
+                <div className="flex items-center space-x-2">
+                  <Link
+                    to="/"
+                    className="inline-flex items-center space-x-1.5 text-xs sm:text-sm font-medium text-blue-100 hover:text-white px-2.5 py-1.5 rounded-md hover:bg-white/10 transition-colors"
+                  >
+                    <Home className="w-4 h-4" />
+                    <span>Accueil</span>
+                  </Link>
+
+                  <Link
+                    to="/verifier-certificat"
+                    className="inline-flex items-center space-x-1.5 text-xs sm:text-sm font-medium text-blue-100 hover:text-white px-2.5 py-1.5 rounded-md hover:bg-white/10 transition-colors"
+                  >
+                    <ShieldCheck className="w-4 h-4 text-emerald-300" />
+                    <span>Vérifier diplôme</span>
+                  </Link>
+
+                  <Link
+                    to="/login"
+                    className="inline-flex items-center space-x-1.5 text-xs sm:text-sm font-semibold text-white bg-white/15 hover:bg-white/25 px-3 py-1.5 rounded-md border border-white/20 transition-colors"
+                  >
+                    <span>Connexion</span>
+                  </Link>
+
+                  <Link
+                    to="/register"
+                    className="inline-flex items-center space-x-1.5 text-xs sm:text-sm font-bold text-white bg-[#C55A11] hover:bg-[#A3480C] px-3.5 py-1.5 rounded-md shadow-xs transition-colors"
+                  >
+                    <span>Rejoindre</span>
+                  </Link>
+                </div>
+              )}
+
               {/* Sélecteur de Thème Visuel */}
               <div className="pl-1 border-l border-white/20">
                 <ThemeSelector />

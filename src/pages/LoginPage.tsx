@@ -15,8 +15,8 @@ export const LoginPage: React.FC = () => {
   const [googleLoading, setGoogleLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
-  // Redirection vers la page demandée ou vers l'accueil
-  const from = (location.state as any)?.from?.pathname || '/';
+  // Redirection vers la page demandée ou vers le tableau de bord des cours
+  const from = (location.state as any)?.from?.pathname || '/cours';
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();

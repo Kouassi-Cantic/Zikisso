@@ -19,6 +19,7 @@ import { FinalExamPage } from './pages/FinalExamPage';
 import { ResourcesPage } from './pages/ResourcesPage';
 import { AdminPage } from './pages/AdminPage';
 import { CertificateVerificationPage } from './pages/CertificateVerificationPage';
+import { LandingPage } from './pages/LandingPage';
 
 export default function App() {
   return (
@@ -27,9 +28,12 @@ export default function App() {
         <ThemeProvider>
           <Layout>
             <Routes>
-            {/* Route protégée : Tableau de bord principal listant les semaines */}
+            {/* Page d'atterrissage officielle publique pour tous les visiteurs */}
+            <Route path="/" element={<LandingPage />} />
+
+            {/* Route protégée : Espace de cours & Tableau de bord principal listant les semaines */}
             <Route
-              path="/"
+              path="/cours"
               element={
                 <ProtectedRoute>
                   <DashboardPage />

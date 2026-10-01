@@ -23,6 +23,8 @@ import {
   FileEdit 
 } from 'lucide-react';
 import { CertificateManager } from '../components/CertificateManager';
+import { MayorMessageModal } from '../components/MayorMessageModal';
+import { Building2, Quote } from 'lucide-react';
 
 const LOCAL_STORAGE_QUIZ_ATTEMPTS_KEY = 'zikisso_local_quiz_attempts';
 const LOCAL_STORAGE_SUBMISSIONS_KEY = 'zikisso_local_submissions';
@@ -50,6 +52,7 @@ export const MyDashboardPage: React.FC = () => {
   const [submissions, setSubmissions] = useState<Record<string, SubmissionData>>({});
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
+  const [isMayorModalOpen, setIsMayorModalOpen] = useState<boolean>(false);
 
   const fetchData = async () => {
     if (!currentUser) return;

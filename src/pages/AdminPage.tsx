@@ -13,6 +13,7 @@ import {
 import type { SubmissionData, ExerciceFilRouge, NotationCritere } from '../types';
 import { DEFAULT_EXERCISES } from '../data/defaultExercises';
 import { TerritoryObservatory } from '../components/TerritoryObservatory';
+import { MayorMessageEditor } from '../components/MayorMessageEditor';
 import { 
   ShieldCheck, 
   Clock, 
@@ -37,8 +38,8 @@ const LOCAL_STORAGE_SUBMISSIONS_KEY = 'zikisso_local_submissions';
 export const AdminPage: React.FC = () => {
   const { userData, currentUser } = useAuth();
 
-  // Onglet actif : 'corrections' ou 'observatoire'
-  const [activeTab, setActiveTab] = useState<'corrections' | 'observatoire'>('corrections');
+  // Onglet actif : 'corrections', 'observatoire' ou 'maires'
+  const [activeTab, setActiveTab] = useState<'corrections' | 'observatoire' | 'maires'>('corrections');
 
   const [submissions, setSubmissions] = useState<SubmissionData[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
@@ -338,6 +339,22 @@ Notre priorité doit porter sur la modernisation du recouvrement des taxes forai
               Statistiques Régionales
             </span>
           </button>
+
+          <button
+            type="button"
+            onClick={() => setActiveTab('maires')}
+            className={`pb-3 px-3 text-xs sm:text-sm font-bold flex items-center space-x-2 border-b-2 transition ${
+              activeTab === 'maires'
+                ? 'border-[#C55A11] text-[#C55A11]'
+                : 'border-transparent text-slate-500 hover:text-slate-800'
+            }`}
+          >
+            <MessageSquare className="w-4 h-4 text-[#C55A11]" />
+            <span>Messages des Maires</span>
+            <span className="bg-orange-100 text-[#C55A11] text-[10px] px-2 py-0.5 rounded-full font-bold border border-orange-200">
+              Personnalisation
+            </span>
+          </button>
         </div>
 
         {/* Métriques récapitulatives (affichées en mode corrections) */}
@@ -364,6 +381,11 @@ Notre priorité doit porter sur la modernisation du recouvrement des taxes forai
       {/* Onglet 2 : Observatoire Territorial */}
       {activeTab === 'observatoire' && (
         <TerritoryObservatory />
+      )}
+
+      {/* Onglet 3 : Messages des Maires & Personnalisation */}
+      {activeTab === 'maires' && (
+        <MayorMessageEditor />
       )}
 
       {/* Onglet 1 : Contenu principal des corrections */}
