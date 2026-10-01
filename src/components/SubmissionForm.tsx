@@ -13,6 +13,7 @@ import {
   limit 
 } from 'firebase/firestore';
 import type { ExerciceFilRouge, SubmissionData } from '../types';
+import { PeerReviewSection } from './PeerReviewSection';
 import { 
   FileEdit, 
   Send, 
@@ -539,6 +540,12 @@ export const SubmissionForm: React.FC<SubmissionFormProps> = ({ exercice }) => {
         )}
 
       </div>
+
+      {/* Section Évaluation par les Pairs (Peer-Reviewing pédagogique collaboratif) */}
+      <PeerReviewSection
+        exercice={exercice}
+        userSubmission={existingSubmission}
+      />
     </div>
   );
 };

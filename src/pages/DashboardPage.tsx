@@ -19,6 +19,7 @@ import { collection, getDocs, query, where } from 'firebase/firestore';
 import { db, isFirebaseConfigured } from '../firebase/config';
 import { AudioReader } from '../components/AudioReader';
 import { COTE_D_IVOIRE_TERRITORIES, findTerritoryByCommune } from '../data/territories';
+import { ProfileModal } from '../components/ProfileModal';
 
 interface CourseCardMeta {
   id: string;
@@ -84,6 +85,7 @@ export const DashboardPage: React.FC = () => {
   const { userData, currentUser, updateProfileTerritory } = useAuth();
   const [completedCount, setCompletedCount] = useState<number>(0);
   const [isEditingTerritory, setIsEditingTerritory] = useState<boolean>(false);
+  const [isProfileModalOpen, setIsProfileModalOpen] = useState<boolean>(false);
   const [tempCommune, setTempCommune] = useState<string>(userData?.commune || 'Zikisso');
   const [tempRegion, setTempRegion] = useState<string>(userData?.region || 'Lôh-Djiboua');
   const [isSavingTerritory, setIsSavingTerritory] = useState<boolean>(false);
@@ -171,9 +173,15 @@ export const DashboardPage: React.FC = () => {
           </div>
 
           <div className="flex flex-wrap items-center gap-2">
-            <span className="px-3 py-1.5 text-xs font-semibold bg-[#1F4E79] text-white rounded-md">
-              Profil : {userData?.profil || 'Non renseigné'}
-            </span>
+            <button
+              type="button"
+              onClick={() => setIsProfileModalOpen(true)}
+              className="inline-flex items-center space-x-1.5 px-3 py-1.5 text-xs font-semibold bg-[#1F4E79] hover:bg-[#153755] text-white rounded-md transition shadow-2xs cursor-pointer group"
+              title="Modifier mon nom, profil et commune"
+            >
+              <span>Profil : {userData?.profil || 'Non renseigné'}</span>
+              <Edit2 className="w-3 h-3 text-blue-200 group-hover:text-white" />
+            </button>
             <span
               className={`px-3 py-1.5 text-xs font-bold rounded-md ${
                 userData?.role === 'admin'
@@ -378,6 +386,11 @@ export const DashboardPage: React.FC = () => {
         </div>
       </div>
 
+      {/* Modale d'édition de profil complet */}
+      <ProfileModal
+        isOpen={isProfileModalOpen}
+        onClose={() => setIsProfileModalOpen(false)}
+      />
     </div>
   );
 };

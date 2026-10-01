@@ -77,6 +77,22 @@ export interface SubmissionData {
   commentaire?: string;
   dateCorrection?: string;
   correcteurNom?: string;
+  peerReviewsCount?: number;
+  createdAt?: any;
+}
+
+export interface PeerReview {
+  id?: string;
+  submissionId: string;
+  exerciceId: string;
+  reviewerUid: string;
+  reviewerNom: string;
+  notesParCritere: Record<string, number>;
+  totalNote: number;
+  commentaire: string;
+  pointsForts?: string;
+  axesAmelioration?: string;
+  dateEvaluation: string;
   createdAt?: any;
 }
 

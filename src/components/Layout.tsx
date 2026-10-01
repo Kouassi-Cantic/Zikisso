@@ -3,9 +3,10 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import { useTheme } from '../contexts/ThemeContext';
 import { ThemeSelector } from './ThemeSelector';
-import { LogOut, User, Menu, X, BookOpen, ShieldCheck, Home, ShieldAlert, Award, Files } from 'lucide-react';
+import { LogOut, User, Menu, X, BookOpen, ShieldCheck, Home, ShieldAlert, Award, Files, Edit3 } from 'lucide-react';
 import elephantsBgUrl from '../assets/images/elephants_cote_ivoire_savane_1790771623677.jpg';
 const moocLogoUrl = '/Medias/logo-mooc-ecommunes.jpg';
+import { ProfileModal } from './ProfileModal';
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -16,6 +17,7 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
   const { currentTheme } = useTheme();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [isLoggingOut, setIsLoggingOut] = useState(false);
+  const [isProfileModalOpen, setIsProfileModalOpen] = useState(false);
   const navigate = useNavigate();
 
   const handleLogout = async () => {
@@ -203,12 +205,20 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
                     </Link>
                   )}
 
-                  <div className="flex items-center space-x-2 text-xs sm:text-sm bg-white/10 px-3 py-1.5 rounded-md border border-white/15">
-                    <User className="w-4 h-4 text-emerald-300" />
+                  <button
+                    type="button"
+                    onClick={() => setIsProfileModalOpen(true)}
+                    className="flex items-center space-x-2 text-xs sm:text-sm bg-white/10 hover:bg-white/15 px-3 py-1.5 rounded-md border border-white/15 transition text-left group cursor-pointer"
+                    title="Cliquer pour modifier votre profil, identité et commune"
+                  >
+                    <User className="w-4 h-4 text-emerald-300 group-hover:scale-110 transition-transform" />
                     <div className="text-left">
-                      <p className="font-semibold text-white leading-none">
-                        {userData?.nom || currentUser.email}
-                      </p>
+                      <div className="flex items-center space-x-1.5">
+                        <p className="font-semibold text-white leading-none">
+                          {userData?.nom || currentUser.email}
+                        </p>
+                        <Edit3 className="w-3 h-3 text-blue-200 opacity-60 group-hover:opacity-100" />
+                      </div>
                       <p className="text-[11px] text-blue-200 mt-0.5 leading-none flex items-center space-x-1.5 flex-wrap">
                         <span>{userData?.profil || 'Apprenant'}</span>
                         {userData?.commune && (
@@ -223,7 +233,7 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
                         )}
                       </p>
                     </div>
-                  </div>
+                  </button>
 
                   <button
                     onClick={handleLogout}
@@ -310,15 +320,25 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
                   </Link>
                 )}
 
-                <div className="p-3 bg-white/10 rounded-md">
-                  <p className="font-semibold text-white text-sm">{userData?.nom || currentUser.email}</p>
+                <button
+                  type="button"
+                  onClick={() => {
+                    setMobileMenuOpen(false);
+                    setIsProfileModalOpen(true);
+                  }}
+                  className="w-full p-3 bg-white/10 hover:bg-white/15 rounded-md text-left transition cursor-pointer"
+                >
+                  <div className="flex items-center justify-between">
+                    <p className="font-semibold text-white text-sm">{userData?.nom || currentUser.email}</p>
+                    <Edit3 className="w-3.5 h-3.5 text-blue-200" />
+                  </div>
                   <p className="text-xs text-blue-200">{userData?.profil || 'Apprenant'}</p>
                   {userData?.role === 'admin' && (
                     <span className="mt-1 inline-block text-[11px] bg-[#C55A11] text-white px-2 py-0.5 rounded font-semibold">
                       Administrateur
                     </span>
                   )}
-                </div>
+                </button>
 
                 <button
                   onClick={() => {
@@ -372,6 +392,12 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
           </div>
         </div>
       </footer>
+
+      {/* Modale d'édition du profil apprenant */}
+      <ProfileModal
+        isOpen={isProfileModalOpen}
+        onClose={() => setIsProfileModalOpen(false)}
+      />
     </div>
   );
 };

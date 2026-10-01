@@ -29,6 +29,7 @@ interface AuthContextType {
   loginWithGoogle: () => Promise<void>;
   logout: () => Promise<void>;
   updateProfileTerritory: (commune: string, region: string) => Promise<void>;
+  updateUserProfile: (data: { nom?: string; profil?: UserProfileType; commune?: string; region?: string }) => Promise<void>;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -68,23 +69,33 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
             if (userSnap.exists()) {
               const data = userSnap.data() as UserData;
               const effectiveRole = isSuperAdmin ? 'admin' : (data.role || 'apprenant');
+              const resolvedNom = data.nom || user.displayName || (isSuperAdmin ? 'Super Administrateur' : user.email?.split('@')[0] || 'Apprenant');
+              const resolvedProfil = data.profil || (isSuperAdmin ? 'Conseiller municipal élu' : 'Citoyen engagé');
+              
               setUserData({
                 ...data,
+                nom: resolvedNom,
+                profil: resolvedProfil,
                 role: effectiveRole,
                 commune: data.commune || 'Zikisso',
                 region: data.region || 'Lôh-Djiboua',
               });
 
-              // Si super admin et que Firestore avait encore 'apprenant', mise à jour automatique
-              if (isSuperAdmin && data.role !== 'admin') {
-                setDoc(userDocRef, { role: 'admin' }, { merge: true }).catch(() => {});
+              // Si des données par défaut doivent être consolidées dans Firestore
+              if ((isSuperAdmin && data.role !== 'admin') || !data.nom || !data.profil) {
+                setDoc(userDocRef, {
+                  role: effectiveRole,
+                  nom: resolvedNom,
+                  profil: resolvedProfil,
+                }, { merge: true }).catch(() => {});
               }
             } else {
               // Profil par défaut si le document n'existe pas encore
               const defaultRole = isSuperAdmin ? 'admin' : 'apprenant';
+              const resolvedNom = user.displayName || (isSuperAdmin ? 'Super Administrateur' : user.email?.split('@')[0] || 'Apprenant');
               const newProfile: UserData = {
                 uid: user.uid,
-                nom: user.displayName || (isSuperAdmin ? 'Super Administrateur' : user.email?.split('@')[0] || 'Apprenant'),
+                nom: resolvedNom,
                 email: userEmail,
                 profil: isSuperAdmin ? 'Conseiller municipal élu' : 'Citoyen engagé',
                 role: defaultRole,
@@ -110,12 +121,21 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         const savedSession = localStorage.getItem(LOCAL_STORAGE_SESSION_KEY);
         if (savedSession) {
           const parsed = JSON.parse(savedSession);
-          setCurrentUser({ uid: parsed.uid, email: parsed.email } as User);
-          setUserData({
+          const isSuperAdmin = isSuperAdminEmail(parsed.email);
+          const effectiveRole = isSuperAdmin ? 'admin' : (parsed.role || 'apprenant');
+          const resolvedNom = parsed.nom || (isSuperAdmin ? 'Super Administrateur' : parsed.email?.split('@')[0] || 'Apprenant');
+          const resolvedProfil = parsed.profil || (isSuperAdmin ? 'Conseiller municipal élu' : 'Citoyen engagé');
+
+          const hydrated: UserData = {
             ...parsed,
+            nom: resolvedNom,
+            profil: resolvedProfil,
+            role: effectiveRole,
             commune: parsed.commune || 'Zikisso',
             region: parsed.region || 'Lôh-Djiboua',
-          });
+          };
+          setCurrentUser({ uid: parsed.uid, email: parsed.email } as User);
+          setUserData(hydrated);
         }
       } catch (err) {
         console.warn('Session locale introuvable:', err);
@@ -304,36 +324,57 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   };
 
   const updateProfileTerritory = async (commune: string, region: string) => {
+    await updateUserProfile({ commune, region });
+  };
+
+  const updateUserProfile = async (updates: {
+    nom?: string;
+    profil?: UserProfileType;
+    commune?: string;
+    region?: string;
+  }) => {
     if (!currentUser || !userData) return;
-    const cleanCommune = commune.trim() || 'Zikisso';
-    const cleanRegion = region.trim() || 'Lôh-Djiboua';
+
+    const userEmail = (currentUser.email || userData.email || '').toLowerCase();
+    const isSuperAdmin = isSuperAdminEmail(userEmail);
 
     const updated: UserData = {
       ...userData,
-      commune: cleanCommune,
-      region: cleanRegion,
+      nom: updates.nom !== undefined ? updates.nom.trim() : userData.nom,
+      profil: updates.profil !== undefined ? updates.profil : userData.profil,
+      commune: updates.commune !== undefined ? (updates.commune.trim() || 'Zikisso') : (userData.commune || 'Zikisso'),
+      region: updates.region !== undefined ? (updates.region.trim() || 'Lôh-Djiboua') : (userData.region || 'Lôh-Djiboua'),
+      role: isSuperAdmin ? 'admin' : userData.role,
     };
 
     if (isFirebaseConfigured) {
       try {
-        await setDoc(
-          doc(db, 'users', currentUser.uid),
-          { commune: cleanCommune, region: cleanRegion },
-          { merge: true }
-        );
+        const payload: any = {
+          nom: updated.nom,
+          profil: updated.profil,
+          commune: updated.commune,
+          region: updated.region,
+          role: updated.role,
+        };
+        await setDoc(doc(db, 'users', currentUser.uid), payload, { merge: true });
       } catch (e) {
-        console.error('Erreur mise à jour territoire Firestore:', e);
+        console.error('Erreur mise à jour profil Firestore:', e);
+        throw e;
       }
     } else {
       try {
         localStorage.setItem(LOCAL_STORAGE_SESSION_KEY, JSON.stringify(updated));
         const existingUsers = JSON.parse(localStorage.getItem(LOCAL_STORAGE_USERS_KEY) || '[]');
-        const idx = existingUsers.findIndex((u: any) => u.uid === currentUser.uid);
+        const idx = existingUsers.findIndex((u: any) => u.uid === currentUser.uid || u.email === updated.email);
         if (idx !== -1) {
-          existingUsers[idx] = { ...existingUsers[idx], commune: cleanCommune, region: cleanRegion };
-          localStorage.setItem(LOCAL_STORAGE_USERS_KEY, JSON.stringify(existingUsers));
+          existingUsers[idx] = { ...existingUsers[idx], ...updated };
+        } else {
+          existingUsers.push(updated);
         }
-      } catch (e) {}
+        localStorage.setItem(LOCAL_STORAGE_USERS_KEY, JSON.stringify(existingUsers));
+      } catch (e) {
+        console.warn('Erreur mise à jour profil local:', e);
+      }
     }
     setUserData(updated);
   };
@@ -360,6 +401,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         loginWithGoogle,
         logout,
         updateProfileTerritory,
+        updateUserProfile,
       }}
     >
       {children}
