@@ -1,6 +1,7 @@
 import React from 'react';
 import { CheckCircle2, Circle, Clock, FileText } from 'lucide-react';
 import { AudioReader } from './AudioReader';
+import { FormattedCourseContent } from './FormattedCourseContent';
 
 interface CapsuleCardProps {
   id: string;
@@ -90,8 +91,8 @@ export const CapsuleCard: React.FC<CapsuleCardProps> = ({
       </div>
 
       {/* Contenu textuel de la capsule */}
-      <div className="p-4 sm:p-6 text-xs sm:text-sm text-slate-700 leading-relaxed whitespace-pre-line">
-        {content}
+      <div className="p-4 sm:p-6 text-xs sm:text-sm text-slate-700 leading-relaxed">
+        <FormattedCourseContent content={content} />
       </div>
     </article>
   );

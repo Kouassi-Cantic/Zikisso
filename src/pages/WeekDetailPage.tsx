@@ -140,8 +140,15 @@ export const WeekDetailPage: React.FC = () => {
 
       if (docSnap.exists()) {
         const firestoreData = { id: docSnap.id, ...(docSnap.data() as any) };
-        // S'assurer que les capsules existent, sinon compléter avec les capsules par défaut
-        if (!firestoreData.capsules || firestoreData.capsules.length === 0) {
+        // Si les capsules de Firestore sont absentes ou plus courtes que le contenu officiel enrichi de DEFAULT_WEEKS, utiliser les capsules enrichies
+        const shouldUseDefaultCapsules = 
+          !firestoreData.capsules || 
+          firestoreData.capsules.length === 0 ||
+          (defaultData?.capsules && defaultData.capsules.length > 0 && 
+           firestoreData.capsules.reduce((acc: number, c: any) => acc + (c.content?.length || 0), 0) < 
+           defaultData.capsules.reduce((acc: number, c: any) => acc + (c.content?.length || 0), 0) / 2);
+
+        if (shouldUseDefaultCapsules) {
           firestoreData.capsules = defaultData?.capsules || [];
         }
         setWeekData(firestoreData);
@@ -155,7 +162,14 @@ export const WeekDetailPage: React.FC = () => {
       if (!querySnap.empty) {
         const firstDoc = querySnap.docs[0];
         const firestoreData = { id: firstDoc.id, ...(firstDoc.data() as any) };
-        if (!firestoreData.capsules || firestoreData.capsules.length === 0) {
+        const shouldUseDefaultCapsules = 
+          !firestoreData.capsules || 
+          firestoreData.capsules.length === 0 ||
+          (defaultData?.capsules && defaultData.capsules.length > 0 && 
+           firestoreData.capsules.reduce((acc: number, c: any) => acc + (c.content?.length || 0), 0) < 
+           defaultData.capsules.reduce((acc: number, c: any) => acc + (c.content?.length || 0), 0) / 2);
+
+        if (shouldUseDefaultCapsules) {
           firestoreData.capsules = defaultData?.capsules || [];
         }
         setWeekData(firestoreData);
