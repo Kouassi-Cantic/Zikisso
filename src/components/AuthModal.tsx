@@ -277,7 +277,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({
             <form onSubmit={handleRegisterSubmit} className="space-y-3.5">
               <div>
                 <label className="block text-xs font-semibold text-slate-700 uppercase tracking-wider mb-1">
-                  Nom &amp; Prénoms officiels <span className="text-red-500">*</span>
+                  Nom et Prénoms officiels <span className="text-red-500">*</span>
                 </label>
                 <div className="relative">
                   <User className="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" />

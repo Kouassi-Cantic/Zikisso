@@ -171,9 +171,9 @@ export const ProfileModal: React.FC<ProfileModalProps> = ({ isOpen, onClose }) =
               <User className="w-5 h-5 text-emerald-300" />
             </div>
             <div>
-              <h2 className="text-base sm:text-lg font-bold">Mon Profil &amp; Ancrage Territorial</h2>
+              <h2 className="text-base sm:text-lg font-bold">Mon Profil et Ancrage Territorial</h2>
               <p className="text-xs text-blue-200">
-                Photo d'identité &amp; Lieu emblématique de votre commune
+                Photo d'identité et Lieu emblématique de votre commune
               </p>
             </div>
           </div>
@@ -372,7 +372,7 @@ export const ProfileModal: React.FC<ProfileModalProps> = ({ isOpen, onClose }) =
           {/* Section 2 : Identité & Nom */}
           <div>
             <label className="block text-xs font-semibold text-slate-700 uppercase tracking-wider mb-1">
-              Nom &amp; Prénoms officiels <span className="text-red-500">*</span>
+              Nom et Prénoms officiels <span className="text-red-500">*</span>
             </label>
             <div className="relative">
               <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400">
@@ -534,7 +534,7 @@ export const ProfileModal: React.FC<ProfileModalProps> = ({ isOpen, onClose }) =
               ) : (
                 <>
                   <Save className="w-4 h-4" />
-                  <span>Valider mon profil &amp; mon ancrage</span>
+                  <span>Valider mon profil et mon ancrage</span>
                 </>
               )}
             </button>

@@ -97,8 +97,8 @@ export const generateToolboxPDF = (): jsPDF => {
   y += 7;
 
   const sampleRows = [
-    ["Voirie & Entretien pistes", "15 000 000", "8 500 000", "6 500 000", "Travaux saison sèche en cours"],
-    ["Salubrité & Gestion déchets", "10 000 000", "6 200 000", "3 800 000", "Curage caniveaux marché"],
+    ["Voirie et Entretien pistes", "15 000 000", "8 500 000", "6 500 000", "Travaux saison sèche en cours"],
+    ["Salubrité et Gestion déchets", "10 000 000", "6 200 000", "3 800 000", "Curage caniveaux marché"],
     ["Modernisation État Civil", "8 000 000", "5 100 000", "2 900 000", "Équipements informatiques ONECI"],
     ["Écoles primaires communales", "12 000 000", "11 000 000", "1 000 000", "Fournitures et bancs livrés"]
   ];
@@ -153,7 +153,7 @@ export const generateToolboxPDF = (): jsPDF => {
   doc.setFont('helvetica', 'normal');
   doc.setFontSize(7);
   doc.setTextColor(148, 163, 184);
-  doc.text("Document pédagogique officiel • MOOC Zikisso • Mairie de Zikisso & Partenaire Éducatif Klo-Liké", pageWidth / 2, pageHeight - 10, { align: 'center' });
+  doc.text("Document pédagogique officiel • MOOC e-Communes • Mairie de Zikisso et Partenaire Éducatif Klo-Liké", pageWidth / 2, pageHeight - 10, { align: 'center' });
 
   return doc;
 };
@@ -186,7 +186,7 @@ export const generateGlossaryPDF = (glossaryItems: Array<[string, string]>): jsP
   doc.setFont('helvetica', 'normal');
   doc.setFontSize(9);
   doc.setTextColor(220, 235, 250);
-  doc.text("Annexe C — 22 Définitions Clés : Gouvernance Locale, Finances & Numérique", pageWidth / 2, 19, { align: 'center' });
+  doc.text("Annexe C — 22 Définitions Clés : Gouvernance Locale, Finances et Numérique", pageWidth / 2, 19, { align: 'center' });
 
   let y = 36;
   let pageNum = 1;
@@ -195,7 +195,7 @@ export const generateGlossaryPDF = (glossaryItems: Array<[string, string]>): jsP
     doc.setFont('helvetica', 'normal');
     doc.setFontSize(7);
     doc.setTextColor(148, 163, 184);
-    doc.text(`Page ${pageNum} • MOOC Zikisso — Décentralisation & Transformation Digitale`, pageWidth / 2, pageHeight - 10, { align: 'center' });
+    doc.text(`Page ${pageNum} • MOOC e-Communes — Décentralisation et Transformation Digitale`, pageWidth / 2, pageHeight - 10, { align: 'center' });
   };
 
   glossaryItems.forEach(([terme, definition], idx) => {

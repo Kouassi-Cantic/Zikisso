@@ -38,11 +38,11 @@ interface ModuleTrack {
 
 const TRACKED_MODULES: ModuleTrack[] = [
   { id: 'semaine-1', name: 'Fondamentaux de la Décentralisation', badge: 'Semaine 1', type: 'semaine' },
-  { id: 'semaine-2', name: 'Gestion Budgétaire & Finances Locales', badge: 'Semaine 2', type: 'semaine' },
-  { id: 'semaine-3', name: 'Services Publics & Urbanisme', badge: 'Semaine 3', type: 'semaine' },
-  { id: 'semaine-4', name: 'Transformation Digitale & E-Services', badge: 'Semaine 4', type: 'semaine' },
-  { id: 'module-bonus', name: 'Boîte à Outils Numériques & Cybersécurité', badge: 'Module Bonus', type: 'bonus' },
-  { id: 'examen-final', name: 'Évaluation Globale & Certification', badge: 'Examen Final', type: 'examen' },
+  { id: 'semaine-2', name: 'Gestion Budgétaire et Finances Locales', badge: 'Semaine 2', type: 'semaine' },
+  { id: 'semaine-3', name: 'Services Publics et Urbanisme', badge: 'Semaine 3', type: 'semaine' },
+  { id: 'semaine-4', name: 'Transformation Digitale et E-Services', badge: 'Semaine 4', type: 'semaine' },
+  { id: 'module-bonus', name: 'Boîte à Outils Numériques et Cybersécurité', badge: 'Module Bonus', type: 'bonus' },
+  { id: 'examen-final', name: 'Évaluation Globale et Certification', badge: 'Examen Final', type: 'examen' },
 ];
 
 export const MyDashboardPage: React.FC = () => {
@@ -314,7 +314,7 @@ export const MyDashboardPage: React.FC = () => {
 
           <div className="flex justify-between items-center text-[11px] text-slate-400 mt-1.5">
             <span>Début du parcours</span>
-            <span>Attestation &amp; Fin de formation</span>
+            <span>Attestation et Fin de formation</span>
           </div>
         </div>
       </div>
@@ -364,7 +364,7 @@ export const MyDashboardPage: React.FC = () => {
         <div className="md:col-span-2 bg-white rounded-lg border border-slate-200 p-6 shadow-sm">
           <h3 className="text-xs font-bold text-[#1F4E79] uppercase tracking-wider mb-4 flex items-center space-x-2">
             <CheckSquare className="w-4 h-4 text-[#1A6B3C]" />
-            <span>Barème &amp; Pondérations Réglementaires</span>
+            <span>Barème et Pondérations Réglementaires</span>
           </h3>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs">
@@ -552,7 +552,7 @@ export const MyDashboardPage: React.FC = () => {
           <div>
             <div className="flex items-center space-x-2 text-[#14532D] font-bold text-base">
               <CheckSquare className="w-5 h-5 text-[#1A6B3C]" />
-              <h2>Historique des Quiz &amp; Évaluations QCM</h2>
+              <h2>Historique des Quiz et Évaluations QCM</h2>
             </div>
             <p className="text-xs text-slate-600 mt-0.5">
               Scores obtenus aux questionnaires interactifs hebdomadaires et examens.

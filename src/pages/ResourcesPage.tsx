@@ -46,10 +46,10 @@ interface CharterSignature {
 const LOCAL_STORAGE_CHARTER_SIGNATURE_KEY = 'zikisso_local_charter_signature';
 
 const DEFAULT_CHARTER_COMMITMENTS = [
-  "Faire connaître les principes de transparence budgétaire et de contrôle citoyen au sein de ma communauté.",
-  "Contribuer à une veille citoyenne bienveillante, constructive et rigoureuse sur les projets communaux de Zikisso.",
-  "Promouvoir un usage responsable, inclusif et sécurisé des technologies numériques auprès de tous les usagers.",
-  "Partager les connaissances acquises lors du MOOC, en particulier avec les jeunes et les acteurs de la société civile."
+  "Faire connaître les principes de transparence budgétaire et de contrôle citoyen au sein de ma collectivité.",
+  "Contribuer à une veille citoyenne bienveillante, constructive et rigoureuse sur les projets de développement communal.",
+  "Promouvoir un usage responsable, inclusif et sécurisé des technologies numériques auprès de tous les usagers du service public.",
+  "Partager les connaissances acquises lors du MOOC e-Communes, en particulier avec la jeunesse et les acteurs de la société civile."
 ];
 
 const DEFAULT_GLOSSARY_ITEMS: Array<[string, string]> = [
@@ -87,7 +87,7 @@ export const ResourcesPage: React.FC = () => {
   const [downloadMessage, setDownloadMessage] = useState<string | null>(null);
 
   // 2. État de la Charte d'engagement
-  const [charterTitle, setCharterTitle] = useState<string>("Charte d'Engagement Civique de Zikisso");
+  const [charterTitle, setCharterTitle] = useState<string>("Charte d'Engagement du MOOC e-Communes");
   const [commitments, setCommitments] = useState<string[]>(DEFAULT_CHARTER_COMMITMENTS);
   const [loadingCharter, setLoadingCharter] = useState<boolean>(true);
   const [signerNom, setSignerNom] = useState<string>('');
@@ -123,7 +123,11 @@ export const ResourcesPage: React.FC = () => {
           const docSnap = await getDoc(docRef);
           if (docSnap.exists() && isMounted) {
             const data = docSnap.data();
-            if (data.title) setCharterTitle(data.title);
+            if (data.title && !data.title.includes("Civique de Zikisso")) {
+              setCharterTitle(data.title);
+            } else {
+              setCharterTitle("Charte d'Engagement du MOOC e-Communes");
+            }
             if (Array.isArray(data.commitments) && data.commitments.length > 0) {
               setCommitments(data.commitments);
             }
@@ -322,13 +326,13 @@ export const ResourcesPage: React.FC = () => {
           <div>
             <div className="inline-flex items-center space-x-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-[#F0F5FA] text-[#1F4E79] border border-[#1F4E79]/20 mb-2">
               <BookOpen className="w-3.5 h-3.5" />
-              <span>Centre de Ressources Pédagogiques &amp; Engagements</span>
+              <span>Centre de Ressources Pédagogiques et Engagements</span>
             </div>
             <h1 className="text-2xl sm:text-3xl font-extrabold text-[#1F4E79] tracking-tight">
-              Ressources, Guides &amp; Charte Civique
+              Ressources, Guides et Charte d'Engagement
             </h1>
             <p className="text-xs sm:text-sm text-slate-600 mt-1 max-w-3xl leading-relaxed">
-              Téléchargez les supports de cours complets pour l'étude hors-ligne, consultez le glossaire interactif sonorisé et signez la Charte d'Engagement Civique de Zikisso.
+              Téléchargez les supports de cours complets pour l'étude hors-ligne, consultez le glossaire interactif sonorisé et signez la Charte d'Engagement du MOOC e-Communes.
             </p>
           </div>
 
@@ -356,7 +360,7 @@ export const ResourcesPage: React.FC = () => {
         <div className="mb-4">
           <h2 className="text-xl font-bold text-[#1F4E79] flex items-center space-x-2">
             <FolderDown className="w-5 h-5 text-[#1A6B3C]" />
-            <span>Guides Pratiques &amp; Fascicule Complet (PDF)</span>
+            <span>Guides Pratiques et Fascicule Complet (PDF)</span>
           </h2>
           <p className="text-xs text-slate-500 mt-0.5">
             Téléchargeables pour consultation hors-ligne ou impression sur le terrain.
@@ -515,7 +519,7 @@ export const ResourcesPage: React.FC = () => {
           <div className="flex items-center space-x-3">
             {/* Synthèse vocale de la Charte */}
             <AudioReader
-              text={`Charte d'engagement civique de Zikisso. ${commitments.map((c, i) => `Engagement ${i + 1} : ${c}`).join('. ')}`}
+              text={`Charte d'engagement du MOOC e-Communes. ${commitments.map((c, i) => `Engagement ${i + 1} : ${c}`).join('. ')}`}
               title="Lecture vocale de la Charte"
               variant="button"
             />
@@ -528,10 +532,10 @@ export const ResourcesPage: React.FC = () => {
         <div className="p-6 sm:p-8 space-y-6">
           
           <p className="text-xs sm:text-sm text-slate-700 leading-relaxed">
-            En tant qu'apprenant(e) du MOOC Zikisso, vous êtes invité(e) à souscrire solennellement à la 
-            <strong> Charte d'Engagement Civique</strong>. Cette démarche acte votre engagement à mettre vos 
+            En tant qu'apprenant(e) du MOOC e-Communes, vous êtes invité(e) à souscrire solennellement à la 
+            <strong> Charte d'Engagement du MOOC e-Communes</strong>. Cette démarche acte votre engagement à mettre vos 
             compétences au service de la transparence, de la bonne gestion des affaires locales et du bien-être 
-            des populations de Zikisso.
+            des populations de votre commune.
           </p>
 
           {/* Liste des 4 engagements civiques */}
@@ -558,7 +562,7 @@ export const ResourcesPage: React.FC = () => {
                   <CheckCircle2 className="w-6 h-6 text-[#1A6B3C] flex-shrink-0 mt-0.5" />
                   <div>
                     <span className="inline-flex items-center space-x-1 text-xs font-bold text-[#14532D] uppercase tracking-wider">
-                      Charte Officiellement Signée &amp; Validée
+                      Charte Officiellement Signée et Validée
                     </span>
                     <h3 className="text-base sm:text-lg font-bold text-slate-800 mt-0.5">
                       Signataire : {existingSignature.nom}
@@ -638,7 +642,7 @@ export const ResourcesPage: React.FC = () => {
                     disabled={isSigning}
                   />
                   <span className="text-xs sm:text-sm text-slate-700 font-semibold select-none">
-                    Je m'engage formellement à respecter et promouvoir les principes de la présente Charte d'Engagement Civique de Zikisso.
+                    Je m'engage formellement à respecter et promouvoir les principes de la présente Charte d'Engagement du MOOC e-Communes.
                   </span>
                 </label>
               </div>
@@ -730,7 +734,7 @@ export const ResourcesPage: React.FC = () => {
           <div className="space-y-3 max-w-3xl">
             <div className="inline-flex items-center space-x-1.5 px-3 py-1 rounded-full text-xs font-bold bg-white/10 text-emerald-300 border border-white/15">
               <Sparkles className="w-3.5 h-3.5" />
-              <span>Alphabétisation &amp; Petite Enfance</span>
+              <span>Alphabétisation et Petite Enfance</span>
             </div>
 
             <h2 className="text-xl sm:text-2xl font-bold tracking-tight">

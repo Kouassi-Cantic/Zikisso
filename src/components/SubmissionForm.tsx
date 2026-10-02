@@ -391,7 +391,7 @@ export const SubmissionForm: React.FC<SubmissionFormProps> = ({ exercice }) => {
               <div className="bg-white rounded-md p-4 border border-[#1A6B3C]/30">
                 <div className="flex items-center space-x-1.5 text-xs font-bold text-[#1F4E79] uppercase tracking-wider mb-1.5">
                   <MessageSquare className="w-4 h-4 text-[#1F4E79]" />
-                  <span>Observations &amp; Recommandations personnalisées</span>
+                  <span>Observations et Recommandations personnalisées</span>
                 </div>
                 <p className="text-xs sm:text-sm text-slate-700 whitespace-pre-line leading-relaxed italic">
                   « {existingSubmission.commentaire} »

@@ -265,7 +265,7 @@ export const PeerReviewSection: React.FC<PeerReviewSectionProps> = ({ exercice, 
             <div className="p-4 sm:p-5 bg-[#F0F7F2] border border-[#1A6B3C]/30 rounded-lg space-y-3">
               <div className="flex items-center space-x-2 text-[#1A6B3C] font-bold text-sm">
                 <ThumbsUp className="w-4 h-4" />
-                <h4>Avis &amp; Conseils constructifs reçus de vos pairs ({reviewsReceived.length})</h4>
+                <h4>Avis et Conseils constructifs reçus de vos pairs ({reviewsReceived.length})</h4>
               </div>
               <div className="space-y-3">
                 {reviewsReceived.map((rev, idx) => (
@@ -367,7 +367,7 @@ export const PeerReviewSection: React.FC<PeerReviewSectionProps> = ({ exercice, 
                   {/* Formulaire de notation par critères */}
                   <form onSubmit={handleSubmitReview} className="space-y-4 pt-3 border-t border-slate-200">
                     <h4 className="text-xs font-bold text-slate-800 uppercase tracking-wider">
-                      Grille de notation &amp; Appréciation constructive
+                      Grille de notation et Appréciation constructive
                     </h4>
 
                     {successMessage && (

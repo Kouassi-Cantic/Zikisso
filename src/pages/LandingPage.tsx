@@ -205,7 +205,7 @@ export const LandingPage: React.FC = () => {
                     Gestionnaire en chef du MOOC e-Communes
                   </p>
                   <p className="text-[11px] text-blue-200 mt-0.5 leading-snug max-w-xl">
-                    Informaticien — Consultant Digital &amp; Intelligence Artificielle • Citoyen bénévole engagé pour l'éducation, le civisme, la salubrité publique et l'Économie Sociale et Solidaire (ESS)
+                    Informaticien — Consultant Digital et Intelligence Artificielle • Citoyen bénévole engagé pour l'éducation, le civisme, la salubrité publique et l'Économie Sociale et Solidaire (ESS)
                   </p>
                 </div>
               </div>
@@ -239,7 +239,7 @@ export const LandingPage: React.FC = () => {
               className="inline-flex items-center justify-center space-x-2 px-5 py-3.5 text-sm font-semibold text-white bg-white/15 hover:bg-white/20 border border-white/25 rounded-xl transition"
             >
               <BookOpen className="w-4.5 h-4.5 text-blue-200" />
-              <span>Explorer le programme &amp; les modules publics</span>
+              <span>Explorer le programme et les modules publics</span>
             </a>
           </div>
 
@@ -256,7 +256,7 @@ export const LandingPage: React.FC = () => {
               <span>Parrainage des Collectivités Locales de Côte d'Ivoire</span>
             </div>
             <h2 className="text-xl sm:text-2xl font-bold text-[#1F4E79]">
-              La Voix des Maires : Encouragements &amp; Parrainage Municipal
+              La Voix des Maires : Encouragements et Parrainage Municipal
             </h2>
             <p className="text-xs sm:text-sm text-slate-600 mt-1 max-w-2xl leading-relaxed">
               Sélectionnez votre commune pour découvrir le mot de bienvenue solennel et les félicitations de votre Maire. Ce message apparaîtra également dans votre espace apprenant pour vous encourager jusqu'à la certification.
@@ -320,7 +320,7 @@ export const LandingPage: React.FC = () => {
         
         <div className="text-center max-w-2xl mx-auto space-y-2">
           <span className="text-xs font-bold uppercase tracking-wider text-[#C55A11] bg-orange-50 px-3 py-1 rounded-full border border-orange-200">
-            Vitrine Publique &amp; Transparence Pédagogique
+            Vitrine Publique et Transparence Pédagogique
           </span>
           <h2 className="text-2xl sm:text-3xl font-extrabold text-[#1F4E79]">
             Visitez les composantes ouvertes du MOOC
@@ -340,7 +340,7 @@ export const LandingPage: React.FC = () => {
                 <BookOpen className="w-5 h-5" />
               </div>
               <h3 className="font-bold text-slate-800 text-sm">
-                Syllabus &amp; 4 Semaines Thématiques
+                Syllabus et 4 Semaines Thématiques
               </h3>
               <p className="text-xs text-slate-600 leading-relaxed">
                 Découvrez le programme structuré : institutions locales, budgets communaux, digitalisation et salubrité publique.
@@ -355,14 +355,14 @@ export const LandingPage: React.FC = () => {
             </Link>
           </div>
 
-          {/* Carte 2 : Ressources & Textes fondateurs */}
+          {/* Carte 2 : Ressources et Textes fondateurs */}
           <div className="bg-white rounded-xl border border-slate-200 p-5 shadow-xs flex flex-col justify-between space-y-4 hover:border-[#1A6B3C] transition">
             <div className="space-y-2.5">
               <div className="w-10 h-10 rounded-lg bg-[#1A6B3C]/10 text-[#1A6B3C] flex items-center justify-center">
                 <FileText className="w-5 h-5" />
               </div>
               <h3 className="font-bold text-slate-800 text-sm">
-                Ressources Légales &amp; Guides PDF
+                Ressources Légales et Guides PDF
               </h3>
               <p className="text-xs text-slate-600 leading-relaxed">
                 Textes de décentralisation en Côte d’Ivoire, modèles d'arrêtés municipaux et guides méthodologiques de Zikisso.
@@ -377,14 +377,14 @@ export const LandingPage: React.FC = () => {
             </Link>
           </div>
 
-          {/* Carte 3 : Observatoire Territorial & Cartographie */}
+          {/* Carte 3 : Observatoire Territorial et Cartographie */}
           <div className="bg-white rounded-xl border border-slate-200 p-5 shadow-xs flex flex-col justify-between space-y-4 hover:border-[#C55A11] transition">
             <div className="space-y-2.5">
               <div className="w-10 h-10 rounded-lg bg-[#C55A11]/10 text-[#C55A11] flex items-center justify-center">
                 <MapPin className="w-5 h-5" />
               </div>
               <h3 className="font-bold text-slate-800 text-sm">
-                Observatoire &amp; Impact National
+                Observatoire et Impact National
               </h3>
               <p className="text-xs text-slate-600 leading-relaxed">
                 Suivi cartographique des communes engagées, des apprenants mobilisés et des partenariats municipaux.

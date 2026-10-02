@@ -282,7 +282,7 @@ Notre priorité doit porter sur la modernisation du recouvrement des taxes forai
           <div>
             <div className="inline-flex items-center space-x-1.5 px-3 py-1 rounded-full text-xs font-bold bg-[#FDF4ED] text-[#C55A11] border border-[#C55A11]/30 mb-2">
               <ShieldCheck className="w-4 h-4 text-[#C55A11]" />
-              <span>Espace Réservé • Administration Pédagogique &amp; Territoriale</span>
+              <span>Espace Réservé • Administration Pédagogique et Territoriale</span>
             </div>
             <h1 className="text-2xl sm:text-3xl font-bold text-[#1F4E79] tracking-tight">
               Espace Administrateur MOOC e-Communes
@@ -334,7 +334,7 @@ Notre priorité doit porter sur la modernisation du recouvrement des taxes forai
             }`}
           >
             <Building2 className="w-4 h-4 text-[#1A6B3C]" />
-            <span>Observatoire Territorial &amp; Parrainage</span>
+            <span>Observatoire Territorial et Parrainage</span>
             <span className="bg-emerald-100 text-[#14532D] text-[10px] px-2 py-0.5 rounded-full font-bold border border-emerald-300">
               Statistiques Régionales
             </span>
@@ -615,7 +615,7 @@ Notre priorité doit porter sur la modernisation du recouvrement des taxes forai
                   <div className="flex items-center space-x-2">
                     <Award className="w-5 h-5 text-[#1F4E79]" />
                     <h3 className="text-base font-bold text-[#1F4E79]">
-                      Grille d'Évaluation &amp; Notation
+                      Grille d'Évaluation et Notation
                     </h3>
                   </div>
 

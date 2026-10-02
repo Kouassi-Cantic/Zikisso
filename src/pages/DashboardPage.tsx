@@ -38,15 +38,15 @@ const MODULES_LIST: CourseCardMeta[] = [
   {
     id: 'semaine-1',
     badge: 'Semaine 1',
-    titre: 'Fondamentaux de la Décentralisation & Cadre Institutionnel Ivoirien',
-    description: 'Organisation administrative, compétences communales de Zikisso, et responsabilités des élus et agents locaux.',
+    titre: 'Fondamentaux de la Décentralisation et Cadre Institutionnel Ivoirien',
+    description: 'Organisation administrative, compétences communales, et responsabilités des élus et agents locaux.',
     type: 'semaine',
     dureeEstimee: '3 à 4 heures',
   },
   {
     id: 'semaine-2',
     badge: 'Semaine 2',
-    titre: 'Gestion Budgétaire, Finances Locales & Mobilisation des Ressources',
+    titre: 'Gestion Budgétaire, Finances Locales et Mobilisation des Ressources',
     description: 'Élaboration du budget communal, fiscalité locale, recouvrement des taxes et transparence des comptes publics.',
     type: 'semaine',
     dureeEstimee: '3 à 4 heures',
@@ -54,7 +54,7 @@ const MODULES_LIST: CourseCardMeta[] = [
   {
     id: 'semaine-3',
     badge: 'Semaine 3',
-    titre: 'Services Publics Municipaux, Urbanisme & Gestion Territoriale',
+    titre: 'Services Publics Municipaux, Urbanisme et Gestion Territoriale',
     description: 'Pilotage de l’état civil, voirie, assainissement, salubrité publique et aménagement du territoire communal.',
     type: 'semaine',
     dureeEstimee: '3 à 4 heures',
@@ -62,15 +62,15 @@ const MODULES_LIST: CourseCardMeta[] = [
   {
     id: 'semaine-4',
     badge: 'Semaine 4',
-    titre: 'Transformation Digitale, E-Administration & Démocratie Participative',
-    description: 'Dématérialisation des démarches administratives, inclusion numérique et concertation active des citoyens de Zikisso.',
+    titre: 'Transformation Digitale, E-Administration et Démocratie Participative',
+    description: 'Dématérialisation des démarches administratives, inclusion numérique et concertation active des citoyens.',
     type: 'semaine',
     dureeEstimee: '3 à 4 heures',
   },
   {
     id: 'module-bonus',
     badge: 'Module Bonus',
-    titre: 'Boîte à Outils Numériques & Cybersécurité des Collectivités',
+    titre: 'Boîte à Outils Numériques et Cybersécurité des Collectivités',
     description: 'Guides pratiques, protection des données personnelles communales et bonnes pratiques informatiques quotidiennes.',
     type: 'bonus',
     dureeEstimee: '2 heures',
@@ -78,8 +78,8 @@ const MODULES_LIST: CourseCardMeta[] = [
   {
     id: 'examen-final',
     badge: 'Examen Final Général',
-    titre: 'Évaluation Globale des Compétences & Certification',
-    description: 'Épreuve terminale de validation des acquis pour l’obtention de l’attestation de réussite du MOOC Zikisso.',
+    titre: 'Évaluation Globale des Compétences et Certification',
+    description: 'Épreuve terminale de validation des acquis pour l’obtention de l’attestation de réussite du MOOC e-Communes.',
     type: 'examen',
     dureeEstimee: '2 heures',
   },
@@ -337,7 +337,7 @@ export const DashboardPage: React.FC = () => {
             </div>
             <div>
               <p className="text-xs sm:text-sm font-bold text-[#1F4E79]">
-                Mon Tableau de Bord Pédagogique (Relevé &amp; Progression)
+                Mon Tableau de Bord Pédagogique (Relevé et Progression)
               </p>
               <p className="text-[11px] text-slate-500">
                 Suivi des 4 quiz, devoirs fil rouge notés, calcul de la note globale sur 20 ({completionPercent}% du parcours complété).

@@ -1,6 +1,6 @@
 {
   "name": "MOOC Zikisso",
-  "description": "Plateforme web de formation en ligne — Gestion des Collectivités Locales & Transformation Digitale à Zikisso.",
+  "description": "Plateforme web de formation en ligne — Gouvernance Municipale et Transformation Digitale en Côte d'Ivoire (Pilote : Zikisso).",
   "requestFramePermissions": [],
   "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
 }

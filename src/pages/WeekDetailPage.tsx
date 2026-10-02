@@ -27,33 +27,33 @@ import {
 const MODULE_TITLES_FALLBACK: Record<string, { badge: string; defaultTitre: string; quizTitle: string }> = {
   'semaine-1': {
     badge: 'Semaine 1',
-    defaultTitre: 'Fondamentaux de la Décentralisation & Cadre Institutionnel Ivoirien',
-    quizTitle: 'Quiz Hebdomadaire — Semaine 1 : Institutions & Compétences Communales',
+    defaultTitre: 'Fondamentaux de la Décentralisation et Cadre Institutionnel Ivoirien',
+    quizTitle: 'Quiz Hebdomadaire — Semaine 1 : Institutions et Compétences Communales',
   },
   'semaine-2': {
     badge: 'Semaine 2',
-    defaultTitre: 'Gestion Budgétaire, Finances Locales & Mobilisation des Ressources',
-    quizTitle: 'Quiz Hebdomadaire — Semaine 2 : Finances & Budget Communal',
+    defaultTitre: 'Gestion Budgétaire, Finances Locales et Mobilisation des Ressources',
+    quizTitle: 'Quiz Hebdomadaire — Semaine 2 : Finances et Budget Communal',
   },
   'semaine-3': {
     badge: 'Semaine 3',
-    defaultTitre: 'Services Publics Municipaux, Urbanisme & Gestion Territoriale',
-    quizTitle: 'Quiz Hebdomadaire — Semaine 3 : Services Municipaux & Aménagement',
+    defaultTitre: 'Services Publics Municipaux, Urbanisme et Gestion Territoriale',
+    quizTitle: 'Quiz Hebdomadaire — Semaine 3 : Services Municipaux et Aménagement',
   },
   'semaine-4': {
     badge: 'Semaine 4',
-    defaultTitre: 'Transformation Digitale, E-Administration & Démocratie Participative',
-    quizTitle: 'Quiz Hebdomadaire — Semaine 4 : Numérisation & Démocratie Participative',
+    defaultTitre: 'Transformation Digitale, E-Administration et Démocratie Participative',
+    quizTitle: 'Quiz Hebdomadaire — Semaine 4 : Numérisation et Démocratie Participative',
   },
   'module-bonus': {
     badge: 'Module Bonus',
-    defaultTitre: 'Redevabilité, Cybersécurité & Participation Citoyenne',
-    quizTitle: 'Quiz d’Évaluation — Module Bonus : Cybersécurité & Participation',
+    defaultTitre: 'Redevabilité, Cybersécurité et Participation Citoyenne',
+    quizTitle: 'Quiz d’Évaluation — Module Bonus : Cybersécurité et Participation',
   },
   'examen-final': {
     badge: 'Examen Final Général',
-    defaultTitre: 'Évaluation Globale des Compétences & Certification',
-    quizTitle: 'Partie 1 (QCM) — Examen Final Général du MOOC Zikisso',
+    defaultTitre: 'Évaluation Globale des Compétences et Certification',
+    quizTitle: 'Partie 1 (QCM) — Examen Final Général du MOOC e-Communes',
   },
 };
 

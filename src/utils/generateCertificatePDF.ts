@@ -158,7 +158,7 @@ export const generateCertificatePDF = (data: CertificateData): jsPDF => {
   doc.setFont('helvetica', 'bold');
   doc.setFontSize(10.5);
   doc.setTextColor(...colorVert);
-  doc.text("MOOC E-COMMUNES — GOUVERNANCE MUNICIPALE & TRANSFORMATION DIGITALE", pageWidth / 2, 50, { align: 'center' });
+  doc.text("MOOC E-COMMUNES — GOUVERNANCE MUNICIPALE ET TRANSFORMATION DIGITALE", pageWidth / 2, 50, { align: 'center' });
 
   doc.setFont('helvetica', 'italic');
   doc.setFontSize(7.5);
@@ -283,7 +283,7 @@ export const generateCertificatePDF = (data: CertificateData): jsPDF => {
   doc.line(sigLeftX, sigY + 18, sigLeftX + 48, sigY + 18);
   doc.setFont('helvetica', 'italic');
   doc.setFontSize(6.5);
-  doc.text("Signature & Approbation académique", sigLeftX, sigY + 22);
+  doc.text("Signature et Approbation académique", sigLeftX, sigY + 22);
 
   // Signature Droite : Mairie de rattachement & Collectivité
   const sigRightX = pageWidth - 93;

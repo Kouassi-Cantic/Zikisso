@@ -52,7 +52,7 @@ export const generateCourseGuidePDF = (): jsPDF => {
   doc.setFont('helvetica', 'normal');
   doc.setFontSize(13);
   doc.setTextColor(220, 235, 250);
-  doc.text("Gouvernance Municipale & Transformation Digitale", margin + 10, 72);
+  doc.text("Gouvernance Municipale et Transformation Digitale", margin + 10, 72);
 
   doc.setFont('helvetica', 'bold');
   doc.setFontSize(16);
@@ -67,8 +67,8 @@ export const generateCourseGuidePDF = (): jsPDF => {
     "• Semaine 1 : Cadre Institutionnel, Acteurs et Décentralisation",
     "• Semaine 2 : Planification Locale et Budgétisation Territoriale",
     "• Semaine 3 : Fiscalité Locale et Mobilisation des Ressources Propres",
-    "• Semaine 4 : Modernisation des Services Publics & Administration Numérique",
-    "• Module Bonus : Redevabilité, Participation Citoyenne & Cybersécurité"
+    "• Semaine 4 : Modernisation des Services Publics et Administration Numérique",
+    "• Module Bonus : Redevabilité, Participation Citoyenne et Cybersécurité"
   ];
   let couvY = 110;
   introCouv.forEach((line) => {
@@ -83,7 +83,7 @@ export const generateCourseGuidePDF = (): jsPDF => {
   doc.setFont('helvetica', 'bold');
   doc.setFontSize(9.5);
   doc.setTextColor(255, 255, 255);
-  doc.text("Réseau des Collectivités Locales de Côte d'Ivoire & Conseil Pédagogique", margin + 8, pageHeight - 44);
+  doc.text("Réseau des Collectivités Locales de Côte d'Ivoire et Conseil Pédagogique", margin + 8, pageHeight - 44);
 
   doc.setFont('helvetica', 'normal');
   doc.setFontSize(8);

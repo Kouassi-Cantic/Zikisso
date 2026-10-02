@@ -63,7 +63,7 @@ export const MayorMessageModal: React.FC<MayorMessageModalProps> = ({
             <div>
               <div className="inline-flex items-center space-x-1.5 text-emerald-300 text-xs font-bold uppercase tracking-wider mb-0.5">
                 <ShieldCheck className="w-3.5 h-3.5" />
-                <span>Parrainage Institutionnel &amp; Encouragements</span>
+                <span>Parrainage Institutionnel et Encouragements</span>
               </div>
               <h2 className="text-lg sm:text-xl font-bold tracking-tight">
                 Commune de {commune}

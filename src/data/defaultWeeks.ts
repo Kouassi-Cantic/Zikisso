@@ -45,7 +45,7 @@ Aux termes de la loi, la décentralisation opère un transfert progressif de 16 
 • **Infrastructures marchandes et économiques** : édification et gestion des marchés centraux, gares routières, abattoirs municipaux et aires de stationnement.
 • **Action sociale et insertion des jeunes** : secours d'urgence, appui aux groupements féminins agricoles et encouragement des initiatives d'Économie Sociale et Solidaire (ESS).
 
-⚖️ **BASE LÉGALE & NORME MINISTÉRIELLE**
+⚖️ **BASE LÉGALE ET NORME MINISTÉRIELLE**
 Articles 1 à 15 de la loi n° 2012-1128 du 13 décembre 2012. Circulaire interministérielle n° 004/MEMIS/DGDDL relative à l'exercice effectif des compétences dévolues aux communes.
 
 📍 **CAS PRATIQUE ZIKISSO — L'ARTICULATION COMMUNE / RÉGION DU LÔH-DJIBOUA**
@@ -490,12 +490,12 @@ Consciente que plus de 50% des habitants des campements ruraux ne disposent pas 
   },
 
   // =========================================================================
-  // MODULE BONUS : REDEVABILITÉ, CYBERSÉCURITÉ & PARTICIPATION CITOYENNE
+  // MODULE BONUS : REDEVABILITÉ, CYBERSÉCURITÉ ET PARTICIPATION CITOYENNE
   // =========================================================================
   'module-bonus': {
     id: 'module-bonus',
     ordre: 5,
-    titre: "Redevabilité, Cybersécurité & Participation Citoyenne",
+    titre: "Redevabilité, Cybersécurité et Participation Citoyenne",
     objectifs: [
       "Maîtriser la méthodologie et le cadre réglementaire du budget participatif communal.",
       "Structurer des comités de concertation citoyenne conformes à la démocratie participative locale.",

@@ -195,7 +195,7 @@ export const COTE_D_IVOIRE_TERRITORIES: TerritoryItem[] = [
 
   // Option d'ouverture générale / Diaspora
   { commune: 'Autre commune de Côte d’Ivoire', region: 'Côte d’Ivoire' },
-  { commune: 'International / Diaspora', region: 'Diaspora & Partenaires' },
+  { commune: 'International / Diaspora', region: 'Diaspora et Partenaires' },
 ];
 
 export const REGIONS_LIST = Array.from(

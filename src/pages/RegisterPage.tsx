@@ -131,7 +131,7 @@ export const RegisterPage: React.FC = () => {
             Inscription au MOOC e-Communes
           </h1>
           <p className="text-xs sm:text-sm text-slate-500 mt-1">
-            Gouvernance Municipale &amp; Transformation Digitale <br className="hidden sm:inline" />
+            Gouvernance Municipale et Transformation Digitale <br className="hidden sm:inline" />
             <span className="text-[#1A6B3C] font-semibold">Collectivité pilote d'application : Commune de Zikisso</span>
           </p>
         </div>
@@ -280,7 +280,7 @@ export const RegisterPage: React.FC = () => {
             <div className="flex items-center justify-between">
               <label htmlFor="commune-select" className="text-xs font-bold text-[#1F4E79] uppercase tracking-wider flex items-center space-x-1.5">
                 <MapPin className="w-3.5 h-3.5 text-[#C55A11]" />
-                <span>Commune &amp; Région de rattachement <span className="text-red-500">*</span></span>
+                <span>Commune et Région de rattachement <span className="text-red-500">*</span></span>
               </label>
               {commune === 'Zikisso' && (
                 <span className="text-[10px] bg-emerald-100 text-[#14532D] font-bold px-2 py-0.5 rounded-full flex items-center space-x-1 border border-emerald-300">

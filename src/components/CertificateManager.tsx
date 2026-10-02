@@ -142,7 +142,7 @@ export const CertificateManager: React.FC<CertificateManagerProps> = ({ noteGlob
           const docRef = await addDoc(collection(db, 'certificates'), {
             ...certRecord,
             userId: currentUser.uid,
-            titreMooc: 'MOOC e-Communes — Gouvernance Municipale & Transformation Digitale',
+            titreMooc: 'MOOC e-Communes — Gouvernance Municipale et Transformation Digitale',
             commune: userCommune,
             region: userRegion,
             createdAt: serverTimestamp(),
@@ -198,7 +198,7 @@ export const CertificateManager: React.FC<CertificateManagerProps> = ({ noteGlob
         <div className="flex items-center space-x-2">
           <Award className="w-5 h-5 text-[#C55A11]" />
           <h2 className="text-base font-bold text-[#1F4E79]">
-            Certification &amp; Attestation Officielle
+            Certification et Attestation Officielle
           </h2>
         </div>
 
@@ -371,7 +371,7 @@ export const CertificateManager: React.FC<CertificateManagerProps> = ({ noteGlob
             </div>
 
             <div className="p-3 rounded bg-slate-50 border border-slate-200">
-              <span className="text-slate-500 block text-[11px]">Signature &amp; Sceau</span>
+              <span className="text-slate-500 block text-[11px]">Signature et Sceau</span>
               <strong className="text-slate-800">Mairie d'attache • Pilote Zikisso</strong>
             </div>
           </div>

@@ -231,7 +231,7 @@ export const TerritoryObservatory: React.FC = () => {
 
         <div className="bg-white border border-slate-200 rounded-lg p-5 shadow-xs">
           <div className="flex items-center justify-between">
-            <span className="text-xs font-semibold uppercase tracking-wider text-slate-500">Régions &amp; Districts</span>
+            <span className="text-xs font-semibold uppercase tracking-wider text-slate-500">Régions et Districts</span>
             <div className="w-8 h-8 rounded-full bg-[#C55A11]/10 text-[#C55A11] flex items-center justify-center">
               <MapPin className="w-4 h-4" />
             </div>
@@ -258,7 +258,7 @@ export const TerritoryObservatory: React.FC = () => {
           <div>
             <h3 className="text-base font-bold text-[#1F4E79] flex items-center space-x-2">
               <MapPin className="w-4 h-4 text-[#C55A11]" />
-              <span>Répartition par Conseil Régional &amp; District Autonome</span>
+              <span>Répartition par Conseil Régional et District Autonome</span>
             </h3>
             <p className="text-xs text-slate-500 mt-0.5">
               Opportunité d'engagement pour les 31 Régions et 2 Districts de Côte d'Ivoire.
@@ -418,7 +418,7 @@ export const TerritoryObservatory: React.FC = () => {
             </div>
             <div>
               <span className="text-[10px] font-bold uppercase tracking-wider bg-[#F0F5FA] text-[#1F4E79] px-2 py-0.5 rounded border border-[#1F4E79]/20">
-                Outil de Plaidoyer &amp; Financement B2G
+                Outil de Plaidoyer et Financement B2G
               </span>
               <h3 className="text-lg sm:text-xl font-bold text-[#1F4E79] mt-1">
                 Fiche de Parrainage Municipal : Commune de {selectedPlaidoyerData.commune}
@@ -497,7 +497,7 @@ export const TerritoryObservatory: React.FC = () => {
           <div className="md:col-span-2 p-5 bg-white rounded-lg border border-slate-200 text-xs space-y-3">
             <h4 className="text-xs font-bold text-[#1F4E79] uppercase tracking-wider flex items-center space-x-1.5">
               <CheckCircle2 className="w-4 h-4 text-[#1A6B3C]" />
-              <span>Argumentaire pour le Conseil Municipal &amp; la Région</span>
+              <span>Argumentaire pour le Conseil Municipal et la Région</span>
             </h4>
 
             <div className="space-y-2 text-slate-700 leading-relaxed">

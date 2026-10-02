@@ -230,10 +230,10 @@ export const FinalExamPage: React.FC = () => {
           <div>
             <div className="inline-flex items-center space-x-1.5 px-3 py-1 rounded-full text-xs font-bold bg-[#F0F5FA] text-[#1F4E79] border border-[#1F4E79]/25 mb-2">
               <Award className="w-4 h-4 text-[#C55A11]" />
-              <span>Examen Final Général • MOOC Zikisso</span>
+              <span>Examen Final Général • MOOC e-Communes</span>
             </div>
             <h1 className="text-2xl sm:text-3xl font-bold text-[#1F4E79] tracking-tight">
-              Évaluation Globale des Compétences &amp; Certification
+              Évaluation Globale des Compétences et Certification
             </h1>
             <p className="text-xs sm:text-sm text-slate-600 mt-1 max-w-3xl leading-relaxed">
               Cette épreuve terminale valide l'ensemble des connaissances institutionnelles, budgétaires,
@@ -256,7 +256,7 @@ export const FinalExamPage: React.FC = () => {
           <div className="bg-[#F0F5FA] border-l-4 border-[#1F4E79] p-5 rounded-r-lg">
             <h2 className="text-xs font-bold text-[#1F4E79] uppercase tracking-wider mb-2 flex items-center space-x-1.5">
               <ShieldCheck className="w-4 h-4 text-[#1A6B3C]" />
-              <span>Règlement de l'Épreuve &amp; Modalités de Calcul</span>
+              <span>Règlement de l'Épreuve et Modalités de Calcul</span>
             </h2>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs mt-3">
@@ -273,7 +273,7 @@ export const FinalExamPage: React.FC = () => {
               </div>
 
               <div className="p-3 bg-white rounded border border-slate-200">
-                <span className="font-bold text-[#1A6B3C] block mb-0.5">Validation &amp; Réussite</span>
+                <span className="font-bold text-[#1A6B3C] block mb-0.5">Validation et Réussite</span>
                 <span className="text-slate-600">Note finale = (QCM × 40 %) + (Cas × 60 %)</span>
                 <strong className="block text-[#1A6B3C] mt-1 text-sm">Seuil d'admission : 12 / 20</strong>
               </div>

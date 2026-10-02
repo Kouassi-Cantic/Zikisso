@@ -3,7 +3,7 @@ import type { ExerciceFilRouge } from '../types';
 export const DEFAULT_EXERCISES: Record<string, ExerciceFilRouge> = {
   'semaine-1': {
     id: 'semaine-1',
-    titre: 'Exercice Fil Rouge — Semaine 1 : Diagnostic institutionnel & Répartition des compétences',
+    titre: 'Exercice Fil Rouge — Semaine 1 : Diagnostic institutionnel et Répartition des compétences',
     enonce: `Dans le cadre du renforcement de la gouvernance locale à Zikisso, vous êtes chargé(e) de rédiger une note d'analyse institutionnelle (300 à 600 mots).
 
 Votre travail doit répondre aux points suivants :
@@ -189,10 +189,10 @@ Votre protocole doit comporter :
 En tant qu'expert(e) en management public territorial et gouvernance locale, rédigez le mémoire stratégique et opérationnel de déploiement (600 à 1000 mots).
 
 Votre projet doit traiter les 4 axes obligatoires suivants :
-1. Diagnostic institutionnel & Vision stratégique : Justifiez la valeur ajoutée du Guichet Unique pour les habitants de Zikisso et pour la productivité des agents communaux.
-2. Architecture technique & Dispositif multi-canal : Décrivez l'aménagement physique du hall d'accueil à la mairie et la déclinaison numérique (portail web simple, alertes SMS, paiement mobile sécurisé).
-3. Conduite du changement & Inclusion citoyenne : Présentez le plan de formation du personnel communal et les mesures spécifiques pour accompagner les administrés non connectés ou en situation d'analphabétisme.
-4. Suivi de performance, indicateurs de qualité & Modèle économique : Définissez 4 indicateurs mesurables de succès (délai moyen de délivrance, taux de satisfaction, sécurisation des recettes fiscales) et la pérennité budgétaire de l'infrastructure.`,
+1. Diagnostic institutionnel et Vision stratégique : Justifiez la valeur ajoutée du Guichet Unique pour les habitants de Zikisso et pour la productivité des agents communaux.
+2. Architecture technique et Dispositif multi-canal : Décrivez l'aménagement physique du hall d'accueil à la mairie et la déclinaison numérique (portail web simple, alertes SMS, paiement mobile sécurisé).
+3. Conduite du changement et Inclusion citoyenne : Présentez le plan de formation du personnel communal et les mesures spécifiques pour accompagner les administrés non connectés ou en situation d'analphabétisme.
+4. Suivi de performance, indicateurs de qualité et Modèle économique : Définissez 4 indicateurs mesurables de succès (délai moyen de délivrance, taux de satisfaction, sécurisation des recettes fiscales) et la pérennité budgétaire de l'infrastructure.`,
     consignes: [
       'Longueur recommandée : 600 à 1000 mots.',
       'Structurez impérativement votre réponse selon les 4 axes demandés.',
@@ -201,25 +201,25 @@ Votre projet doit traiter les 4 axes obligatoires suivants :
     grilleNotation: [
       {
         id: 'c1',
-        libelle: 'Diagnostic institutionnel & vision stratégique du Guichet Unique',
+        libelle: 'Diagnostic institutionnel et vision stratégique du Guichet Unique',
         pointsMax: 5,
         description: 'Clarté de la vision, pertinence territoriale pour Zikisso et valeur ajoutée administrative.'
       },
       {
         id: 'c2',
-        libelle: 'Conception physique, architecture technique & accessibilité multi-canal',
+        libelle: 'Conception physique, architecture technique et accessibilité multi-canal',
         pointsMax: 5,
         description: 'Agencement des flux, ergonomie des e-services et sécurité des données citoyennes.'
       },
       {
         id: 'c3',
-        libelle: 'Conduite du changement, formation des agents & inclusion des usagers',
+        libelle: 'Conduite du changement, formation des agents et inclusion des usagers',
         pointsMax: 5,
         description: 'Qualité du plan de formation, accompagnement humain et lutte contre la fracture numérique.'
       },
       {
         id: 'c4',
-        libelle: 'Gouvernance, indicateurs de performance & pérennité budgétaire',
+        libelle: 'Gouvernance, indicateurs de performance et pérennité budgétaire',
         pointsMax: 5,
         description: 'Pertinence des indicateurs de suivi, traçabilité des recettes et viabilité financière.'
       }

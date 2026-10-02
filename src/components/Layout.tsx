@@ -151,7 +151,7 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
                     </span>
                   </div>
                   <span className="text-[10px] sm:text-xs text-blue-200 tracking-wide font-normal truncate max-w-[200px] sm:max-w-md">
-                    Gouvernance Municipale &amp; Transformation Digitale
+                    Gouvernance Municipale et Transformation Digitale
                   </span>
                 </div>
               </Link>
@@ -331,7 +331,7 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
                   className="flex items-center space-x-2 text-white px-3 py-2 rounded-md bg-white/10 text-sm font-semibold border border-white/15"
                 >
                   <Award className="w-4 h-4 text-emerald-300" />
-                  <span>Mon tableau de bord (Notes &amp; Progression)</span>
+                  <span>Mon tableau de bord (Notes et Progression)</span>
                 </Link>
 
                 <Link
@@ -340,7 +340,7 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
                   className="flex items-center space-x-2 text-white px-3 py-2 rounded-md hover:bg-white/10 text-sm font-medium"
                 >
                   <Files className="w-4 h-4 text-amber-300" />
-                  <span>Ressources, PDF &amp; Charte Civique</span>
+                  <span>Ressources, PDF et Charte d'Engagement</span>
                 </Link>
 
                 <Link
@@ -414,7 +414,7 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row justify-between items-center gap-4 text-center sm:text-left">
           <div>
             <p className="font-bold text-white tracking-wide">
-              MOOC e-Communes — Gouvernance Municipale &amp; Transformation Digitale
+              MOOC e-Communes — Gouvernance Municipale et Transformation Digitale
             </p>
             <p className="text-slate-400 mt-0.5">
               Plateforme nationale certifiante • Collectivité pilote d'expérimentation : Commune de Zikisso (Lôh-Djiboua).

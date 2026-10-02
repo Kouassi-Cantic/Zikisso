@@ -49,7 +49,7 @@ export const FormattedCourseContent: React.FC<FormattedContentProps> = ({ conten
             <div key={idx} className="p-4 rounded-xl bg-amber-50/90 border border-amber-300 text-amber-950 text-xs sm:text-sm shadow-2xs">
               <div className="flex items-center space-x-2 font-bold text-[#C55A11] mb-1.5">
                 <AlertTriangle className="w-4 h-4 text-[#C55A11] flex-shrink-0" />
-                <span className="uppercase tracking-wider text-[11px]">Point de vigilance institutionnelle &amp; risque juridique</span>
+                <span className="uppercase tracking-wider text-[11px]">Point de vigilance institutionnelle et risque juridique</span>
               </div>
               <p className="leading-relaxed whitespace-pre-line text-slate-800">
                 {block.replace(/^⚠️\s*/, '').replace(/^(POINT DE VIGILANCE|ATTENTION|PIÈGE)\s*:\s*/i, '')}
@@ -58,7 +58,7 @@ export const FormattedCourseContent: React.FC<FormattedContentProps> = ({ conten
           );
         }
 
-        // 3. Encadré "Cas Pratique Zikisso & Réalités Communales"
+        // 3. Encadré "Cas Pratique Zikisso et Réalités Communales"
         if (block.startsWith('📍') || block.toUpperCase().startsWith('CAS PRATIQUE ZIKISSO') || block.toUpperCase().startsWith('FOCUS TERRAIN')) {
           return (
             <div key={idx} className="p-4 rounded-xl bg-emerald-50/80 border border-emerald-300 text-[#14532D] text-xs sm:text-sm shadow-2xs">
@@ -73,13 +73,13 @@ export const FormattedCourseContent: React.FC<FormattedContentProps> = ({ conten
           );
         }
 
-        // 4. Encadré "Références Légales & Normes Ivoiriennes"
+        // 4. Encadré "Références Légales et Normes Ivoiriennes"
         if (block.startsWith('⚖️') || block.toUpperCase().startsWith('TEXTES DE RÉFÉRENCE') || block.toUpperCase().startsWith('BASE LÉGALE')) {
           return (
             <div key={idx} className="p-4 rounded-xl bg-blue-50/80 border border-blue-200 text-[#1F4E79] text-xs sm:text-sm shadow-2xs">
               <div className="flex items-center space-x-2 font-bold text-[#1F4E79] mb-1.5">
                 <Scale className="w-4 h-4 text-[#1F4E79] flex-shrink-0" />
-                <span className="uppercase tracking-wider text-[11px]">Cadre légal républicain &amp; Normes nationales (DGDDL / UVICOCI)</span>
+                <span className="uppercase tracking-wider text-[11px]">Cadre légal républicain et Normes nationales (DGDDL / UVICOCI)</span>
               </div>
               <p className="leading-relaxed whitespace-pre-line text-slate-800">
                 {block.replace(/^⚖️\s*/, '').replace(/^(TEXTES DE RÉFÉRENCE|BASE LÉGALE)\s*:\s*/i, '')}

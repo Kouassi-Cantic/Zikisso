@@ -31,7 +31,7 @@ export default function App() {
             {/* Page d'atterrissage officielle publique pour tous les visiteurs */}
             <Route path="/" element={<LandingPage />} />
 
-            {/* Route protégée : Espace de cours & Tableau de bord principal listant les semaines */}
+            {/* Route protégée : Espace de cours et Tableau de bord principal listant les semaines */}
             <Route
               path="/cours"
               element={
@@ -51,7 +51,7 @@ export default function App() {
               }
             />
 
-            {/* Route protégée : Ressources, Téléchargements PDF, Charte civique & Ambassadeurs */}
+            {/* Route protégée : Ressources, Téléchargements PDF, Charte civique et Ambassadeurs */}
             <Route
               path="/ressources"
               element={

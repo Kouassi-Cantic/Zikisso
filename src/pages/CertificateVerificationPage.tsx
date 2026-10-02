@@ -128,7 +128,7 @@ export const CertificateVerificationPage: React.FC = () => {
         <div className="max-w-2xl space-y-3">
           <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full text-xs font-semibold bg-white/10 text-emerald-300 border border-white/15">
             <Sparkles className="w-3.5 h-3.5" />
-            <span>Authenticité &amp; Traçabilité Numérique</span>
+            <span>Authenticité et Traçabilité Numérique</span>
           </div>
 
           <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight">
@@ -138,7 +138,7 @@ export const CertificateVerificationPage: React.FC = () => {
           <p className="text-xs sm:text-sm text-blue-100 leading-relaxed">
             Employeurs, administrations, partenaires et collectivités : vérifiez l'authenticité
             d'une attestation de réussite ou de participation délivrée dans le cadre du
-            <strong> MOOC Zikisso — Collectivités Locales &amp; Transformation Digitale</strong>.
+            <strong> MOOC e-Communes — Gouvernance Municipale et Transformation Digitale</strong>.
           </p>
         </div>
       </div>
@@ -286,7 +286,7 @@ export const CertificateVerificationPage: React.FC = () => {
                   <span className="text-xs font-semibold uppercase tracking-wider text-slate-500">Programme de formation</span>
                   <p className="text-sm font-bold text-slate-800 flex items-start space-x-2">
                     <BookOpen className="w-4 h-4 text-[#1F4E79] flex-shrink-0 mt-0.5" />
-                    <span>MOOC e-Communes — Gouvernance Municipale &amp; Transformation Digitale</span>
+                    <span>MOOC e-Communes — Gouvernance Municipale et Transformation Digitale</span>
                   </p>
                   <p className="text-[11px] text-slate-500 italic pl-6">
                     Laboratoire territorial d'expérimentation : Commune de Zikisso
@@ -308,10 +308,10 @@ export const CertificateVerificationPage: React.FC = () => {
                 </div>
 
                 <div className="space-y-1">
-                  <span className="text-xs font-semibold uppercase tracking-wider text-slate-500">Autorité &amp; Organismes Associés</span>
+                  <span className="text-xs font-semibold uppercase tracking-wider text-slate-500">Autorité et Organismes Associés</span>
                   <p className="text-sm font-semibold text-slate-700 flex items-center space-x-2">
                     <Building2 className="w-4 h-4 text-[#1A6B3C]" />
-                    <span>Collectivité de {certificate.commune || 'Zikisso'} &amp; Conseil Pédagogique MOOC e-Communes</span>
+                    <span>Collectivité de {certificate.commune || 'Zikisso'} et Conseil Pédagogique MOOC e-Communes</span>
                   </p>
                 </div>
               </div>

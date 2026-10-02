@@ -194,7 +194,7 @@ export const MayorMessageEditor: React.FC = () => {
 
           <div>
             <label className="block text-xs font-semibold text-slate-700 uppercase tracking-wider mb-1">
-              Message Officiel de Bienvenue &amp; d'Encouragement <span className="text-red-500">*</span>
+              Message Officiel de Bienvenue et d'Encouragement <span className="text-red-500">*</span>
             </label>
             <textarea
               rows={6}
