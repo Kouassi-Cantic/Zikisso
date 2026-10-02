@@ -145,7 +145,7 @@ export const LandingPage: React.FC = () => {
           {/* Boutons d'Action Principaux */}
           <div className="flex flex-col sm:flex-row sm:items-center gap-4 pt-2">
             <button
-              onClick={handleDirectAuth}
+              onClick={() => handleDirectAuth('register')}
               className="inline-flex items-center justify-center space-x-2.5 px-6 py-3.5 text-sm font-bold text-white bg-[#C55A11] hover:bg-[#A3480C] rounded-xl shadow-lg transition-transform hover:-translate-y-0.5 cursor-pointer"
             >
               <GraduationCap className="w-5 h-5 text-amber-200" />

@@ -262,6 +262,35 @@ export const MyDashboardPage: React.FC = () => {
           </div>
         </div>
 
+        {/* Encadré solennel : Le mot d'encouragement du Maire de la commune de l'apprenant */}
+        <div className="mt-6 p-4 rounded-xl bg-gradient-to-r from-emerald-50/80 via-white to-amber-50/60 border border-emerald-300/80 flex flex-col sm:flex-row sm:items-center justify-between gap-3 shadow-2xs">
+          <div className="flex items-center space-x-3">
+            <div className="w-10 h-10 rounded-lg bg-[#1A6B3C] text-white flex items-center justify-center flex-shrink-0 shadow-xs">
+              <Building2 className="w-5 h-5 text-emerald-200" />
+            </div>
+            <div>
+              <div className="inline-flex items-center space-x-1 text-[11px] font-bold text-[#14532D] uppercase tracking-wider">
+                <Quote className="w-3 h-3 text-[#1A6B3C]" />
+                <span>Message d'encouragement de votre municipalité</span>
+              </div>
+              <h3 className="text-sm font-bold text-[#1F4E79]">
+                Le Maire de la Commune de {userData?.commune || 'Zikisso'} vous soutient
+              </h3>
+              <p className="text-xs text-slate-600">
+                Votre engagement honore votre collectivité locale. Retrouvez le mot officiel et les priorités de votre ville.
+              </p>
+            </div>
+          </div>
+
+          <button
+            type="button"
+            onClick={() => setIsMayorModalOpen(true)}
+            className="inline-flex items-center space-x-1.5 px-3.5 py-2 text-xs font-bold text-white bg-[#1A6B3C] hover:bg-[#14532D] rounded-lg transition shadow-xs cursor-pointer self-start sm:self-auto"
+          >
+            <span>Lire le mot du Maire</span>
+          </button>
+        </div>
+
         {/* Indicateur visuel de complétion du parcours */}
         <div className="mt-8 pt-6 border-t border-slate-100">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-2">
@@ -616,6 +645,13 @@ export const MyDashboardPage: React.FC = () => {
           })}
         </div>
       </div>
+
+      {/* Modale solennelle du mot du Maire pour l'apprenant */}
+      <MayorMessageModal
+        isOpen={isMayorModalOpen}
+        commune={userData?.commune || 'Zikisso'}
+        onClose={() => setIsMayorModalOpen(false)}
+      />
 
     </div>
   );

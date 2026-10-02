@@ -162,11 +162,11 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
               {currentUser && (
                 <>
                   <Link
-                    to="/"
+                    to="/cours"
                     className="inline-flex items-center space-x-1.5 text-xs sm:text-sm font-medium text-blue-100 hover:text-white px-2.5 py-1.5 rounded-md hover:bg-white/10 transition-colors"
                   >
-                    <Home className="w-4 h-4" />
-                    <span>Programme</span>
+                    <BookOpen className="w-4 h-4 text-amber-300" />
+                    <span>Programme des cours</span>
                   </Link>
 
                   <Link
@@ -317,12 +317,12 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
             {currentUser ? (
               <>
                 <Link
-                  to="/"
+                  to="/cours"
                   onClick={() => setMobileMenuOpen(false)}
                   className="flex items-center space-x-2 text-white px-3 py-2 rounded-md hover:bg-white/10 text-sm font-medium"
                 >
-                  <Home className="w-4 h-4 text-blue-200" />
-                  <span>Programme de formation</span>
+                  <BookOpen className="w-4 h-4 text-blue-200" />
+                  <span>Programme de formation (Cours)</span>
                 </Link>
 
                 <Link
