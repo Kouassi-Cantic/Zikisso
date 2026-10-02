@@ -1,6 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { useAuth } from '../contexts/AuthContext';
+import { useAuth, SUPER_ADMIN_EMAILS } from '../contexts/AuthContext';
+import { db, isFirebaseConfigured } from '../firebase/config';
+import { collection, query, where, getDocs, limit } from 'firebase/firestore';
 import { COTE_D_IVOIRE_TERRITORIES, PILOT_COMMUNE } from '../data/territories';
 import { MayorMessageModal } from '../components/MayorMessageModal';
 import { AuthModal } from '../components/AuthModal';
@@ -32,6 +34,73 @@ export const LandingPage: React.FC = () => {
   const [isMayorModalOpen, setIsMayorModalOpen] = useState<boolean>(false);
   const [isAuthModalOpen, setIsAuthModalOpen] = useState<boolean>(false);
   const [authModalMode, setAuthModalMode] = useState<'login' | 'register'>('register');
+  const [superAdminPhotoUrl, setSuperAdminPhotoUrl] = useState<string | null>(null);
+
+  // Récupération automatique de la photo de profil du Super Admin (teletechnologyci@gmail.com)
+  useEffect(() => {
+    let isMounted = true;
+
+    const fetchSuperAdminPhoto = async () => {
+      // 1. Si l'utilisateur actuellement connecté est le Super Admin, utiliser directement sa photo
+      const primaryEmail = SUPER_ADMIN_EMAILS[0].toLowerCase();
+      if (currentUser?.email?.toLowerCase() === primaryEmail && userData?.photoUrl) {
+        if (isMounted) setSuperAdminPhotoUrl(userData.photoUrl);
+        return;
+      }
+
+      // 2. Chercher dans Firestore si configuré
+      if (isFirebaseConfigured) {
+        try {
+          const q = query(
+            collection(db, 'users'),
+            where('email', '==', primaryEmail),
+            limit(1)
+          );
+          const snap = await getDocs(q);
+          if (!snap.empty && isMounted) {
+            const adminDoc = snap.docs[0].data();
+            if (adminDoc.photoUrl) {
+              setSuperAdminPhotoUrl(adminDoc.photoUrl);
+              return;
+            }
+          }
+        } catch (e) {
+          console.warn('Erreur récupération photo super admin Firestore:', e);
+        }
+      }
+
+      // 3. Chercher dans le localStorage (session ou utilisateurs sauvegardés localement)
+      try {
+        const localSession = localStorage.getItem('zikisso_local_session');
+        if (localSession) {
+          const parsedSession = JSON.parse(localSession);
+          if (parsedSession.email?.toLowerCase() === primaryEmail && parsedSession.photoUrl) {
+            if (isMounted) setSuperAdminPhotoUrl(parsedSession.photoUrl);
+            return;
+          }
+        }
+
+        const localUsers = localStorage.getItem('zikisso_local_users');
+        if (localUsers) {
+          const usersList = JSON.parse(localUsers);
+          const foundAdmin = usersList.find(
+            (u: any) => u.email?.toLowerCase() === primaryEmail && u.photoUrl
+          );
+          if (foundAdmin && isMounted) {
+            setSuperAdminPhotoUrl(foundAdmin.photoUrl);
+          }
+        }
+      } catch (e) {
+        console.warn('Erreur lecture photo super admin locale:', e);
+      }
+    };
+
+    fetchSuperAdminPhoto();
+
+    return () => {
+      isMounted = false;
+    };
+  }, [currentUser, userData]);
 
   const handleSelectCommuneChange = (communeName: string) => {
     setSelectedCommune(communeName);
@@ -115,9 +184,19 @@ export const LandingPage: React.FC = () => {
             {/* Signature Protocolaire */}
             <div className="pt-4 border-t border-white/20 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
               <div className="flex items-center space-x-3.5">
-                <div className="w-12 h-12 rounded-full bg-white/20 border-2 border-emerald-400 flex items-center justify-center font-bold text-lg text-white shadow-sm flex-shrink-0">
-                  KG
-                </div>
+                {superAdminPhotoUrl ? (
+                  <div className="w-14 h-14 rounded-full border-2 border-emerald-400 overflow-hidden shadow-md flex-shrink-0 bg-slate-900">
+                    <img
+                      src={superAdminPhotoUrl}
+                      alt="Kouassi Ouréga Goblé"
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                ) : (
+                  <div className="w-12 h-12 rounded-full bg-white/20 border-2 border-emerald-400 flex items-center justify-center font-bold text-lg text-white shadow-sm flex-shrink-0">
+                    KG
+                  </div>
+                )}
                 <div>
                   <h3 className="font-extrabold text-white text-sm sm:text-base leading-snug">
                     Kouassi Ouréga Goblé
