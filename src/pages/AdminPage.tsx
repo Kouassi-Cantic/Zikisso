@@ -15,6 +15,7 @@ import { DEFAULT_EXERCISES } from '../data/defaultExercises';
 import { TerritoryObservatory } from '../components/TerritoryObservatory';
 import { MayorMessageEditor } from '../components/MayorMessageEditor';
 import { NewsletterManager } from '../components/NewsletterManager';
+import { FooterConfigEditor } from '../components/FooterConfigEditor';
 import { 
   ShieldCheck, 
   Clock, 
@@ -32,7 +33,8 @@ import {
   BookOpen,
   Building2,
   MapPin,
-  Mail
+  Mail,
+  Sliders
 } from 'lucide-react';
 
 const LOCAL_STORAGE_SUBMISSIONS_KEY = 'zikisso_local_submissions';
@@ -40,8 +42,8 @@ const LOCAL_STORAGE_SUBMISSIONS_KEY = 'zikisso_local_submissions';
 export const AdminPage: React.FC = () => {
   const { userData, currentUser } = useAuth();
 
-  // Onglet actif : 'corrections', 'observatoire', 'maires' ou 'newsletter'
-  const [activeTab, setActiveTab] = useState<'corrections' | 'observatoire' | 'maires' | 'newsletter'>('corrections');
+  // Onglet actif : 'corrections', 'observatoire', 'maires', 'newsletter' ou 'footer'
+  const [activeTab, setActiveTab] = useState<'corrections' | 'observatoire' | 'maires' | 'newsletter' | 'footer'>('corrections');
 
   const [submissions, setSubmissions] = useState<SubmissionData[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
@@ -373,6 +375,22 @@ Notre priorité doit porter sur la modernisation du recouvrement des taxes forai
               Veille
             </span>
           </button>
+
+          <button
+            type="button"
+            onClick={() => setActiveTab('footer')}
+            className={`pb-3 px-3 text-xs sm:text-sm font-bold flex items-center space-x-2 border-b-2 transition ${
+              activeTab === 'footer'
+                ? 'border-teal-600 text-teal-700'
+                : 'border-transparent text-slate-500 hover:text-slate-800'
+            }`}
+          >
+            <Sliders className="w-4 h-4 text-teal-600" />
+            <span>Configuration Pied de Page</span>
+            <span className="bg-teal-100 text-teal-800 text-[10px] px-2 py-0.5 rounded-full font-bold border border-teal-200">
+              Pilotage
+            </span>
+          </button>
         </div>
 
         {/* Métriques récapitulatives (affichées en mode corrections) */}
@@ -409,6 +427,11 @@ Notre priorité doit porter sur la modernisation du recouvrement des taxes forai
       {/* Onglet 4 : Gestionnaire de la Newsletter et Veille Communale */}
       {activeTab === 'newsletter' && (
         <NewsletterManager />
+      )}
+
+      {/* Onglet 5 : Configuration du Pied de Page & Pilotage */}
+      {activeTab === 'footer' && (
+        <FooterConfigEditor />
       )}
 
       {/* Onglet 1 : Contenu principal des corrections */}

@@ -1,14 +1,16 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import { useTheme } from '../contexts/ThemeContext';
 import { ThemeSelector } from './ThemeSelector';
-import { LogOut, User, Menu, X, BookOpen, ShieldCheck, Home, ShieldAlert, Award, Files, Edit3, Mail, Send, Phone, MapPin, CheckCircle2, AlertCircle, Loader2 } from 'lucide-react';
+import { LogOut, User, Menu, X, BookOpen, ShieldCheck, Home, ShieldAlert, Award, Files, Edit3, Mail, Send, Phone, MapPin, CheckCircle2, AlertCircle, Loader2, Globe, MessageCircle, ExternalLink } from 'lucide-react';
 import elephantsBgUrl from '../assets/images/elephants_cote_ivoire_savane_1790771623677.jpg';
 const moocLogoUrl = '/Medias/logo-mooc-ecommunes.jpg';
 import { ProfileModal } from './ProfileModal';
 import { LegalModal } from './LegalModal';
 import { subscribeToNewsletter } from '../services/newsletterService';
+import { getFooterConfig, FOOTER_CONFIG_UPDATED_EVENT } from '../services/footerConfigService';
+import { FooterConfig, DEFAULT_FOOTER_CONFIG } from '../data/defaultFooterConfig';
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -21,6 +23,25 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
   const [isLoggingOut, setIsLoggingOut] = useState(false);
   const [isProfileModalOpen, setIsProfileModalOpen] = useState(false);
   const [legalModalType, setLegalModalType] = useState<'mentions' | 'cgu_rgpd' | null>(null);
+
+  // Configuration dynamique du pied de page
+  const [footerConfig, setFooterConfig] = useState<FooterConfig>(DEFAULT_FOOTER_CONFIG);
+
+  useEffect(() => {
+    // Chargement initial
+    getFooterConfig().then((cfg) => setFooterConfig(cfg));
+
+    // Écoute des mises à jour en direct depuis la console d'administration
+    const handleConfigUpdated = (e: any) => {
+      if (e.detail) {
+        setFooterConfig(e.detail);
+      }
+    };
+    window.addEventListener(FOOTER_CONFIG_UPDATED_EVENT, handleConfigUpdated);
+    return () => {
+      window.removeEventListener(FOOTER_CONFIG_UPDATED_EVENT, handleConfigUpdated);
+    };
+  }, []);
 
   // Newsletter Footer State
   const [footerEmail, setFooterEmail] = useState('');
@@ -466,54 +487,72 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
                 </div>
                 <div>
                   <h3 className="font-extrabold text-white text-base tracking-tight leading-tight">
-                    MOOC e-COMMUNES
+                    {footerConfig.brandTitle || 'MOOC e-COMMUNES'}
                   </h3>
                   <span className="text-[11px] font-bold text-[#00E5A3] tracking-wide block uppercase">
-                    GOUVERNANCE ET TRANSFORMATION DIGITALE
+                    {footerConfig.brandSubtitle || 'GOUVERNANCE ET TRANSFORMATION DIGITALE'}
                   </span>
                 </div>
               </div>
 
               <p className="text-xs text-slate-400 leading-relaxed">
-                Penser l'utile. Former l'élu. Outiller l'agent. Éclairer le citoyen. 
-                Première initiative certifiante de gouvernance territoriale et de transition numérique en Côte d'Ivoire. 
-                Laboratoire pilote : Commune de Zikisso (Lôh-Djiboua).
+                {footerConfig.brandDescription || "Penser l'utile. Former l'élu. Outiller l'agent. Éclairer le citoyen. Première initiative certifiante de gouvernance territoriale et de transition numérique en Côte d'Ivoire. Laboratoire pilote : Commune de Zikisso (Lôh-Djiboua)."}
               </p>
 
-              {/* Réseaux sociaux et liens communautaires */}
+              {/* Réseaux sociaux et liens communautaires (y compris WhatsApp) */}
               <div className="flex items-center space-x-2.5 pt-2">
+                {/* Facebook */}
                 <a
-                  href="https://facebook.com"
+                  href={footerConfig.facebookUrl || "https://facebook.com"}
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label="Facebook"
                   className="w-8 h-8 rounded-full bg-white/5 hover:bg-white/15 border border-white/10 flex items-center justify-center text-slate-300 hover:text-white transition cursor-pointer"
+                  title="Facebook"
                 >
                   <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24">
                     <path d="M22 12c0-5.52-4.48-10-10-10S2 6.48 2 12c0 4.84 3.44 8.87 8 9.8V15H8v-3h2V9.5C10 7.57 11.57 6 13.5 6H16v3h-2c-.55 0-1 .45-1 1v2h3v3h-3v6.95c5.05-.5 9-4.76 9-9.95z"/>
                   </svg>
                 </a>
+
+                {/* X Twitter */}
                 <a
-                  href="https://twitter.com"
+                  href={footerConfig.twitterUrl || "https://twitter.com"}
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label="X Twitter"
                   className="w-8 h-8 rounded-full bg-white/5 hover:bg-white/15 border border-white/10 flex items-center justify-center text-slate-300 hover:text-white transition cursor-pointer"
+                  title="X (Twitter)"
                 >
                   <svg className="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24">
                     <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
                   </svg>
                 </a>
+
+                {/* LinkedIn */}
                 <a
-                  href="https://linkedin.com"
+                  href={footerConfig.linkedinUrl || "https://linkedin.com"}
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label="LinkedIn"
                   className="w-8 h-8 rounded-full bg-white/5 hover:bg-white/15 border border-white/10 flex items-center justify-center text-slate-300 hover:text-white transition cursor-pointer"
+                  title="LinkedIn"
                 >
                   <svg className="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24">
                     <path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.75M6.88 8.56a1.68 1.68 0 0 0 1.68-1.68c0-.93-.75-1.69-1.68-1.69a1.69 1.69 0 0 0-1.69 1.69c0 .93.76 1.68 1.69 1.68m1.39 9.94v-8.37H5.5v8.37h2.77z"/>
                   </svg>
+                </a>
+
+                {/* WhatsApp Officiel direct */}
+                <a
+                  href={footerConfig.whatsappUrl || `https://wa.me/${(footerConfig.coordinationLeadWhatsapp || '2250103438456').replace(/\D/g, '')}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="WhatsApp"
+                  className="w-8 h-8 rounded-full bg-emerald-950/60 hover:bg-emerald-800/80 border border-emerald-500/40 flex items-center justify-center text-emerald-400 hover:text-white transition cursor-pointer shadow-sm group"
+                  title={`WhatsApp : ${footerConfig.coordinationLeadWhatsapp || footerConfig.whatsappNumber || '+225 0103438456'}`}
+                >
+                  <MessageCircle className="w-4 h-4 text-emerald-400 group-hover:scale-110 transition-transform" />
                 </a>
               </div>
             </div>
@@ -521,112 +560,135 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
             {/* Colonne 2 (lg:col-span-2) : Parcours & Cursus (Remplace Solutions & Cabinet) */}
             <div className="lg:col-span-2 space-y-3.5">
               <div className="flex items-center space-x-1.5 text-xs font-bold text-[#00E5A3] uppercase tracking-wider">
-                <span>💼</span>
-                <span>PARCOURS ET CURSUS</span>
+                <span>{footerConfig.column2Icon || '💼'}</span>
+                <span>{footerConfig.column2Title || 'PARCOURS ET CURSUS'}</span>
               </div>
               <ul className="space-y-2.5 text-xs text-slate-400">
-                <li>
-                  <Link to="/cours" className="hover:text-white transition flex items-center space-x-1 group">
-                    <span className="text-slate-500 group-hover:text-emerald-400">→</span>
-                    <span className="group-hover:translate-x-0.5 transition-transform">Semaine 1 : Décentralisation 🏛️</span>
-                  </Link>
-                </li>
-                <li>
-                  <Link to="/cours" className="hover:text-white transition flex items-center space-x-1 group">
-                    <span className="text-slate-500 group-hover:text-emerald-400">→</span>
-                    <span className="group-hover:translate-x-0.5 transition-transform">Semaine 2 : Finances Locales 📊</span>
-                  </Link>
-                </li>
-                <li>
-                  <Link to="/cours" className="hover:text-white transition flex items-center space-x-1 group">
-                    <span className="text-slate-500 group-hover:text-emerald-400">→</span>
-                    <span className="group-hover:translate-x-0.5 transition-transform">Semaine 3 : Services Municipaux 🏗️</span>
-                  </Link>
-                </li>
-                <li>
-                  <Link to="/cours" className="hover:text-white transition flex items-center space-x-1 group">
-                    <span className="text-slate-500 group-hover:text-emerald-400">→</span>
-                    <span className="group-hover:translate-x-0.5 transition-transform">Semaine 4 : E-Administration 💻</span>
-                  </Link>
-                </li>
-                <li>
-                  <Link to="/cours" className="hover:text-white transition flex items-center space-x-1 group">
-                    <span className="text-slate-500 group-hover:text-emerald-400">→</span>
-                    <span className="group-hover:translate-x-0.5 transition-transform">Examen Final et Certification 🎓</span>
-                  </Link>
-                </li>
+                {(footerConfig.column2Links || []).map((link) => (
+                  <li key={link.id || link.label}>
+                    {link.isExternal ? (
+                      <a
+                        href={link.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="hover:text-white transition flex items-center space-x-1 group"
+                      >
+                        <span className="text-slate-500 group-hover:text-emerald-400">→</span>
+                        <span className="group-hover:translate-x-0.5 transition-transform">{link.label}</span>
+                      </a>
+                    ) : (
+                      <Link to={link.url} className="hover:text-white transition flex items-center space-x-1 group">
+                        <span className="text-slate-500 group-hover:text-emerald-400">→</span>
+                        <span className="group-hover:translate-x-0.5 transition-transform">{link.label}</span>
+                      </Link>
+                    )}
+                  </li>
+                ))}
               </ul>
             </div>
 
             {/* Colonne 3 (lg:col-span-2) : Citoyenneté & Ressources (Remplace Engagement Citoyen & RSE) */}
             <div className="lg:col-span-2 space-y-3.5">
               <div className="flex items-center space-x-1.5 text-xs font-bold text-pink-400 uppercase tracking-wider">
-                <span>🌍</span>
-                <span>ENGAGEMENT ET RESSOURCES</span>
+                <span>{footerConfig.column3Icon || '🌍'}</span>
+                <span>{footerConfig.column3Title || 'ENGAGEMENT ET RESSOURCES'}</span>
               </div>
               <ul className="space-y-2.5 text-xs text-slate-400">
-                <li>
-                  <Link to="/ressources" className="hover:text-white transition flex items-center space-x-1 group">
-                    <span className="text-slate-500 group-hover:text-pink-400">→</span>
-                    <span className="group-hover:translate-x-0.5 transition-transform">Charte d'Engagement Civique 📜</span>
-                  </Link>
-                </li>
-                <li>
-                  <Link to="/ressources" className="hover:text-white transition flex items-center space-x-1 group">
-                    <span className="text-slate-500 group-hover:text-pink-400">→</span>
-                    <span className="group-hover:translate-x-0.5 transition-transform">Fascicule Complet (PDF) 📥</span>
-                  </Link>
-                </li>
-                <li>
-                  <Link to="/ressources" className="hover:text-white transition flex items-center space-x-1 group">
-                    <span className="text-slate-500 group-hover:text-pink-400">→</span>
-                    <span className="group-hover:translate-x-0.5 transition-transform">Glossaire des Collectivités 📖</span>
-                  </Link>
-                </li>
-                <li>
-                  <Link to="/verifier-certificat" className="hover:text-white transition flex items-center space-x-1 group">
-                    <span className="text-slate-500 group-hover:text-pink-400">→</span>
-                    <span className="group-hover:translate-x-0.5 transition-transform">Vérificateur d'Attestation 🛡️</span>
-                  </Link>
-                </li>
-                <li>
-                  <a
-                    href="https://www.klo-like.com"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="hover:text-white transition flex items-center space-x-1 group"
-                  >
-                    <span className="text-slate-500 group-hover:text-pink-400">→</span>
-                    <span className="group-hover:translate-x-0.5 transition-transform">Plateforme Klo-Liké (Relève) 🤝</span>
-                  </a>
-                </li>
+                {(footerConfig.column3Links || []).map((link) => (
+                  <li key={link.id || link.label}>
+                    {link.isExternal ? (
+                      <a
+                        href={link.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="hover:text-white transition flex items-center space-x-1 group"
+                      >
+                        <span className="text-slate-500 group-hover:text-pink-400">→</span>
+                        <span className="group-hover:translate-x-0.5 transition-transform">{link.label}</span>
+                      </a>
+                    ) : (
+                      <Link to={link.url} className="hover:text-white transition flex items-center space-x-1 group">
+                        <span className="text-slate-500 group-hover:text-pink-400">→</span>
+                        <span className="group-hover:translate-x-0.5 transition-transform">{link.label}</span>
+                      </Link>
+                    )}
+                  </li>
+                ))}
               </ul>
             </div>
 
-            {/* Colonne 4 (lg:col-span-2) : Siège & Coordination Territoriale */}
+            {/* Colonne 4 (lg:col-span-2) : Coordination et Pilotage (Cantic Think IA, Abidjan Cocody, WhatsApp) */}
             <div className="lg:col-span-2 space-y-3.5">
               <div className="flex items-center space-x-1.5 text-xs font-bold text-amber-400 uppercase tracking-wider">
                 <MapPin className="w-3.5 h-3.5 text-amber-400" />
-                <span>COORDINATION ET PILOTE</span>
+                <span>{footerConfig.column4Title || 'COORDINATION ET PILOTAGE'}</span>
               </div>
               <div className="space-y-3 text-xs text-slate-400">
-                <div className="flex items-start space-x-2">
-                  <span className="text-amber-400 flex-shrink-0 mt-0.5">📍</span>
-                  <p className="leading-snug">
-                    <strong className="text-slate-200">Commune de Zikisso</strong><br />
-                    Hôtel de Ville — Place de la République, Région du Lôh-Djiboua, Côte d'Ivoire
+                
+                {/* Entité Coordinatrice avec lien cliquable */}
+                <div className="space-y-1">
+                  <a
+                    href={footerConfig.coordinationWebsiteUrl || "https://canticthinkia.work"}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center space-x-1.5 font-bold text-slate-100 hover:text-emerald-400 transition group"
+                    title="Visiter le site de Cantic Think IA"
+                  >
+                    <span className="text-sm underline underline-offset-2 decoration-emerald-500/50 group-hover:decoration-emerald-400">
+                      {footerConfig.coordinationEntityName || 'Cantic Think IA'}
+                    </span>
+                    <ExternalLink className="w-3.5 h-3.5 text-emerald-400 group-hover:translate-x-0.5 transition-transform" />
+                  </a>
+
+                  {/* Adresse géographique */}
+                  <p className="text-[11px] text-slate-400 leading-snug">
+                    {footerConfig.coordinationAddress || "544, Deux Plateaux Agban — Rue 70, Carrefour Kratos, Cocody, Abidjan, Côte d'Ivoire"}
                   </p>
                 </div>
-                <div className="flex items-center space-x-2">
-                  <Phone className="w-3.5 h-3.5 text-emerald-400 flex-shrink-0" />
-                  <span>+225 07 08 00 24 00</span>
-                </div>
-                <div className="flex items-center space-x-2">
-                  <Mail className="w-3.5 h-3.5 text-blue-400 flex-shrink-0" />
-                  <a href="mailto:contact@mooc-ecommunes.ci" className="hover:text-white transition truncate">
-                    contact@mooc-ecommunes.ci
+
+                {/* Téléphone fixe */}
+                {footerConfig.coordinationPhone && (
+                  <div className="flex items-center space-x-2">
+                    <Phone className="w-3.5 h-3.5 text-emerald-400 flex-shrink-0" />
+                    <a href={`tel:${footerConfig.coordinationPhone.replace(/\s+/g, '')}`} className="hover:text-white transition">
+                      {footerConfig.coordinationPhone}
+                    </a>
+                  </div>
+                )}
+
+                {/* Email de contact */}
+                {footerConfig.coordinationEmail && (
+                  <div className="flex items-center space-x-2">
+                    <Mail className="w-3.5 h-3.5 text-blue-400 flex-shrink-0" />
+                    <a href={`mailto:${footerConfig.coordinationEmail}`} className="hover:text-white transition truncate">
+                      {footerConfig.coordinationEmail}
+                    </a>
+                  </div>
+                )}
+
+                {/* Responsable & WhatsApp */}
+                <div className="pt-1.5 border-t border-slate-800 space-y-1 text-[11px]">
+                  <p className="text-slate-300 font-semibold">
+                    {footerConfig.coordinationLeadName || 'Kouassi Ouréga Goble'}
+                  </p>
+                  <a
+                    href={footerConfig.whatsappUrl || `https://wa.me/${(footerConfig.coordinationLeadWhatsapp || '2250103438456').replace(/\D/g, '')}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center space-x-1.5 text-emerald-400 hover:text-emerald-300 transition"
+                  >
+                    <MessageCircle className="w-3.5 h-3.5" />
+                    <span>WhatsApp : {footerConfig.coordinationLeadWhatsapp || '+225 0103438456'}</span>
                   </a>
                 </div>
+
+                {/* Ancrage expérimental */}
+                {footerConfig.coordinationComplementText && (
+                  <p className="text-[10px] text-slate-500 italic pt-1 border-t border-slate-800/60 leading-tight">
+                    {footerConfig.coordinationComplementText}
+                  </p>
+                )}
+
               </div>
             </div>
 
@@ -634,10 +696,10 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
             <div className="lg:col-span-3 space-y-3.5">
               <div className="flex items-center space-x-1.5 text-xs font-bold text-[#00E5A3] uppercase tracking-wider">
                 <Mail className="w-3.5 h-3.5 text-[#00E5A3]" />
-                <span>VEILLE STRATÉGIQUE</span>
+                <span>{footerConfig.column5Title || 'VEILLE STRATÉGIQUE'}</span>
               </div>
               <p className="text-xs text-slate-400 leading-relaxed">
-                Recevez nos notes de prospective municipale, analyses des réformes territoriales et alertes de sessions directement dans votre boîte de réception.
+                {footerConfig.column5Description || "Recevez nos notes de prospective municipale, analyses des réformes territoriales et alertes de sessions directement dans votre boîte de réception."}
               </p>
 
               {newsletterStatus && (
@@ -666,7 +728,7 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
                     required
                     value={footerEmail}
                     onChange={(e) => setFooterEmail(e.target.value)}
-                    placeholder="contact@collectivite.ci"
+                    placeholder={footerConfig.newsletterPlaceholder || "contact@collectivite.ci"}
                     className="w-full bg-transparent text-white text-xs placeholder:text-slate-500 focus:outline-none py-1.5 pr-2"
                   />
                   <button
@@ -693,7 +755,7 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
             {/* Copyright */}
             <div>
               <p>
-                © 2026 MOOC e-COMMUNES CI. Tous droits réservés. Penser l'utile, Agir pour le bien commun.
+                {footerConfig.copyrightText || "© 2026 MOOC e-COMMUNES CI. Tous droits réservés. Penser l'utile, Agir pour le bien commun."}
               </p>
             </div>
 
@@ -704,7 +766,7 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
                 className="inline-flex items-center space-x-2 px-4 py-1.5 rounded-full bg-[#181B34] hover:bg-[#23274A] border border-indigo-500/30 text-indigo-300 hover:text-white text-xs font-bold tracking-wider transition uppercase shadow-sm"
               >
                 <ShieldCheck className="w-3.5 h-3.5 text-indigo-400" />
-                <span>CONSOLE DE GOUVERNANCE</span>
+                <span>{footerConfig.consoleButtonText || 'CONSOLE DE GOUVERNANCE'}</span>
               </Link>
             </div>
 
