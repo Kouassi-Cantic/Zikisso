@@ -14,6 +14,7 @@ import type { SubmissionData, ExerciceFilRouge, NotationCritere } from '../types
 import { DEFAULT_EXERCISES } from '../data/defaultExercises';
 import { TerritoryObservatory } from '../components/TerritoryObservatory';
 import { MayorMessageEditor } from '../components/MayorMessageEditor';
+import { NewsletterManager } from '../components/NewsletterManager';
 import { 
   ShieldCheck, 
   Clock, 
@@ -30,7 +31,8 @@ import {
   ChevronRight, 
   BookOpen,
   Building2,
-  MapPin
+  MapPin,
+  Mail
 } from 'lucide-react';
 
 const LOCAL_STORAGE_SUBMISSIONS_KEY = 'zikisso_local_submissions';
@@ -38,8 +40,8 @@ const LOCAL_STORAGE_SUBMISSIONS_KEY = 'zikisso_local_submissions';
 export const AdminPage: React.FC = () => {
   const { userData, currentUser } = useAuth();
 
-  // Onglet actif : 'corrections', 'observatoire' ou 'maires'
-  const [activeTab, setActiveTab] = useState<'corrections' | 'observatoire' | 'maires'>('corrections');
+  // Onglet actif : 'corrections', 'observatoire', 'maires' ou 'newsletter'
+  const [activeTab, setActiveTab] = useState<'corrections' | 'observatoire' | 'maires' | 'newsletter'>('corrections');
 
   const [submissions, setSubmissions] = useState<SubmissionData[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
@@ -355,6 +357,22 @@ Notre priorité doit porter sur la modernisation du recouvrement des taxes forai
               Personnalisation
             </span>
           </button>
+
+          <button
+            type="button"
+            onClick={() => setActiveTab('newsletter')}
+            className={`pb-3 px-3 text-xs sm:text-sm font-bold flex items-center space-x-2 border-b-2 transition ${
+              activeTab === 'newsletter'
+                ? 'border-indigo-600 text-indigo-700'
+                : 'border-transparent text-slate-500 hover:text-slate-800'
+            }`}
+          >
+            <Mail className="w-4 h-4 text-indigo-600" />
+            <span>Gestionnaire Newsletter</span>
+            <span className="bg-indigo-100 text-indigo-800 text-[10px] px-2 py-0.5 rounded-full font-bold border border-indigo-200">
+              Veille
+            </span>
+          </button>
         </div>
 
         {/* Métriques récapitulatives (affichées en mode corrections) */}
@@ -386,6 +404,11 @@ Notre priorité doit porter sur la modernisation du recouvrement des taxes forai
       {/* Onglet 3 : Messages des Maires & Personnalisation */}
       {activeTab === 'maires' && (
         <MayorMessageEditor />
+      )}
+
+      {/* Onglet 4 : Gestionnaire de la Newsletter et Veille Communale */}
+      {activeTab === 'newsletter' && (
+        <NewsletterManager />
       )}
 
       {/* Onglet 1 : Contenu principal des corrections */}

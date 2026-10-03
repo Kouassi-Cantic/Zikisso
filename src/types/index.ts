@@ -109,3 +109,27 @@ export interface WeekData {
   exercice?: ExerciceFilRouge | any;
   quiz?: QuizQuestion[];
 }
+
+export interface NewsletterSubscriber {
+  id?: string;
+  email: string;
+  dateInscription: string;
+  source?: string;
+  statut: 'actif' | 'désabonné';
+  commune?: string;
+  region?: string;
+  nom?: string;
+  createdAt?: any;
+}
+
+export interface NewsletterCampaign {
+  id?: string;
+  sujet: string;
+  contenu: string;
+  cibleCommune?: string; // 'toutes' ou nom de commune
+  destinatairesCount: number;
+  dateEnvoi: string;
+  statut: 'envoyé' | 'brouillon';
+  auteurNom?: string;
+  createdAt?: any;
+}
