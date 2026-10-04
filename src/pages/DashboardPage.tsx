@@ -160,71 +160,101 @@ export const DashboardPage: React.FC = () => {
   return (
     <div className="space-y-8">
       
-      {/* En-tête de bienvenue personnalisé */}
+      {/* En-tête de bienvenue personnalisé ou d'accueil public */}
       <div className="bg-white rounded-lg border border-slate-200 p-6 sm:p-8 shadow-sm">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           
           {/* Avatar & Identité */}
           <div className="flex items-start sm:items-center space-x-4">
-            <div 
-              onClick={() => setIsProfileModalOpen(true)}
-              className="relative w-16 h-16 sm:w-18 sm:h-18 rounded-full overflow-hidden border-2 border-[#1F4E79] shadow-sm bg-slate-100 flex items-center justify-center flex-shrink-0 cursor-pointer group"
-              title="Cliquer pour modifier votre photo de profil"
-            >
-              {userData?.photoUrl ? (
-                <img
-                  src={userData.photoUrl}
-                  alt={userData.nom || 'Photo de profil'}
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform"
-                />
-              ) : (
-                <div className="w-full h-full bg-[#1F4E79]/10 text-[#1F4E79] flex items-center justify-center font-bold text-xl">
-                  {(userData?.nom || currentUser?.email || 'A').charAt(0).toUpperCase()}
+            {currentUser ? (
+              <div 
+                onClick={() => setIsProfileModalOpen(true)}
+                className="relative w-16 h-16 sm:w-18 sm:h-18 rounded-full overflow-hidden border-2 border-[#1F4E79] shadow-sm bg-slate-100 flex items-center justify-center flex-shrink-0 cursor-pointer group"
+                title="Cliquer pour modifier votre photo de profil"
+              >
+                {userData?.photoUrl ? (
+                  <img
+                    src={userData.photoUrl}
+                    alt={userData.nom || 'Photo de profil'}
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform"
+                  />
+                ) : (
+                  <div className="w-full h-full bg-[#1F4E79]/10 text-[#1F4E79] flex items-center justify-center font-bold text-xl">
+                    {(userData?.nom || currentUser?.email || 'A').charAt(0).toUpperCase()}
+                  </div>
+                )}
+                <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center text-white">
+                  <Camera className="w-5 h-5" />
                 </div>
-              )}
-              <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center text-white">
-                <Camera className="w-5 h-5" />
               </div>
-            </div>
+            ) : (
+              <div className="w-16 h-16 sm:w-18 sm:h-18 rounded-full bg-gradient-to-tr from-[#1F4E79] to-[#1A6B3C] text-white flex items-center justify-center flex-shrink-0 shadow-md">
+                <BookOpen className="w-8 h-8 text-amber-200" />
+              </div>
+            )}
 
             <div>
               <div className="inline-flex items-center space-x-1.5 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-[#F0F7F2] text-[#1A6B3C] border border-[#1A6B3C]/20 mb-1.5">
                 <CheckCircle className="w-3.5 h-3.5" />
-                <span>Session active • MOOC e-Communes</span>
+                <span>
+                  {currentUser ? 'Session active • MOOC e-Communes' : 'Consultation publique en accès libre'}
+                </span>
               </div>
               <h1 className="text-2xl sm:text-3xl font-bold text-[#1F4E79] tracking-tight">
-                Bienvenue, {userData?.nom || currentUser?.email}
+                {currentUser 
+                  ? `Bienvenue, ${userData?.nom || currentUser?.email}` 
+                  : 'Syllabus & Cursus Pédagogique du MOOC'}
               </h1>
               <p className="text-xs sm:text-sm text-slate-600 mt-0.5 max-w-3xl leading-relaxed">
-                Plateforme nationale de formation continue des acteurs communaux, régionaux et des forces vives citoyennes.
+                Plateforme nationale certifiante de formation continue des acteurs communaux, régionaux et des forces vives citoyennes.
                 Laboratoire territorial d'expérimentation : <strong>Commune pilote de Zikisso</strong> (Lôh-Djiboua).
               </p>
             </div>
           </div>
 
           <div className="flex flex-wrap items-center gap-2 self-start sm:self-center">
-            <button
-              type="button"
-              onClick={() => setIsProfileModalOpen(true)}
-              className="inline-flex items-center space-x-1.5 px-3 py-1.5 text-xs font-semibold bg-[#1F4E79] hover:bg-[#153755] text-white rounded-md transition shadow-2xs cursor-pointer group"
-              title="Modifier mon nom, photo, profil et commune"
-            >
-              <span>Profil : {userData?.profil || 'Non renseigné'}</span>
-              <Edit2 className="w-3 h-3 text-blue-200 group-hover:text-white" />
-            </button>
-            <span
-              className={`px-3 py-1.5 text-xs font-bold rounded-md ${
-                userData?.role === 'admin'
-                  ? 'bg-[#C55A11] text-white'
-                  : 'bg-[#1A6B3C] text-white'
-              }`}
-            >
-              Rôle : {userData?.role === 'admin' ? 'Administrateur' : 'Apprenant'}
-            </span>
+            {currentUser ? (
+              <>
+                <button
+                  type="button"
+                  onClick={() => setIsProfileModalOpen(true)}
+                  className="inline-flex items-center space-x-1.5 px-3 py-1.5 text-xs font-semibold bg-[#1F4E79] hover:bg-[#153755] text-white rounded-md transition shadow-2xs cursor-pointer group"
+                  title="Modifier mon nom, photo, profil et commune"
+                >
+                  <span>Profil : {userData?.profil || 'Non renseigné'}</span>
+                  <Edit2 className="w-3 h-3 text-blue-200 group-hover:text-white" />
+                </button>
+                <span
+                  className={`px-3 py-1.5 text-xs font-bold rounded-md ${
+                    userData?.role === 'admin'
+                      ? 'bg-[#C55A11] text-white'
+                      : 'bg-[#1A6B3C] text-white'
+                  }`}
+                >
+                  Rôle : {userData?.role === 'admin' ? 'Administrateur' : 'Apprenant'}
+                </span>
+              </>
+            ) : (
+              <div className="flex items-center space-x-2">
+                <Link
+                  to="/login"
+                  className="px-3.5 py-1.5 text-xs font-bold text-[#1F4E79] hover:text-white hover:bg-[#1F4E79] border border-[#1F4E79] rounded-md transition"
+                >
+                  Se connecter
+                </Link>
+                <Link
+                  to="/register"
+                  className="px-4 py-1.5 text-xs font-bold text-white bg-[#C55A11] hover:bg-[#A3480C] rounded-md shadow-xs transition"
+                >
+                  Rejoindre le MOOC
+                </Link>
+              </div>
+            )}
           </div>
         </div>
 
-        {/* Bloc d'ancrage territorial de l'apprenant avec photo du lieu emblématique */}
+        {/* Bloc d'ancrage territorial de l'apprenant avec photo du lieu emblématique (si connecté) */}
+        {currentUser && (
         <div className="mt-5 p-4 rounded-lg bg-[#F8FAFC] border border-slate-200 flex flex-col md:flex-row md:items-center justify-between gap-4">
           <div className="flex items-start sm:items-center space-x-3.5">
             {/* Vignette du lieu emblématique si téléversé */}
@@ -328,8 +358,10 @@ export const DashboardPage: React.FC = () => {
             )}
           </div>
         </div>
+        )}
 
-        {/* Accès direct à "Mon tableau de bord" personnel */}
+        {/* Accès direct à "Mon tableau de bord" personnel (si connecté) */}
+        {currentUser && (
         <div className="mt-4 pt-4 border-t border-slate-100 flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-[#F0F5FA] p-4 rounded-lg">
           <div className="flex items-center space-x-3">
             <div className="w-10 h-10 rounded-full bg-[#1F4E79] text-white flex items-center justify-center flex-shrink-0">
@@ -353,6 +385,7 @@ export const DashboardPage: React.FC = () => {
             <ArrowRight className="w-4 h-4" />
           </Link>
         </div>
+        )}
       </div>
 
       {/* Citation institutionnelle en police serif avec lecteur audio */}

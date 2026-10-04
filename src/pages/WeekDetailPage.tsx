@@ -412,18 +412,76 @@ export const WeekDetailPage: React.FC = () => {
                     : `Quiz de validation des acquis — ${fallbackInfo.badge}`}
                 </h2>
               </div>
-              <Quiz
-                quizId={id}
-                questions={activeQuizQuestions}
-                title={fallbackInfo.quizTitle}
-              />
+              {currentUser ? (
+                <Quiz
+                  quizId={id}
+                  questions={activeQuizQuestions}
+                  title={fallbackInfo.quizTitle}
+                />
+              ) : (
+                <div className="bg-slate-50 border border-slate-200 rounded-xl p-6 sm:p-8 text-center space-y-3">
+                  <div className="w-12 h-12 rounded-full bg-emerald-100 text-[#14532D] mx-auto flex items-center justify-center font-bold">
+                    <CheckSquare className="w-6 h-6 text-[#1A6B3C]" />
+                  </div>
+                  <h3 className="text-base font-bold text-[#1F4E79]">
+                    Validation des compétences & Quiz ({activeQuizQuestions.length} questions)
+                  </h3>
+                  <p className="text-xs sm:text-sm text-slate-600 max-w-lg mx-auto">
+                    Les capsules sont consultables librement. Pour tester vos connaissances, enregistrer votre score et progresser vers la certification officielle, connectez-vous ou créez votre compte apprenant.
+                  </p>
+                  <div className="pt-2 flex flex-wrap justify-center gap-3">
+                    <Link
+                      to="/login"
+                      className="px-4 py-2 text-xs font-bold text-[#1F4E79] bg-white border border-[#1F4E79] rounded-lg hover:bg-slate-50 transition"
+                    >
+                      Se connecter pour passer le quiz
+                    </Link>
+                    <Link
+                      to="/register"
+                      className="px-4 py-2 text-xs font-bold text-white bg-[#C55A11] hover:bg-[#A3480C] rounded-lg shadow-xs transition"
+                    >
+                      Créer un compte apprenant
+                    </Link>
+                  </div>
+                </div>
+              )}
             </section>
           )}
 
           {/* Section Exercice Fil Rouge */}
           {activeExercice && id !== 'examen-final' && (
             <section className="space-y-4 pt-6 border-t border-slate-200">
-              <SubmissionForm exercice={activeExercice} />
+              {currentUser ? (
+                <SubmissionForm exercice={activeExercice} />
+              ) : (
+                <div className="bg-white border border-slate-200 rounded-xl p-6 sm:p-8 space-y-4 shadow-xs">
+                  <div className="flex items-center justify-between border-b border-slate-100 pb-3">
+                    <span className="inline-flex items-center space-x-1.5 px-2.5 py-0.5 rounded text-xs font-bold bg-[#1F4E79] text-white">
+                      <span>Exercice Fil Rouge</span>
+                    </span>
+                    <span className="text-xs text-slate-500 font-medium">
+                      Barème officiel : {activeExercice.grilleNotation.reduce((a, c) => a + c.pointsMax, 0)} points
+                    </span>
+                  </div>
+                  <h3 className="text-lg font-bold text-[#1F4E79]">
+                    {activeExercice.titre}
+                  </h3>
+                  <p className="text-xs sm:text-sm text-slate-700 whitespace-pre-line leading-relaxed">
+                    {activeExercice.enonce}
+                  </p>
+                  <div className="p-4 bg-emerald-50/80 border border-emerald-200 rounded-lg flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs">
+                    <span className="text-[#14532D] font-medium">
+                      La remise des travaux et la notation personnalisée par le jury nécessitent un compte apprenant actif.
+                    </span>
+                    <Link
+                      to="/register"
+                      className="px-4 py-2 bg-[#1A6B3C] text-white font-bold rounded-lg hover:bg-[#14532D] transition self-start sm:self-auto flex-shrink-0"
+                    >
+                      S'inscrire pour soumettre
+                    </Link>
+                  </div>
+                </div>
+              )}
             </section>
           )}
 

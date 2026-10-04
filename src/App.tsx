@@ -20,6 +20,7 @@ import { ResourcesPage } from './pages/ResourcesPage';
 import { AdminPage } from './pages/AdminPage';
 import { CertificateVerificationPage } from './pages/CertificateVerificationPage';
 import { LandingPage } from './pages/LandingPage';
+import { ObservatoryPage } from './pages/ObservatoryPage';
 
 export default function App() {
   return (
@@ -31,15 +32,15 @@ export default function App() {
             {/* Page d'atterrissage officielle publique pour tous les visiteurs */}
             <Route path="/" element={<LandingPage />} />
 
-            {/* Route protégée : Espace de cours et Tableau de bord principal listant les semaines */}
-            <Route
-              path="/cours"
-              element={
-                <ProtectedRoute>
-                  <DashboardPage />
-                </ProtectedRoute>
-              }
-            />
+            {/* Routes publiques du Cursus / Syllabus en accès libre pour la vitrine publique */}
+            <Route path="/cours" element={<DashboardPage />} />
+            <Route path="/semaine/:id" element={<WeekDetailPage />} />
+
+            {/* Route publique : Ressources, Téléchargements PDF, Charte civique et Glossaire */}
+            <Route path="/ressources" element={<ResourcesPage />} />
+
+            {/* Route publique : Observatoire Territorial et Cartographie nationale */}
+            <Route path="/observatoire" element={<ObservatoryPage />} />
 
             {/* Route protégée : Mon tableau de bord personnel (notes, pondération, quiz, devoirs, progression) */}
             <Route
@@ -47,16 +48,6 @@ export default function App() {
               element={
                 <ProtectedRoute>
                   <MyDashboardPage />
-                </ProtectedRoute>
-              }
-            />
-
-            {/* Route protégée : Ressources, Téléchargements PDF, Charte civique et Ambassadeurs */}
-            <Route
-              path="/ressources"
-              element={
-                <ProtectedRoute>
-                  <ResourcesPage />
                 </ProtectedRoute>
               }
             />
@@ -75,16 +66,6 @@ export default function App() {
               element={
                 <ProtectedRoute>
                   <FinalExamPage />
-                </ProtectedRoute>
-              }
-            />
-
-            {/* Route protégée : Page de détail d'une semaine / module */}
-            <Route
-              path="/semaine/:id"
-              element={
-                <ProtectedRoute>
-                  <WeekDetailPage />
                 </ProtectedRoute>
               }
             />

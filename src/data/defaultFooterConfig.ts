@@ -76,8 +76,8 @@ export const DEFAULT_FOOTER_CONFIG: FooterConfig = {
     { id: 'c3-1', label: "Charte d'Engagement Civique 📜", url: '/ressources', isExternal: false },
     { id: 'c3-2', label: 'Fascicule Complet (PDF) 📥', url: '/ressources', isExternal: false },
     { id: 'c3-3', label: 'Glossaire des Collectivités 📖', url: '/ressources', isExternal: false },
-    { id: 'c3-4', label: "Vérificateur d'Attestation 🛡️", url: '/verifier-certificat', isExternal: false },
-    { id: 'c3-5', label: 'Plateforme Klo-Liké (Relève) 🤝', url: 'https://www.klo-like.com', isExternal: true }
+    { id: 'c3-4', label: "Observatoire Territorial des 31 Régions 🗺️", url: '/observatoire', isExternal: false },
+    { id: 'c3-5', label: "Vérificateur d'Attestation 🛡️", url: '/verifier-certificat', isExternal: false }
   ],
 
   // Colonne 4 : Coordination & Pilotage

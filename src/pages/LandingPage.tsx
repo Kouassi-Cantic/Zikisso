@@ -333,7 +333,7 @@ export const LandingPage: React.FC = () => {
         {/* Grille des 4 rubriques publiques */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
           
-          {/* Carte 1 : Les 4 Semaines de formation */}
+          {/* Carte 1 : Les 4 Semaines de formation (Syllabus & Cursus) */}
           <div className="bg-white rounded-xl border border-slate-200 p-5 shadow-xs flex flex-col justify-between space-y-4 hover:border-[#1F4E79] transition">
             <div className="space-y-2.5">
               <div className="w-10 h-10 rounded-lg bg-[#1F4E79]/10 text-[#1F4E79] flex items-center justify-center">
@@ -347,7 +347,7 @@ export const LandingPage: React.FC = () => {
               </p>
             </div>
             <Link
-              to="/login"
+              to="/cours"
               className="inline-flex items-center space-x-1.5 text-xs font-bold text-[#1F4E79] hover:text-[#C55A11] transition pt-2 border-t border-slate-100"
             >
               <span>Consulter le cursus</span>
@@ -391,7 +391,7 @@ export const LandingPage: React.FC = () => {
               </p>
             </div>
             <Link
-              to="/login"
+              to="/observatoire"
               className="inline-flex items-center space-x-1.5 text-xs font-bold text-[#C55A11] hover:text-[#A3480C] transition pt-2 border-t border-slate-100"
             >
               <span>Voir l'Observatoire</span>

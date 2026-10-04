@@ -324,6 +324,30 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
                   </Link>
 
                   <Link
+                    to="/cours"
+                    className="inline-flex items-center space-x-1.5 text-xs sm:text-sm font-medium text-blue-100 hover:text-white px-2.5 py-1.5 rounded-md hover:bg-white/10 transition-colors"
+                  >
+                    <BookOpen className="w-4 h-4 text-amber-300" />
+                    <span>Cursus</span>
+                  </Link>
+
+                  <Link
+                    to="/ressources"
+                    className="inline-flex items-center space-x-1.5 text-xs sm:text-sm font-medium text-blue-100 hover:text-white px-2.5 py-1.5 rounded-md hover:bg-white/10 transition-colors"
+                  >
+                    <Files className="w-4 h-4 text-amber-300" />
+                    <span>Ressources</span>
+                  </Link>
+
+                  <Link
+                    to="/observatoire"
+                    className="inline-flex items-center space-x-1.5 text-xs sm:text-sm font-medium text-blue-100 hover:text-white px-2.5 py-1.5 rounded-md hover:bg-white/10 transition-colors"
+                  >
+                    <MapPin className="w-4 h-4 text-emerald-400" />
+                    <span>Observatoire</span>
+                  </Link>
+
+                  <Link
                     to="/verifier-certificat"
                     className="inline-flex items-center space-x-1.5 text-xs sm:text-sm font-medium text-blue-100 hover:text-white px-2.5 py-1.5 rounded-md hover:bg-white/10 transition-colors"
                   >
@@ -453,8 +477,68 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
                 </button>
               </>
             ) : (
-              <div className="text-sm text-blue-200 text-center py-2">
-                Plateforme de formation numérique pour les acteurs locaux et communaux.
+              <div className="space-y-2 py-1">
+                <Link
+                  to="/"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="flex items-center space-x-2 text-white px-3 py-2 rounded-md hover:bg-white/10 text-sm font-medium"
+                >
+                  <Home className="w-4 h-4 text-blue-200" />
+                  <span>Accueil</span>
+                </Link>
+
+                <Link
+                  to="/cours"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="flex items-center space-x-2 text-white px-3 py-2 rounded-md hover:bg-white/10 text-sm font-medium"
+                >
+                  <BookOpen className="w-4 h-4 text-amber-300" />
+                  <span>Syllabus & Cursus des 4 semaines</span>
+                </Link>
+
+                <Link
+                  to="/ressources"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="flex items-center space-x-2 text-white px-3 py-2 rounded-md hover:bg-white/10 text-sm font-medium"
+                >
+                  <Files className="w-4 h-4 text-amber-300" />
+                  <span>Ressources & Guides PDF</span>
+                </Link>
+
+                <Link
+                  to="/observatoire"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="flex items-center space-x-2 text-white px-3 py-2 rounded-md hover:bg-white/10 text-sm font-medium"
+                >
+                  <MapPin className="w-4 h-4 text-emerald-400" />
+                  <span>Observatoire Territorial</span>
+                </Link>
+
+                <Link
+                  to="/verifier-certificat"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="flex items-center space-x-2 text-white px-3 py-2 rounded-md hover:bg-white/10 text-sm font-medium"
+                >
+                  <ShieldCheck className="w-4 h-4 text-emerald-300" />
+                  <span>Vérifier un diplôme</span>
+                </Link>
+
+                <div className="pt-2 border-t border-white/10 flex flex-col gap-2">
+                  <Link
+                    to="/login"
+                    onClick={() => setMobileMenuOpen(false)}
+                    className="w-full text-center py-2.5 rounded-md text-sm font-semibold text-white bg-white/15 hover:bg-white/20 transition"
+                  >
+                    Se connecter
+                  </Link>
+                  <Link
+                    to="/register"
+                    onClick={() => setMobileMenuOpen(false)}
+                    className="w-full text-center py-2.5 rounded-md text-sm font-bold text-white bg-[#C55A11] hover:bg-[#A3480C] shadow-xs transition"
+                  >
+                    Rejoindre le MOOC
+                  </Link>
+                </div>
               </div>
             )}
           </div>
