@@ -21,10 +21,12 @@ import { AdminPage } from './pages/AdminPage';
 import { CertificateVerificationPage } from './pages/CertificateVerificationPage';
 import { LandingPage } from './pages/LandingPage';
 import { ObservatoryPage } from './pages/ObservatoryPage';
+import { ScrollToTop } from './components/ScrollToTop';
 
 export default function App() {
   return (
     <BrowserRouter>
+      <ScrollToTop />
       <AuthProvider>
         <ThemeProvider>
           <Layout>

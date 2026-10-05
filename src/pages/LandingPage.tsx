@@ -234,13 +234,13 @@ export const LandingPage: React.FC = () => {
               <ArrowRight className="w-4 h-4" />
             </button>
 
-            <a
-              href="#visite-commune"
+            <Link
+              to="/cours"
               className="inline-flex items-center justify-center space-x-2 px-5 py-3.5 text-sm font-semibold text-white bg-white/15 hover:bg-white/20 border border-white/25 rounded-xl transition"
             >
               <BookOpen className="w-4.5 h-4.5 text-blue-200" />
-              <span>Explorer le programme et les modules publics</span>
-            </a>
+              <span>Explorer le programme et le cursus</span>
+            </Link>
           </div>
 
         </div>
